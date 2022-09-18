@@ -11,7 +11,10 @@ namespace Targil0 {
 
         }
 
-        static partial void Welcome9154();
+        static partial void Welcome9154()
+        {
+            Console.WriteLine(  "trtrtrtr");
+        }
         private static void Welcome6884()
         {
             Console.WriteLine("Enter your name: ");

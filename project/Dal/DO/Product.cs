@@ -5,8 +5,7 @@ namespace Dal.DO;
 /// <summary>
 ///  product describes each product in the store.
 /// </summary>
-public struct product 
-{
+public struct product { 
     public int ID { get; set; }
     public string Name { get; set; }
     public eCategory Category { get; set; }

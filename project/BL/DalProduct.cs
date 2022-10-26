@@ -1,18 +1,21 @@
 ﻿
 using Dal.DO;
+using DalFacade.DO;
 namespace Dal.UseObjects;
 
 internal class DalProduct : IDalObject
 {
-    public int Create(IDataObject obj)
+    public product Create(int id, string name, eCategory cat, float price, int inStock)
     {
-        //Product p = new Product() { };
-        //ProductList[0]=obj;
+        product p = new product() { };
+        p.ID = id; p.Name = name; p.Category = cat; p.Price = price; p.InStock = inStock;
+        //products[0] = obj;
         //// p.ProductName = (obj as Product).ProductName;
         //p.ProductName = ((Product)obj).ProductName;
         //int x = 2;
         //p.Category = (eCategory)x;
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
+        return p;
     }
 
     public void Delete(int Id)

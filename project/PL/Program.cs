@@ -1,5 +1,38 @@
 ﻿// See https://aka.ms/new-console-template for more information
-Console.WriteLine("Hello, World!");
+using DalList;
+
+
+void addOrder()
+{
+    int _id;
+    string _name;
+    string _email;
+    string _address;
+    DateTime _oDate;
+    DateTime _sDate;
+    DateTime _dDate;
+    Console.WriteLine("enter costumer name");
+    _name = Console.ReadLine();
+    Console.WriteLine("enter costumer email");
+    _email = Console.ReadLine();
+    Console.WriteLine("enter costumer address");
+    _address = Console.ReadLine();
+    _oDate = DateTime.Today;
+    TimeSpan shipSpan = TimeSpan.FromDays(10);
+    TimeSpan deliverySpan = TimeSpan.FromDays(25);
+    _sDate = _oDate+shipSpan;
+    _dDate = _sDate+deliverySpan;
+    _id = DataSource.Config.OrderIndex;
+    order = {
+        int id: _id,
+        string name: _name,
+        string email: _email,
+        string address: _address,
+
+
+    }
+
+}
 
 void orders() {
     Console.WriteLine("1. add new order. 2. view order. 3. view orders list. 4. update order. 5. delete order.");
@@ -13,8 +46,16 @@ void orders() {
             viewOrder();
             break;
         case 3:
-
-
+            viewOrderList();
+            break;
+        case 4:
+            updateOrder();
+            break;
+        case 5:
+            deleteOrder();
+            break;
+        default:
+            Console.WriteLine("wrong choice");
 
     }
 

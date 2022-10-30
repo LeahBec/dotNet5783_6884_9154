@@ -46,10 +46,11 @@ static internal class DataSource
         string[] CustomerName = { "aaa", "bbb", "ccc" };
         string[] CustomerAdress = { "ddd", "eee", "fff" };
         string[] CustomerEmail = { "ggg", "hhh", "iii" };
-        int uniqueID = 500000;
+        static int uniqueID = 500000;
         for (int i = 0; i < 20; i++)
         {
             orders[i] = new Order();
+            orders[i].OrderID = uniqueID++;
             int indexName = (int)rand.NextInt64(CustomerName.Length);
             int indexAdress = (int)rand.NextInt64(CustomerAdress.Length);
             int indexEmail = (int)rand.NextInt64(CustomerEmail.Length);

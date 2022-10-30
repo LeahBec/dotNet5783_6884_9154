@@ -1,6 +1,6 @@
 ﻿
 
-namespace DalFacade.DO;
+namespace Dal.DO;
 
 public struct OrderItem {
     public int ID { get; set; }

@@ -3,6 +3,8 @@ using Dal.DO;
 using Dal;
 using DalFacade.DO;
 namespace DalList;
+
+
 static internal class DataSource
 {
 
@@ -15,8 +17,8 @@ static internal class DataSource
 
     public static readonly int random;
 
-    internal static product[] products = new product[50];
-    public static Order[] orders = new Order[100];
+    internal static Product[] products = new Product[50];
+    internal static Order[] orders = new Order[100];
     internal static OrderItem[] orderItems = new OrderItem[200];
 
     public static void CreateProductList()
@@ -24,7 +26,7 @@ static internal class DataSource
         int uniqueID = 100000;
         for (int i = 0; i < 10; i++)
         {
-            products[i] = new product();
+            products[i] = new Product();
             string[] productsNames = Enum.GetValues(typeof(eProductNames))
                 .Cast<int>()
                 .Select(x => x.ToString())
@@ -85,12 +87,9 @@ static internal class DataSource
     }
     internal class Config
     {
-        static internal int ProductIndex = 0;
-        static internal int OrderIndex = 0;
-        static internal int OrderItemIndex = 0;
-        static internal int ProductLastIndex = 0;
-        static internal int OrderLastIndex = 0;
-        static internal int OrderItemLastIndex = 0;
+        static internal int ProductIndex = 10;
+        static internal int OrderIndex = 20;
+        static internal int OrderItemIndex = 40;
     }
 
     

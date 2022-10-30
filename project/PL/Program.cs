@@ -2,9 +2,19 @@
 Console.WriteLine("Hello, World!");
 
 void orders() {
-    Console.WriteLine();
-    switch ()
+    Console.WriteLine("1. add new order. 2. view order. 3. view orders list. 4. update order. 5. delete order.");
+    int choice = Console.ReadLine();
+    switch (choice)
     {
+        case 1:
+            addOrder();
+            break;
+        case 2:
+            viewOrder();
+            break;
+        case 3:
+
+
 
     }
 
@@ -12,6 +22,7 @@ void orders() {
 
 void orderItems()
 {
+    
 
 
 }

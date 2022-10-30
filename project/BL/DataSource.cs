@@ -5,7 +5,7 @@ using DalFacade.DO;
 namespace DalList;
 
 
-static internal class DataSource
+static public class DataSource
 {
 
 
@@ -86,11 +86,11 @@ static internal class DataSource
         CreateOrderList();
         CreateOrderItemList();
     }
-    internal class Config
+    public class Config
     {
-        static internal int ProductIndex = 10;
-        static internal int OrderIndex = 20;
-        static internal int OrderItemIndex = 40;
+        static public int ProductIndex = 10;
+        static public int OrderIndex = 20;
+        static public int OrderItemIndex = 40;
     }
 
     

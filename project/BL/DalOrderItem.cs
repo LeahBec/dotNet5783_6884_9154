@@ -2,72 +2,75 @@
 
 using Dal.DO;
 using DalList;
-namespace Dal.UseObjects;
+namespace DalList;
 
-internal class DalOrderItem : IDalObject
+static public class DalOrderItem
 {
-    int IDalObject.Create(IDataObject obj)
+    static public void Create(OrderItem obj)
     {
-         if (DataSource.Config.OrderItemIndex >200) 
-                throw new Exception("not enough space");
-            DataSource.orderItems[DataSource.Config.OrderItemIndex++]=(OrderItem)obj;
-        
+        if (DataSource.Config.OrderItemIndex > 200)
+            throw new Exception("not enough space");
+        DataSource.orderItems[DataSource.Config.OrderItemIndex++] = obj;
+
     }
 
-    void IDalObject.Delete(int Id)
+    static public void Delete(int Id)
     {
         int i;
-        for ( i = 0; i < DataSource.Config.OrderItemIndex; i++)
-		{
+        for (i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        {
             if (DataSource.orderItems[i].ID == Id)
             {
                 for (int k = i; k < DataSource.Config.OrderItemIndex; k++)
-			    {
-                    DataSource.orderItems[k] = DataSource.orderItems[k+1]
-			    }
+                {
+                    DataSource.orderItems[k] = DataSource.orderItems[k + 1];
+                }
                 DataSource.Config.OrderItemIndex--;
                 return;
             }
-		}
-            throw new Exception("object not found");
+        }
+        throw new Exception("object not found");
 
     }
 
-    IDataObject[] IDalObject.Read()
+    static public OrderItem[] Read()
     {
-           OrderItem[] orderItems = new OrderItem[100];
+        OrderItem[] orderItems = new OrderItem[100];
         for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
-			{
+        {
             orderItems[i] = DataSource.orderItems[i];
-			}
-            return orderItems;
-        
+        }
+        return orderItems;
+
         throw new Exception("failed to read orderItems");
     }
 
-    IDataObject IDalObject.ReadSingle(int Id)
+    static public OrderItem ReadSingle(int Id)
     {
-        for ( i = 0; i < DataSource.Config.OrderItemIndex; i++)
-		{
+        int i;
+        for (i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        {
             if (DataSource.orderItems[i].ID == Id)
             {
-               return DataSource.orderItems[i].ID;
+                return DataSource.orderItems[i];
             }
-		}            throw new Exception("object not found");
-
+        }
+        throw new Exception("object not found");
     }
 
-    void IDalObject.Update(IDataObject obj)
+    static public void Update(OrderItem obj)
     {
-      OrderItem oi = (OrderItem)obj;
-        for ( i = 0; i < DataSource.Config.OrderItemIndex; i++)
-		{
-            if (DataSource.orderItems[i].ID ==oi.ID)
+        int i;
+        OrderItem oi = (OrderItem)obj;
+        for (i = 0; i < DataSource.Config.OrderItemIndex; i++)
+        {
+            if (DataSource.orderItems[i].ID == oi.ID)
             {
                 DataSource.orderItems[i] = oi;
                 return;
             }
-		}            throw new Exception("object not found");
+        }
+        throw new Exception("object not found");
 
     }
 }

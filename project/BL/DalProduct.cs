@@ -42,7 +42,6 @@ static public class DalProduct
             products[i] = DataSource.products[i];
         }
         return products;
-
         throw new Exception("failed to read products");
     }
 

@@ -5,23 +5,25 @@ namespace DalList;
 
 
 static public class DataSource{
-    static DataSource()
+    const int V = 500000;
+    private static void s_Initialize()
     {
-        s_Initialize();
+        CreateProductList();
+        CreateOrderList(V);
+        CreateOrderItemList();
     }
+
+    static DataSource() { s_Initialize(); }
     static Random rand = new Random();
 
     public static readonly int random;
 
-    internal static Product[] products = new Product[50];
-    internal static Order[] orders = new Order[100];
-    internal static OrderItem[] orderItems = new OrderItem[200];
-
+    public static Product[] products = new Product[50];
+    public static Order[] orders = new Order[100];
+    public static OrderItem[] orderItems = new OrderItem[200];
     public static void CreateProductList()
-    {
-        int uniqueID = 100000;
-        for (int i = 0; i < 10; i++)
-        {
+    {   int uniqueID = 100000;
+        for (int i = 0; i < 10; i++){
             products[i] = new Product();
             string[] productsNames = Enum.GetValues(typeof(eProductNames))
                 .Cast<int>()
@@ -35,9 +37,10 @@ static public class DataSource{
             products[i].InStock = (int)rand.NextInt64(10, 5000);
             int x = 1;
             products[i].Category = (eCategory)x;
+            Config.ProductIndex++;
         }
     }
-    const int V = 500000;
+
     public static void CreateOrderList(int uniqueID)
     {
         string[] CustomerName = { "aaa", "bbb", "ccc" };
@@ -58,6 +61,7 @@ static public class DataSource{
             TimeSpan deliverySpan = TimeSpan.FromDays(25);
             orders[i].ShipDate = orders[i].OrderDate + shipSpan;
             orders[i].DeliveryDate = orders[i].ShipDate+deliverySpan;
+            Config.OrderIndex++;
         }
     }
     public static void CreateOrderItemList()
@@ -73,15 +77,10 @@ static public class DataSource{
             orderItems[i].ProductID = productId;
             orderItems[i].Price = productPrices[productId];
             orderItems[i].Amount = (int)rand.NextInt64(1, Math.Min(products[productId].InStock, 4));
-
+            Config.OrderItemIndex++;
         }
     }
-    private static void s_Initialize()
-    {
-        CreateProductList();
-        CreateOrderList(V);
-        CreateOrderItemList();
-    }
+
     public class Config
     {
         static public int ProductIndex = 0;

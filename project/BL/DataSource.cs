@@ -1,14 +1,10 @@
 ﻿
 using Dal.DO;
-using Dal;
 using DalFacade.DO;
 namespace DalList;
 
 
-static public class DataSource
-{
-
-
+static public class DataSource{
     static DataSource()
     {
         s_Initialize();
@@ -41,12 +37,12 @@ static public class DataSource
             products[i].Category = (eCategory)x;
         }
     }
-    public static void CreateOrderList()
+    const int V = 500000;
+    public static void CreateOrderList(int uniqueID)
     {
         string[] CustomerName = { "aaa", "bbb", "ccc" };
         string[] CustomerAdress = { "ddd", "eee", "fff" };
         string[] CustomerEmail = { "ggg", "hhh", "iii" };
-        static int uniqueID = 500000;
         for (int i = 0; i < 20; i++)
         {
             orders[i] = new Order();
@@ -83,14 +79,14 @@ static public class DataSource
     private static void s_Initialize()
     {
         CreateProductList();
-        CreateOrderList();
+        CreateOrderList(V);
         CreateOrderItemList();
     }
     public class Config
     {
-        static public int ProductIndex = 10;
-        static public int OrderIndex = 20;
-        static public int OrderItemIndex = 40;
+        static public int ProductIndex = 0;
+        static public int OrderIndex = 0;
+        static public int OrderItemIndex = 0;
     }
 
     

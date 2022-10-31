@@ -4,7 +4,7 @@ using Dal.DO;
 using DalFacade.DO;
 
 
-
+// =============order functions=============
 void addOrder()
 {
     int _id;
@@ -21,10 +21,11 @@ void addOrder()
     Console.WriteLine("enter costumer address");
     _address = Console.ReadLine();
     _oDate = DateTime.Today;
+    //(DateTime)DateTime.Now.ToShortDateString()
     TimeSpan shipSpan = TimeSpan.FromDays(10);
     TimeSpan deliverySpan = TimeSpan.FromDays(25);
-    _sDate = _oDate+shipSpan;
-    _dDate = _sDate+deliverySpan;
+    _sDate = _oDate + shipSpan;
+    _dDate = _sDate + deliverySpan;
     _id = DataSource.Config.OrderIndex++;
     Order newOrder = new Order();
     newOrder.OrderID = _id;
@@ -43,15 +44,17 @@ void viewOrder()
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
     Order order = new Order();
-    order=DalOrder.ReadSingle(id);
-    Console.WriteLine(order.OrderID+order.CustomerName+order.CustomerEmail+order.CustomerAdress+order.OrderDate+order.ShipDate+order.DeliveryDate); 
-
+    order = DalOrder.ReadSingle(id);
+    Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAdress + order.OrderDate + order.ShipDate + order.DeliveryDate);
 }
 
-void viewOrderList(){
+void viewOrderList()
+{
     Order[] orders = new Order[100];
     orders = DalOrder.Read();
-    for (int i = 0; i < orders.Length; i++)
+    int amountOfOrders = DataSource.Config.OrderIndex;
+    if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
+    for (int i = 0; i < amountOfOrders; i++)
     {
         Console.WriteLine(orders[i].OrderID + orders[i].CustomerName + orders[i].CustomerEmail + orders[i].CustomerAdress + orders[i].OrderDate + orders[i].ShipDate + orders[i].DeliveryDate);
     }
@@ -97,7 +100,8 @@ void deleteOrder()
     DalOrder.Delete(id);
 }
 
-void orders() {
+void orders()
+{
     Console.WriteLine("1. add new order. 2. view order. 3. view orders list. 4. update order. 5. delete order.");
     int choice = int.Parse(Console.ReadLine());
     switch (choice)
@@ -122,10 +126,12 @@ void orders() {
 
 }
 
+// ==========finish order functions============
+
+// ============orderItems functions============
 
 void addOrderItem()
 {
-
     int id;
     int orderId;
     int productId;
@@ -141,7 +147,7 @@ void addOrderItem()
     amount = int.Parse(Console.ReadLine());
     Console.WriteLine("enter price");
     price = Single.Parse(Console.ReadLine());
-   
+
     OrderItem orderItem = new OrderItem();
     orderItem.ID = id;
     orderItem.OrderID = orderId;
@@ -152,14 +158,16 @@ void addOrderItem()
 
 }
 
-void viewOrderItem() {
+void viewOrderItem()
+{
     Console.WriteLine("enter order item id");
     int id = int.Parse(Console.ReadLine());
     OrderItem orderItem = new OrderItem();
     orderItem = DalOrderItem.ReadSingle(id);
     Console.WriteLine(orderItem.ID + orderItem.OrderID + orderItem.ProductID + orderItem.Price + orderItem.Amount);
 }
-void viewOrderListItem() {
+void viewOrderListItem()
+{
     OrderItem[] orderItems = new OrderItem[200];
     orderItems = DalOrderItem.Read();
     for (int i = 0; i < orderItems.Length; i++)
@@ -168,8 +176,8 @@ void viewOrderListItem() {
 
     }
 }
-void updateOrderItem() {
-
+void updateOrderItem()
+{
     int id;
     int orderId;
     int productId;
@@ -195,7 +203,8 @@ void updateOrderItem() {
     orderItem.Price = price;
     DalOrderItem.Update(orderItem);
 }
-void deleteOrderItem() {
+void deleteOrderItem()
+{
     int id;
     Console.WriteLine("enter id of the order item you want to delete");
     id = int.Parse(Console.ReadLine());
@@ -224,8 +233,13 @@ void orderItems()
             break;
 
     }
-
 }
+
+// ============finish orderItems functions============
+
+
+// ============product help functions============
+
 Product createProduct()
 {
     string name;
@@ -254,29 +268,29 @@ Product createProduct()
 
 }
 
-//============Product CRUD==============
+// ============products functions============
 void addProduct()
 {
 
     Product newProduct = createProduct();
     DalProduct.Create(newProduct);
-    
+
 }
 void viewProduct()
 {
     int id;
     Console.WriteLine("enter id of the product you want to watch");
-    id=int.Parse(Console.ReadLine());
+    id = int.Parse(Console.ReadLine());
     Product product = new Product();
     product = DalProduct.ReadSingle(id);
-    Console.WriteLine(product.ID + product.Name+product.Price + product.InStock);
+    Console.WriteLine(product.ID + product.Name + product.Price + product.InStock);
 
 }
 void viewProductList()
 {
     Product[] products = new Product[50];
     products = DalProduct.Read();
-    for(int i = 0; i < products.Length; i++)
+    for (int i = 0; i < products.Length; i++)
     {
         Console.WriteLine(products[i].ID + products[i].Name + products[i].Price + products[i].InStock);
     }
@@ -298,7 +312,7 @@ void updateProduct()
     Console.WriteLine("enter price for the new product");
     price = Single.Parse(Console.ReadLine());
     Console.WriteLine("enter amount in stock");
-    Console.WriteLine("enter the amout of product in stock");
+    Console.WriteLine("enter the amount of product in stock");
     inStock = int.Parse(Console.ReadLine());
     Product product = new Product();
     product.ID = id;
@@ -318,11 +332,12 @@ void deleteProduct()
 }
 
 
-//======================================
-void products() {
-        Console.WriteLine("1. add new product. 2. view product. 3. view product list. 4. update product. 5. delete product.");
+void products()
+{
+    Console.WriteLine("1. add new product. 2. view product. 3. view product list. 4. update product. 5. delete product.");
     int choice = int.Parse(Console.ReadLine());
-    switch (choice)    {
+    switch (choice)
+    {
         case 1:
             addProduct();
             break;
@@ -332,7 +347,7 @@ void products() {
         case 3:
             viewProductList();
             break;
-        case 4: 
+        case 4:
             updateProduct();
             break;
         case 5:
@@ -341,23 +356,40 @@ void products() {
 
     }
 }
+// ============finish products functions============
 
-/*void main()
-{*/
-int choice;
-Console.WriteLine("enter the entity number: 1. orders 2. products 3. order-items 0. to exit");
-choice = Convert.ToInt32(Console.ReadLine());
-switch (choice)
+// ============MAIN PROGRAM============
+
+void main()
 {
-    case 1:
-        orders();
-        break;
-    case 2:
-        products();
-        break;
-    case 3:
-        orderItems();
-        break;
+    int choice;
+    do
+    {
+        Console.WriteLine("enter the entity number: 1. orders 2. products 3. order-items 0. to exit");
+        choice = Convert.ToInt32(Console.ReadLine());
+        switch (choice)
+        {
+            case 0:
+                return;
+            case 1:
+                orders();
+                break;
+            case 2:
+                products();
+                break;
+            case 3:
+                orderItems();
+                break;
+            default:
+                Console.WriteLine("wrong chice");
+                break;
+
+        }
+    } while (choice != 0);
 }
-/*}*/
+
+main();
+
+
+
 

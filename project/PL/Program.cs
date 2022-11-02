@@ -248,8 +248,7 @@ void orderItems()
 
 // ============product help functions============
 
-Product addProduct()
-{
+Product addProduct() {
     int f = DataSource.Config.ProductIndex;
     string name;
     eCategory category;
@@ -271,11 +270,8 @@ Product addProduct()
     product.Price = price;
     product.InStock = inStock;
     product.Category = category;
-
     DalProduct.Create(product);
     return product;
-
-
 }
 
 

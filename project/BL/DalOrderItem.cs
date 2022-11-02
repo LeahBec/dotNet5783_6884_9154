@@ -35,7 +35,7 @@ static public class DalOrderItem
 
     static public OrderItem[] Read()
     {
-        OrderItem[] orderItems = new OrderItem[100];
+        OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
         for (int i = 0; i < DataSource.Config.OrderItemIndex; i++)
         {
             orderItems[i] = DataSource.orderItems[i];

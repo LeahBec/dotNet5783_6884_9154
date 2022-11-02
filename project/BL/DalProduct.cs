@@ -6,12 +6,14 @@ namespace DalList;
 
 static public class DalProduct
 {
-    static public int Create(Product obj)
+
+    const int MAXPRODUCTS = 99;
+    static public void Create(Product obj)
     {
-        if (DataSource.Config.ProductIndex > 99)
+        if (DataSource.Config.ProductIndex > MAXPRODUCTS)
             throw new Exception("not enough space");
         DataSource.products[DataSource.Config.ProductIndex] = (Product)obj;
-        return DataSource.Config.ProductIndex++;
+        DataSource.Config.ProductIndex++;
     }
 
     static public void Delete(int Id)
@@ -36,7 +38,7 @@ static public class DalProduct
 
     static public Product[] Read()
     {
-        Product[] products = new Product[100];
+        Product[] products = new Product[DataSource.Config.ProductIndex];
         for (int i = 0; i < DataSource.Config.ProductIndex; i++)
         {
             products[i] = DataSource.products[i];

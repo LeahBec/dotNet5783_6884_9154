@@ -9,6 +9,7 @@ const int IDX = 500000;
 // =============order functions=============
 void addOrder()
 {
+    Random rand = new Random();
     int _id;
     string _name;
     string _email;
@@ -23,12 +24,12 @@ void addOrder()
     Console.WriteLine("enter costumer address");
     _address = Console.ReadLine();
     _oDate = DateTime.Today;
-    //(DateTime)DateTime.Now.ToShortDateString()
-    TimeSpan shipSpan = TimeSpan.FromDays(10);
-    TimeSpan deliverySpan = TimeSpan.FromDays(25);
+    TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
+    TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
     _sDate = _oDate + shipSpan;
     _dDate = _sDate + deliverySpan;
-    _id = DataSource.Config.OrderIndex++ + IDX;
+    _id = DataSource.Config.OrderIndex + IDX;
+    DataSource.Config.OrderIndex++;
     Order newOrder = new Order();
     newOrder.OrderID = _id;
     newOrder.CustomerName = _name;
@@ -52,18 +53,23 @@ void viewOrder()
 
 void viewOrderList()
 {
-    Order[] orders = new Order[100];
+    Order[] orders = new Order[DataSource.Config.OrderIndex];
     orders = DalOrder.Read();
     int amountOfOrders = DataSource.Config.OrderIndex;
     if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
-    for (int i = 0; i < amountOfOrders; i++)
+    foreach (Order item in orders)
     {
-        Console.WriteLine(orders[i].OrderID +" "+ orders[i].CustomerName + " " + orders[i].CustomerEmail + " " + orders[i].CustomerAdress + " " + orders[i].OrderDate + " " + orders[i].ShipDate + " " + orders[i].DeliveryDate);
+        Console.WriteLine(item.OrderID + " " + item.CustomerName + " " + item.CustomerEmail + " " + item.CustomerAdress + " " + item.OrderDate + " " + item.ShipDate + " " + item.DeliveryDate);
+
     }
 }
 
+
+
 void updateOrder()
 {
+    Random rand = new Random();
+    Console.WriteLine("enter id of the order you want to update");
     int _id = int.Parse(Console.ReadLine());
     string _name;
     string _email;
@@ -78,8 +84,8 @@ void updateOrder()
     Console.WriteLine("enter costumer address");
     _address = Console.ReadLine();
     _oDate = DateTime.Today;
-    TimeSpan shipSpan = TimeSpan.FromDays(10);
-    TimeSpan deliverySpan = TimeSpan.FromDays(25);
+    TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
+    TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
     _sDate = _oDate + shipSpan;
     _dDate = _sDate + deliverySpan;
     Order newOrder = new Order();
@@ -151,7 +157,7 @@ void addOrderItem()
     price = Single.Parse(Console.ReadLine());
 
     OrderItem orderItem = new OrderItem();
-    orderItem.ID = id;
+    orderItem.ID = id+100000;
     orderItem.OrderID = orderId;
     orderItem.ProductID = productId;
     orderItem.Amount = amount;
@@ -166,15 +172,15 @@ void viewOrderItem()
     int id = int.Parse(Console.ReadLine());
     OrderItem orderItem = new OrderItem();
     orderItem = DalOrderItem.ReadSingle(id);
-    Console.WriteLine(orderItem.ID + orderItem.OrderID + orderItem.ProductID + orderItem.Price + orderItem.Amount);
+    Console.WriteLine(orderItem.ID + " " + orderItem.OrderID + " " + orderItem.ProductID + " " + orderItem.Price + " " + orderItem.Amount);
 }
 void viewOrderListItem()
 {
-    OrderItem[] orderItems = new OrderItem[200];
+    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
     orderItems = DalOrderItem.Read();
-    for (int i = 0; i < orderItems.Length; i++)
+    foreach (OrderItem item in orderItems)
     {
-        Console.WriteLine(orderItems[i].ID + orderItems[i].OrderID + orderItems[i].ProductID + orderItems[i].Price + orderItems[i].Amount);
+        Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
 
     }
 }
@@ -242,42 +248,37 @@ void orderItems()
 
 // ============product help functions============
 
-Product createProduct()
+Product addProduct()
 {
+    int f = DataSource.Config.ProductIndex;
     string name;
-    int id = DataSource.Config.ProductIndex++;
     eCategory category;
     float price;
     int inStock;
     Console.WriteLine("enter name for the new product");
     name = Console.ReadLine();
     Console.WriteLine("enter the product's category: 1 - Drones, 2 - Cameras, 3 - Headphones, 4 -  Computers, 5 - SmartWatches");
-    int choice;
-    choice = int.Parse(Console.ReadLine());
+    int choice = int.Parse(Console.ReadLine());
     category = (eCategory)choice;
     Console.WriteLine("enter price for the new product");
     price = Single.Parse(Console.ReadLine());
-    Console.WriteLine("enter amount in stock");
     Console.WriteLine("enter the amout of product in stock");
     inStock = int.Parse(Console.ReadLine());
+    int id = DataSource.Config.ProductIndex + 100000;
     Product product = new Product();
     product.ID = id;
     product.Name = name;
     product.Price = price;
     product.InStock = inStock;
     product.Category = category;
+
+    DalProduct.Create(product);
     return product;
 
-}
-
-// ============products functions============
-void addProduct()
-{
-
-    Product newProduct = createProduct();
-    DalProduct.Create(newProduct);
 
 }
+
+
 void viewProduct()
 {
     int id;
@@ -285,16 +286,17 @@ void viewProduct()
     id = int.Parse(Console.ReadLine());
     Product product = new Product();
     product = DalProduct.ReadSingle(id);
-    Console.WriteLine(product.ID + product.Name + product.Price + product.InStock);
+    Console.WriteLine(product.ID +" " + product.Name + " " + product.Price + " " + product.InStock + " "+product.Category);
 
 }
 void viewProductList()
 {
-    Product[] products = new Product[50];
+    Product[] products = new Product[DataSource.Config.ProductIndex];
     products = DalProduct.Read();
-    for (int i = 0; i < products.Length; i++)
+    foreach (Product item in products)
     {
-        Console.WriteLine(products[i].ID + products[i].Name + products[i].Price + products[i].InStock);
+        Console.WriteLine(item.ID + " " + item.Name + " " + item.Price + " " + item.InStock + " " + item.Category);
+
     }
 }
 
@@ -365,29 +367,36 @@ void products()
 void main()
 {
     int choice;
-    do
+    try
     {
-        Console.WriteLine("enter the entity number: 1. orders 2. products 3. order-items 0. to exit");
-        choice = Convert.ToInt32(Console.ReadLine());
-        switch (choice)
+        do
         {
-            case 0:
-                return;
-            case 1:
-                orders();
-                break;
-            case 2:
-                products();
-                break;
-            case 3:
-                orderItems();
-                break;
-            default:
-                Console.WriteLine("wrong chice");
-                break;
+            Console.WriteLine("enter the entity number: 1. orders 2. products 3. order-items 0. to exit");
+            choice = Convert.ToInt32(Console.ReadLine());
+            switch (choice)
+            {
+                case 0:
+                    return;
+                case 1:
+                    orders();
+                    break;
+                case 2:
+                    products();
+                    break;
+                case 3:
+                    orderItems();
+                    break;
+                default:
+                    Console.WriteLine("wrong chice");
+                    break;
 
-        }
-    } while (choice != 0);
+            }
+        } while (choice != 0);
+    }
+    catch (Exception err)
+    {
+        Console.WriteLine(err);
+    }
 }
 
 main();

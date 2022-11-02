@@ -6,10 +6,11 @@ namespace DalList;
 
 static public class DalOrder
 {
+    const int MAXORDERS = 49;
     static public void Create(Order obj)
     {
 
-        if (DataSource.Config.OrderIndex > 49)
+        if (DataSource.Config.OrderIndex > MAXORDERS)
             throw new Exception("not enough space");
         DataSource.orders[DataSource.Config.OrderIndex++] = obj;
 
@@ -39,12 +40,14 @@ static public class DalOrder
     static public Order[] Read()
     {
 
-        Order[] orders = new Order[100];
+        Order[] orders = new Order[DataSource.Config.OrderIndex];
         for (int i = 0; i < DataSource.Config.OrderIndex; i++)
         {
             orders[i] = DataSource.orders[i];
         }
         return orders;
+
+
 
         throw new Exception("failed to read orders");
     }
@@ -68,7 +71,7 @@ static public class DalOrder
     static public void Update(Order obj)
     {
         int i;
-        Order o = (Order)obj;
+        Order o = obj;
         for (i = 0; i < DataSource.Config.OrderIndex; i++)
         {
             if (DataSource.orders[i].OrderID == o.OrderID)

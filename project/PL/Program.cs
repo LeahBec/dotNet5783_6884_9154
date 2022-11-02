@@ -3,6 +3,8 @@ using DalList;
 using Dal.DO;
 using DalFacade.DO;
 
+const int IDX = 500000;
+
 
 // =============order functions=============
 void addOrder()
@@ -26,7 +28,7 @@ void addOrder()
     TimeSpan deliverySpan = TimeSpan.FromDays(25);
     _sDate = _oDate + shipSpan;
     _dDate = _sDate + deliverySpan;
-    _id = DataSource.Config.OrderIndex++;
+    _id = DataSource.Config.OrderIndex++ + IDX;
     Order newOrder = new Order();
     newOrder.OrderID = _id;
     newOrder.CustomerName = _name;
@@ -56,7 +58,7 @@ void viewOrderList()
     if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
     for (int i = 0; i < amountOfOrders; i++)
     {
-        Console.WriteLine(orders[i].OrderID + orders[i].CustomerName + orders[i].CustomerEmail + orders[i].CustomerAdress + orders[i].OrderDate + orders[i].ShipDate + orders[i].DeliveryDate);
+        Console.WriteLine(orders[i].OrderID +" "+ orders[i].CustomerName + " " + orders[i].CustomerEmail + " " + orders[i].CustomerAdress + " " + orders[i].OrderDate + " " + orders[i].ShipDate + " " + orders[i].DeliveryDate);
     }
 }
 

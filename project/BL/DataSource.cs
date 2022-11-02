@@ -10,7 +10,7 @@ static public class DataSource{
     {
         CreateProductList();
         CreateOrderList(V);
-        CreateOrderItemList();
+       // CreateOrderItemList();
     }
 
     static DataSource() { s_Initialize(); }

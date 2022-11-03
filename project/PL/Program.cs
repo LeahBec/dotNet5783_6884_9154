@@ -7,6 +7,10 @@ const int IDX = 500000;
 
 
 // =============order functions=============
+
+/// <summary>
+/// creates new order and adds to the orders array
+/// </summary>
 void addOrder()
 {
     Random rand = new Random();
@@ -42,6 +46,9 @@ void addOrder()
 
 }
 
+/// <summary>
+/// prints to the screen a specific order according to the users will
+/// </summary>
 void viewOrder()
 {
     Console.WriteLine("enter order id");
@@ -51,6 +58,10 @@ void viewOrder()
     Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAdress + order.OrderDate + order.ShipDate + order.DeliveryDate);
 }
 
+
+/// <summary>
+/// prints to the screen list of all the orders in the array
+/// </summary>
 void viewOrderList()
 {
     Order[] orders = new Order[DataSource.Config.OrderIndex];
@@ -64,7 +75,9 @@ void viewOrderList()
 }
 
 
-
+/// <summary>
+/// updates a certin order, the user enters the details and the function goes to the array and inserts the updated order.
+/// </summary>
 void updateOrder()
 {
     Random rand = new Random();
@@ -98,6 +111,10 @@ void updateOrder()
     DalOrder.Update(newOrder);
 }
 
+
+/// <summary>
+/// deletes a certin order
+/// </summary>
 void deleteOrder()
 {
 
@@ -107,6 +124,10 @@ void deleteOrder()
     DalOrder.Delete(id);
 }
 
+
+/// <summary>
+/// orders switch
+/// </summary>
 void orders()
 {
     Console.WriteLine("1. add new order. 2. view order. 3. view orders list. 4. update order. 5. delete order.");
@@ -136,7 +157,9 @@ void orders()
 // ==========finish order functions============
 
 // ============orderItems functions============
-
+/// <summary>
+/// creates new orderItem and adds to the orders array
+/// </summary>
 void addOrderItem()
 {
     int id;
@@ -164,7 +187,9 @@ void addOrderItem()
     DalOrderItem.Create(orderItem);
 
 }
-
+/// <summary>
+/// prints a certin orderItem
+/// </summary>
 void viewOrderItem()
 {
     Console.WriteLine("enter order item id");
@@ -173,7 +198,9 @@ void viewOrderItem()
     orderItem = DalOrderItem.ReadSingle(id);
     Console.WriteLine(orderItem.ID + " " + orderItem.OrderID + " " + orderItem.ProductID + " " + orderItem.Price + " " + orderItem.Amount);
 }
-
+/// <summary>
+/// prints the list of orderItems
+/// </summary>
 void viewOrderListItem()
 {
     OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
@@ -184,7 +211,9 @@ void viewOrderListItem()
 
     }
 }
-
+/// <summary>
+/// prints a list of all order items with the same certin order id
+/// </summary>
 OrderItem[] getOrderItemByOrderId(int id)
 {
     int i = 0;
@@ -213,7 +242,9 @@ void viewListOrderId()
     }
 
 }
-
+/// <summary>
+/// prints a list of all order items with the same product id
+/// </summary>
 OrderItem[] getOrderItemByProductId(int id)
 {
     int i = 0;
@@ -241,6 +272,9 @@ void viewListProductId()
             Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
     }
 }
+/// <summary>
+/// updates a certin order item
+/// </summary>
 void updateOrderItem()
 {
     int id;
@@ -268,6 +302,9 @@ void updateOrderItem()
     orderItem.Price = price;
     DalOrderItem.Update(orderItem);
 }
+/// <summary>
+/// delete a certin order item from the array
+/// </summary>
 void deleteOrderItem()
 {
     int id;
@@ -275,6 +312,10 @@ void deleteOrderItem()
     id = int.Parse(Console.ReadLine());
     DalOrderItem.Delete(id);
 }
+
+/// <summary>
+/// order item switch
+/// </summary>
 void orderItems()
 {
     Console.WriteLine("1. add new order item. 2. view order item. 3. view orders items list. 4. view order items by order id 5. view order items by product id 6. update order item. 7. delete order item.");
@@ -311,7 +352,9 @@ void orderItems()
 
 
 // ============product help functions============
-
+/// <summary>
+/// creates a new product and adds it to the array
+/// </summary>
 Product addProduct()
 {
     int f = DataSource.Config.ProductIndex;
@@ -339,7 +382,9 @@ Product addProduct()
     return product;
 }
 
-
+/// <summary>
+/// prints a certin product
+/// </summary>
 void viewProduct()
 {
     int id;
@@ -350,6 +395,9 @@ void viewProduct()
     Console.WriteLine(product.ID + " " + product.Name + " " + product.Price + " " + product.InStock + " " + product.Category);
 
 }
+/// <summary>
+/// prints the product array
+/// </summary>
 void viewProductList()
 {
     Product[] products = new Product[DataSource.Config.ProductIndex];
@@ -361,6 +409,9 @@ void viewProductList()
     }
 }
 
+/// <summary>
+/// updates a certin product
+/// </summary>
 void updateProduct()
 {
     eCategory category;
@@ -396,7 +447,9 @@ void deleteProduct()
     DalProduct.Delete(id);
 }
 
-
+/// <summary>
+/// products switch
+/// </summary>
 void products()
 {
     Console.WriteLine("1. add new product. 2. view product. 3. view product list. 4. update product. 5. delete product.");

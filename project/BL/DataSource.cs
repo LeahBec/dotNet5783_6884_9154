@@ -6,17 +6,19 @@ namespace DalList;
 
 static public class DataSource
 {
-    private static void s_Initialize() {
+    private static void s_Initialize() {  //initializing the program
         CreateProductList();
         CreateOrderList();
         CreateOrderItemList();
     }
 
+    //default constructor
     static DataSource() { s_Initialize(); }
     static Random rand = new Random();
 
     public static readonly int random;
 
+    // creating the arrays
     public static Product[] products = new Product[50];
     public static Order[] orders = new Order[100];
     public static OrderItem[] orderItems = new OrderItem[200];
@@ -32,9 +34,9 @@ static public class DataSource
         };
         for (int i = 0; i < 10; i++)
         {
-            Config.ProductIndex++;
+            Config.ProductIndex++; //increasing the index in config
             products[i] = new Product();
-            int x = (int)rand.NextInt64(0, 5);
+            int x = (int)rand.NextInt64(0, 5);  //index for the random product name
             int IdxName = (int)rand.NextInt64(Enum.GetNames(typeof(eProductNames)).Length);
             int IdxPrice = (int)rand.NextInt64(10, 100);
             products[i].Name = productsNamesCategories[x].Item2;
@@ -79,7 +81,7 @@ static public class DataSource
             for (int j = 0; j < numOfProducts; j++)
             {
                 int ProductIndex = (int)rand.NextInt64(Config.ProductIndex);
-                if (products[ProductIndex].InStock == 0)
+                if (products[ProductIndex].InStock == 0) //limits the amount of products to the amount in stock
                     continue;
                 orderItems[Config.OrderItemIndex] = new OrderItem();
                 orderItems[Config.OrderItemIndex].ID = Config.OrderItemId;

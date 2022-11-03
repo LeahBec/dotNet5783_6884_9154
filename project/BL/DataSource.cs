@@ -6,11 +6,10 @@ namespace DalList;
 
 static public class DataSource
 {
-    const int V = 500000;
     private static void s_Initialize()
     {
         CreateProductList();
-        CreateOrderList(V);
+        CreateOrderList();
         CreateOrderItemList();
     }
 
@@ -37,10 +36,6 @@ static public class DataSource
             Config.ProductIndex++;
             products[i] = new Product();
             int x = (int)rand.NextInt64(0, 5);
-            string[] productsNames = Enum.GetValues(typeof(eProductNames))
-                .Cast<int>()
-                .Select(x => x.ToString())
-                .ToArray();
             int IdxName = (int)rand.NextInt64(Enum.GetNames(typeof(eProductNames)).Length);
             int IdxPrice = (int)rand.NextInt64(10, 100);
             products[i].Name = productsNamesCategories[x].Item2;
@@ -51,7 +46,7 @@ static public class DataSource
         }
     }
 
-    public static void CreateOrderList(int uniqueID)
+    public static void CreateOrderList()
     {
         string[] CustomerName = { "aaa", "bbb", "ccc" };
         string[] CustomerAdress = { "ddd", "eee", "fff" };
@@ -61,7 +56,7 @@ static public class DataSource
             Random rand = new Random();
 
             orders[i] = new Order();
-            orders[i].OrderID = uniqueID++;
+            orders[i].OrderID = Config.OrderId;
             int indexName = (int)rand.NextInt64(CustomerName.Length);
             int indexAdress = (int)rand.NextInt64(CustomerAdress.Length);
             int indexEmail = (int)rand.NextInt64(CustomerEmail.Length);
@@ -76,33 +71,9 @@ static public class DataSource
             Config.OrderIndex++;
         }
     }
-    /* public static void CreateOrderItemList()
-     {
-         int[] productPrices = { 2000, 1300, 300, 7000, 450 };
-         int uniqueID = 100000;
-         for (int i = 0; i < 40; i++, Config.OrderItemIndex++)
-         {
-             int numOfProducts = (int)rand.NextInt64(1, 4);
-             for (int j = 0; j < numOfProducts; j++)
-             {
-
-                 int ProductIndex = (int)rand.NextInt64(products.Length);
-                 if (products[ProductIndex].InStock == 0)
-                     continue;
-                 orderItems[i] = new OrderItem();
-                 int productId = (int)rand.NextInt64(products.Length);
-                 orderItems[i].ID = uniqueID++;
-                 orderItems[i].OrderID = (int)rand.NextInt64(orders.Length);
-                 orderItems[i].ProductID = productId;
-                 orderItems[i].Price = productPrices[productId];
-                 orderItems[i].Amount = (int)rand.NextInt64(1, Math.Min(products[productId].InStock, 4));
-             }
-         }
-     }*/
-
+   
     static private void CreateOrderItemList()
     {
-        int uniqueID = 100000;
 
         for (int i = 0; i < 40;)
         {
@@ -114,7 +85,7 @@ static public class DataSource
                 if (products[ProductIndex].InStock == 0)
                     continue;
                 orderItems[Config.OrderItemIndex] = new OrderItem();
-                orderItems[Config.OrderItemIndex].ID = uniqueID++;
+                orderItems[Config.OrderItemIndex].ID = Config.OrderItemId;
                 orderItems[Config.OrderItemIndex].ProductID = products[ProductIndex].ID;
                 orderItems[Config.OrderItemIndex].OrderID = orders[OrderIndex].OrderID;
                 orderItems[Config.OrderItemIndex].Amount = (int)rand.NextInt64(1, products[ProductIndex].InStock);
@@ -130,11 +101,22 @@ static public class DataSource
 
 
 
-    public class Config
+    static public class Config
     {
         static public int ProductIndex = 0;
         static public int OrderIndex = 0;
         static public int OrderItemIndex = 0;
+        static private int  orderId = 500000;
+        
+        static private int orderItemId = 100000;
+
+        static public int OrderId
+        {
+            get { return orderId++; }
+        }static public int OrderItemId
+        {
+            get { return orderItemId++; }
+        }
     }
 
 

@@ -184,6 +184,31 @@ void viewOrderListItem()
 
     }
 }
+void viewListOrderId()
+{
+    Console.WriteLine("enter order id");
+    int id = int.Parse(Console.ReadLine());
+    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    orderItems = DalOrderItem.Read();
+    foreach(OrderItem item in orderItems)
+    {
+        if(item.OrderID == id)
+        Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
+    }
+
+}
+void viewListProductId()
+{
+    Console.WriteLine("enter product id");
+    int id = int.Parse(Console.ReadLine());
+    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    orderItems = DalOrderItem.Read();
+    foreach (OrderItem item in orderItems)
+    {
+        if (item.ProductID == id)
+            Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
+    }
+}
 void updateOrderItem()
 {
     int id;
@@ -220,7 +245,7 @@ void deleteOrderItem()
 }
 void orderItems()
 {
-    Console.WriteLine("1. add new order item. 2. view order item. 3. view orders items list. 4. update order item. 5. delete order item.");
+    Console.WriteLine("1. add new order item. 2. view order item. 3. view orders items list. 4. view order items by order id 5. view order items by product id 6. update order item. 7. delete order item.");
     int choice = int.Parse(Console.ReadLine());
     switch (choice)
     {
@@ -234,11 +259,18 @@ void orderItems()
             viewOrderListItem();
             break;
         case 4:
-            updateOrderItem();
+            viewListOrderId();
             break;
         case 5:
+            viewListProductId();
+            break;
+        case 6:
+            updateOrderItem();
+            break;
+        case 7:
             deleteOrderItem();
             break;
+
 
     }
 }

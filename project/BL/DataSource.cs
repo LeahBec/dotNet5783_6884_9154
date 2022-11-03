@@ -6,8 +6,7 @@ namespace DalList;
 
 static public class DataSource
 {
-    private static void s_Initialize()
-    {
+    private static void s_Initialize() {
         CreateProductList();
         CreateOrderList();
         CreateOrderItemList();
@@ -54,7 +53,6 @@ static public class DataSource
         for (int i = 0; i < 20; i++)
         {
             Random rand = new Random();
-
             orders[i] = new Order();
             orders[i].OrderID = Config.OrderId;
             int indexName = (int)rand.NextInt64(CustomerName.Length);
@@ -74,7 +72,6 @@ static public class DataSource
    
     static private void CreateOrderItemList()
     {
-
         for (int i = 0; i < 40;)
         {
             int OrderIndex = (int)rand.NextInt64(Config.OrderIndex);
@@ -107,9 +104,7 @@ static public class DataSource
         static public int OrderIndex = 0;
         static public int OrderItemIndex = 0;
         static private int  orderId = 500000;
-        
         static private int orderItemId = 100000;
-
         static public int OrderId
         {
             get { return orderId++; }

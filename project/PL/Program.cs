@@ -60,7 +60,6 @@ void viewOrderList()
     foreach (Order item in orders)
     {
         Console.WriteLine(item.OrderID + " " + item.CustomerName + " " + item.CustomerEmail + " " + item.CustomerAdress + " " + item.OrderDate + " " + item.ShipDate + " " + item.DeliveryDate);
-
     }
 }
 
@@ -157,7 +156,7 @@ void addOrderItem()
     price = Single.Parse(Console.ReadLine());
 
     OrderItem orderItem = new OrderItem();
-    orderItem.ID = id+100000;
+    orderItem.ID = id + 100000;
     orderItem.OrderID = orderId;
     orderItem.ProductID = productId;
     orderItem.Amount = amount;
@@ -174,6 +173,7 @@ void viewOrderItem()
     orderItem = DalOrderItem.ReadSingle(id);
     Console.WriteLine(orderItem.ID + " " + orderItem.OrderID + " " + orderItem.ProductID + " " + orderItem.Price + " " + orderItem.Amount);
 }
+
 void viewOrderListItem()
 {
     OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
@@ -184,28 +184,60 @@ void viewOrderListItem()
 
     }
 }
+
+OrderItem[] getOrderItemByOrderId(int id)
+{
+    int i = 0;
+    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    foreach (OrderItem item in DataSource.orderItems)
+    {
+        if (item.OrderID == id)
+        {
+            i++;
+            orderItems[i] = item;
+        }
+    }
+    return orderItems;
+}
+
 void viewListOrderId()
 {
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
     OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
-    orderItems = DalOrderItem.Read();
-    foreach(OrderItem item in orderItems)
+    orderItems = getOrderItemByOrderId(id);
+    foreach (OrderItem item in orderItems)
     {
-        if(item.OrderID == id)
-        Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
+        if (item.OrderID != 0)
+            Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
     }
 
 }
+
+OrderItem[] getOrderItemByProductId(int id)
+{
+    int i = 0;
+    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    foreach (OrderItem item in DataSource.orderItems)
+    {
+        if (item.ProductID == id)
+        {
+            i++;
+            orderItems[i] = item;
+        }
+    }
+    return orderItems;
+}
+
 void viewListProductId()
 {
     Console.WriteLine("enter product id");
     int id = int.Parse(Console.ReadLine());
     OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
-    orderItems = DalOrderItem.Read();
+    orderItems = getOrderItemByProductId(id);
     foreach (OrderItem item in orderItems)
     {
-        if (item.ProductID == id)
+        if (item.OrderID != 0)
             Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
     }
 }
@@ -280,7 +312,8 @@ void orderItems()
 
 // ============product help functions============
 
-Product addProduct() {
+Product addProduct()
+{
     int f = DataSource.Config.ProductIndex;
     string name;
     eCategory category;
@@ -314,7 +347,7 @@ void viewProduct()
     id = int.Parse(Console.ReadLine());
     Product product = new Product();
     product = DalProduct.ReadSingle(id);
-    Console.WriteLine(product.ID +" " + product.Name + " " + product.Price + " " + product.InStock + " "+product.Category);
+    Console.WriteLine(product.ID + " " + product.Name + " " + product.Price + " " + product.InStock + " " + product.Category);
 
 }
 void viewProductList()

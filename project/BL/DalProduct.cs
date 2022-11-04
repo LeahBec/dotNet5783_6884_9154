@@ -1,6 +1,4 @@
 ﻿using Dal.DO;
-using DalList;
-//namespace Dal.UseObjects;
 namespace DalList;
 
 

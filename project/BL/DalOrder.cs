@@ -45,7 +45,7 @@ static public class DalOrder
         {
             orders[i] = DataSource.orders[i];
         }
-        return DataSource.orders;
+        return orders;
 
 
 

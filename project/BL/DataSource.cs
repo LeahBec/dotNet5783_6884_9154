@@ -4,7 +4,7 @@ using DalFacade.DO;
 namespace DalList;
 
 
-static public class DataSource
+public class DataSource
 {
     private static void s_Initialize() {  //initializing the program
         CreateProductList();

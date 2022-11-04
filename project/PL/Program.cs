@@ -6,6 +6,7 @@ using DalFacade.DO;
 const int IDX = 500000;
 
 
+
 // =============order functions=============
 
 /// <summary>
@@ -481,6 +482,9 @@ void products()
 void main()
 {
     int choice;
+    DataSource ds = new DataSource();
+    Order o = new Order();
+
     try
     {
         do

@@ -66,8 +66,17 @@ public class DataSource
             orders[i].OrderDate = DateTime.Today;
             TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
             TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
+            //orders[i].ShipDate = orders[i].OrderDate + shipSpan;
+            //orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
+            if (i % 10 < 8)  // 80% have ship date
+                orders[i].OrderDate = DateTime.Now;
+            else
+                orders[i].OrderDate = DateTime.MinValue;
             orders[i].ShipDate = orders[i].OrderDate + shipSpan;
-            orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
+            if (i % 10 < 6)// 60% from them have delivery date
+                orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
+            else
+                orders[i].DeliveryDate = DateTime.MinValue;
             Config.OrderIndex++;
         }
     }

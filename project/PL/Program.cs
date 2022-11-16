@@ -1,11 +1,13 @@
 ﻿// See https://aka.ms/new-console-template for more information
-using DalList;
 using Dal.DO;
 using DalFacade.DO;
+using DalApi;
+using Dal;
+using DalList;
 
 const int IDX = 500000;
 
-
+IDal i = new Dal.DalList();
 
 // =============order functions=============
 
@@ -33,8 +35,7 @@ void addOrder()
     TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
     _sDate = _oDate + shipSpan;
     _dDate = _sDate + deliverySpan;
-    _id = DataSource.Config.OrderIndex + IDX;
-    DataSource.Config.OrderIndex++;
+    _id = DataSource.orders.Count() + IDX;
     Order newOrder = new Order();
     newOrder.OrderID = _id;
     newOrder.CustomerName = _name;
@@ -43,7 +44,7 @@ void addOrder()
     newOrder.OrderDate = _oDate;
     newOrder.ShipDate = _sDate;
     newOrder.DeliveryDate = _dDate;
-    DalOrder.Create(newOrder);
+    i.Order.Add(newOrder);
 
 }
 
@@ -55,7 +56,7 @@ void viewOrder()
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
     Order order = new Order();
-    order = DalOrder.ReadSingle(id);
+    order = i.Order.Get(id);
     Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAdress + order.OrderDate + order.ShipDate + order.DeliveryDate);
 }
 
@@ -65,9 +66,9 @@ void viewOrder()
 /// </summary>
 void viewOrderList()
 {
-    Order[] orders = new Order[DataSource.Config.OrderIndex];
-    orders = DalOrder.Read();
-    int amountOfOrders = DataSource.Config.OrderIndex;
+    IEnumerable<Order> orders = new Order[DataSource.orders.Count()];
+    orders = i.Order.GetAll();
+    int amountOfOrders = DataSource.orders.Count();
     if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
     foreach (Order item in orders)
     {
@@ -109,7 +110,7 @@ void updateOrder()
     newOrder.OrderDate = _oDate;
     newOrder.ShipDate = _sDate;
     newOrder.DeliveryDate = _dDate;
-    DalOrder.Update(newOrder);
+    i.Order.Update(newOrder);
 }
 
 
@@ -122,7 +123,7 @@ void deleteOrder()
     int id;
     Console.WriteLine("enter id of the order you want to delete");
     id = int.Parse(Console.ReadLine());
-    DalOrder.Delete(id);
+    i.Order.Delete(id);
 }
 
 
@@ -169,7 +170,7 @@ void addOrderItem()
     int amount;
     float price;
 
-    id = DataSource.Config.OrderItemIndex;
+    id = DataSource.orderItems.Count();
     Console.WriteLine("enter order id");
     orderId = int.Parse(Console.ReadLine());
     Console.WriteLine("enter product id");
@@ -185,7 +186,7 @@ void addOrderItem()
     orderItem.ProductID = productId;
     orderItem.Amount = amount;
     orderItem.Price = price;
-    DalOrderItem.Create(orderItem);
+    i.OrderItem.Add(orderItem);
 
 }
 /// <summary>
@@ -196,7 +197,7 @@ void viewOrderItem()
     Console.WriteLine("enter order item id");
     int id = int.Parse(Console.ReadLine());
     OrderItem orderItem = new OrderItem();
-    orderItem = DalOrderItem.ReadSingle(id);
+    orderItem = i.OrderItem.Get(id);
     Console.WriteLine(orderItem.ID + " " + orderItem.OrderID + " " + orderItem.ProductID + " " + orderItem.Price + " " + orderItem.Amount);
 }
 /// <summary>
@@ -204,8 +205,8 @@ void viewOrderItem()
 /// </summary>
 void viewOrderListItem()
 {
-    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
-    orderItems = DalOrderItem.Read();
+    IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
+    orderItems = i.OrderItem.GetAll();
     foreach (OrderItem item in orderItems)
     {
         Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
@@ -215,16 +216,14 @@ void viewOrderListItem()
 /// <summary>
 /// prints a list of all order items with the same certin order id
 /// </summary>
-OrderItem[] getOrderItemByOrderId(int id)
+IEnumerable<OrderItem> getOrderItemByOrderId(int id)
 {
-    int i = 0;
-    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    List<OrderItem> orderItems = new List<OrderItem>();//[DataSource.orderItems.Count()];
     foreach (OrderItem item in DataSource.orderItems)
     {
         if (item.OrderID == id)
         {
-            i++;
-            orderItems[i] = item;
+            orderItems.Add(item);
         }
     }
     return orderItems;
@@ -234,7 +233,7 @@ void viewListOrderId()
 {
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
-    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
     orderItems = getOrderItemByOrderId(id);
     foreach (OrderItem item in orderItems)
     {
@@ -246,16 +245,14 @@ void viewListOrderId()
 /// <summary>
 /// prints a list of all order items with the same product id
 /// </summary>
-OrderItem[] getOrderItemByProductId(int id)
+List<OrderItem> getOrderItemByProductId(int id)
 {
-    int i = 0;
-    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    List<OrderItem> orderItems = new List<OrderItem>();//[DataSource.orderItems.Count()];
     foreach (OrderItem item in DataSource.orderItems)
     {
         if (item.ProductID == id)
         {
-            i++;
-            orderItems[i] = item;
+            orderItems.Add(item);
         }
     }
     return orderItems;
@@ -265,7 +262,7 @@ void viewListProductId()
 {
     Console.WriteLine("enter product id");
     int id = int.Parse(Console.ReadLine());
-    OrderItem[] orderItems = new OrderItem[DataSource.Config.OrderItemIndex];
+    IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
     orderItems = getOrderItemByProductId(id);
     foreach (OrderItem item in orderItems)
     {
@@ -301,7 +298,7 @@ void updateOrderItem()
     orderItem.ProductID = productId;
     orderItem.Amount = amount;
     orderItem.Price = price;
-    DalOrderItem.Update(orderItem);
+    i.OrderItem.Update(orderItem);
 }
 /// <summary>
 /// delete a certin order item from the array
@@ -311,7 +308,7 @@ void deleteOrderItem()
     int id;
     Console.WriteLine("enter id of the order item you want to delete");
     id = int.Parse(Console.ReadLine());
-    DalOrderItem.Delete(id);
+    i.OrderItem.Delete(id);
 }
 
 /// <summary>
@@ -358,7 +355,7 @@ void orderItems()
 /// </summary>
 Product addProduct()
 {
-    int f = DataSource.Config.ProductIndex;
+    int f = DataSource.products.Count();
     string name;
     eCategory category;
     float price;
@@ -372,14 +369,14 @@ Product addProduct()
     price = Single.Parse(Console.ReadLine());
     Console.WriteLine("enter the amout of product in stock");
     inStock = int.Parse(Console.ReadLine());
-    int id = DataSource.Config.ProductIndex + 100000;
+    int id = DataSource.products.Count() + 100000;
     Product product = new Product();
     product.ID = id;
     product.Name = name;
     product.Price = price;
     product.InStock = inStock;
     product.Category = category;
-    DalProduct.Create(product);
+    i.Product.Add(product);
     return product;
 }
 
@@ -392,7 +389,7 @@ void viewProduct()
     Console.WriteLine("enter id of the product you want to watch");
     id = int.Parse(Console.ReadLine());
     Product product = new Product();
-    product = DalProduct.ReadSingle(id);
+    product = i.Product.Get(id);
     Console.WriteLine(product.ID + " " + product.Name + " " + product.Price + " " + product.InStock + " " + product.Category);
 
 }
@@ -401,8 +398,8 @@ void viewProduct()
 /// </summary>
 void viewProductList()
 {
-    Product[] products = new Product[DataSource.Config.ProductIndex];
-    products = DalProduct.Read();
+    IEnumerable<Product> products = new Product[DataSource.products.Count()];
+    products = i.Product.GetAll();
     foreach (Product item in products)
     {
         Console.WriteLine(item.ID + " " + item.Name + " " + item.Price + " " + item.InStock + " " + item.Category);
@@ -437,7 +434,7 @@ void updateProduct()
     product.Price = price;
     product.InStock = inStock;
     product.Category = category;
-    DalProduct.Update(product);
+    i.Product.Update(product);
 }
 
 void deleteProduct()
@@ -445,7 +442,7 @@ void deleteProduct()
     int id;
     Console.WriteLine("enter id of the product you want to watch");
     id = int.Parse(Console.ReadLine());
-    DalProduct.Delete(id);
+    i.Product.Delete(id);
 }
 
 /// <summary>

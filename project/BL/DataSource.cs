@@ -19,9 +19,13 @@ public class DataSource
     public static readonly int random;
 
     // creating the arrays
-    public static Product[] products = new Product[50];
-    public static Order[] orders = new Order[100];
-    public static OrderItem[] orderItems = new OrderItem[200];
+    //public static Product[] products = new Product[50];
+    //public static Order[] orders = new Order[100];
+    //public static OrderItem[] orderItems = new OrderItem[200];
+    public static List<Product> products = new List<Product>();
+    public static List<Order> orders = new List<Order>();
+    public static List<OrderItem> orderItems = new List<OrderItem>();
+
     public static void CreateProductList()
     {
         int uniqueID = 100000;
@@ -34,16 +38,18 @@ public class DataSource
         };
         for (int i = 0; i < 10; i++)
         {
-            Config.ProductIndex++; //increasing the index in config
-            products[i] = new Product();
+            //Config.ProductIndex++; //increasing the index in config
+            //products[i] = new Product();
             int x = (int)rand.NextInt64(0, 5);  //index for the random product name
-            int IdxName = (int)rand.NextInt64(Enum.GetNames(typeof(eProductNames)).Length);
+            //int IdxName = (int)rand.NextInt64(Enum.GetNames(typeof(eProductNames)).Length);
             int IdxPrice = (int)rand.NextInt64(10, 100);
-            products[i].Name = productsNamesCategories[x].Item2;
-            products[i].Price = IdxPrice;
-            products[i].ID = uniqueID++;
-            products[i].InStock = (int)rand.NextInt64(10, 5000);
-            products[i].Category = productsNamesCategories[x].Item1;
+            Product p = new Product();
+            p.Name = productsNamesCategories[x].Item2;
+            p.Price = IdxPrice;
+            p.ID = uniqueID++;
+            p.InStock = (int)rand.NextInt64(10, 5000);
+            p.Category = productsNamesCategories[x].Item1;
+            products.Add(p);
         }
     }
 
@@ -55,29 +61,30 @@ public class DataSource
         for (int i = 0; i < 20; i++)
         {
             Random rand = new Random();
-            orders[i] = new Order();
-            orders[i].OrderID = Config.OrderId;
+            //orders[i] = new Order();
+            Order o = new Order();
             int indexName = (int)rand.NextInt64(CustomerName.Length);
             int indexAdress = (int)rand.NextInt64(CustomerAdress.Length);
             int indexEmail = (int)rand.NextInt64(CustomerEmail.Length);
-            orders[i].CustomerName = CustomerName[indexName];
-            orders[i].CustomerAdress = CustomerAdress[indexAdress];
-            orders[i].CustomerEmail = CustomerEmail[indexEmail];
-            orders[i].OrderDate = DateTime.Today;
+            o.OrderID = Config.OrderId;
+            o.CustomerName = CustomerName[indexName];
+            o.CustomerAdress = CustomerAdress[indexAdress];
+            o.CustomerEmail = CustomerEmail[indexEmail];
+            o.OrderDate = DateTime.Today;
             TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
             TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
             //orders[i].ShipDate = orders[i].OrderDate + shipSpan;
             //orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
             if (i % 10 < 8)  // 80% have ship date
-                orders[i].OrderDate = DateTime.Now;
+                o.OrderDate = DateTime.Now;
             else
-                orders[i].OrderDate = DateTime.MinValue;
-            orders[i].ShipDate = orders[i].OrderDate + shipSpan;
+                o.OrderDate = DateTime.MinValue;
+            o.ShipDate = o.OrderDate + shipSpan;
             if (i % 10 < 6)// 60% from them have delivery date
-                orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
+                o.DeliveryDate = o.ShipDate + deliverySpan;
             else
-                orders[i].DeliveryDate = DateTime.MinValue;
-            Config.OrderIndex++;
+                o.DeliveryDate = DateTime.MinValue;
+            orders.Add(o);
         }
     }
    
@@ -85,21 +92,25 @@ public class DataSource
     {
         for (int i = 0; i < 40;)
         {
-            int OrderIndex = (int)rand.NextInt64(Config.OrderIndex);
+            OrderItem oi = new OrderItem();
+            //int OrderIndex = (int)rand.NextInt64(Config.OrderIndex);
             int numOfProducts = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < numOfProducts; j++)
             {
-                int ProductIndex = (int)rand.NextInt64(Config.ProductIndex);
+                int ProductIndex = (int)rand.NextInt64(products.Count());
+                int OrderIndex = (int)rand.NextInt64(orders.Count());
                 if (products[ProductIndex].InStock == 0) //limits the amount of products to the amount in stock
                     continue;
-                orderItems[Config.OrderItemIndex] = new OrderItem();
-                orderItems[Config.OrderItemIndex].ID = Config.OrderItemId;
-                orderItems[Config.OrderItemIndex].ProductID = products[ProductIndex].ID;
-                orderItems[Config.OrderItemIndex].OrderID = orders[OrderIndex].OrderID;
-                orderItems[Config.OrderItemIndex].Amount = (int)rand.NextInt64(1, products[ProductIndex].InStock);
-                products[ProductIndex].InStock -= orderItems[i].Amount;
-                orderItems[Config.OrderItemIndex].Price = orderItems[i].Amount * products[ProductIndex].Price;
-                Config.OrderItemIndex++;
+                Product p = new Product();
+                p = products[ProductIndex];
+                oi.ID = Config.OrderItemId;
+                oi.ProductID = products[ProductIndex].ID;
+                oi.OrderID = orders[OrderIndex].OrderID;
+                oi.Amount = (int)rand.NextInt64(1, products[ProductIndex].InStock);
+                p.InStock -= oi.Amount;
+                oi.Price = oi.Amount * products[ProductIndex].Price;
+                products[ProductIndex] = p;
+                orderItems.Add(oi);
                 i++;
             }
         }
@@ -111,9 +122,9 @@ public class DataSource
 
     static public class Config
     {
-        static public int ProductIndex = 0;
-        static public int OrderIndex = 0;
-        static public int OrderItemIndex = 0;
+        //static public int ProductIndex = 0;
+        //static public int OrderIndex = 0;
+        //static public int OrderItemIndex = 0;
         static private int  orderId = 500000;
         static private int orderItemId = 100000;
         static public int OrderId

@@ -1,78 +1,61 @@
 ﻿
 
 using Dal.DO;
+using DalApi;
 using DalList;
 namespace DalList;
 
-static public class DalOrder
+ internal class DalOrder: IOrder 
 {
     const int MAXORDERS = 49;
-    static public void Create(Order obj)
+     public void Add(Order obj)
     {
-
-        if (DataSource.Config.OrderIndex > MAXORDERS)
-            throw new Exception("not enough space");
-        DataSource.orders[DataSource.Config.OrderIndex++] = obj;
-
+        DataSource.orders.Add(obj);
     }
-
-    static public void Delete(int Id)
+     public void Delete(int Id)
     {
 
         int i;
-        for (i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (i = 0; i < DataSource.orders.Count(); i++)
         {
             if (DataSource.orders[i].OrderID == Id)
             {
-                for (int k = i; k < DataSource.Config.OrderIndex; k++)
-                {
-                    DataSource.orders[k] = DataSource.orders[k + 1];
-                }
-                DataSource.Config.OrderIndex--;
+                DataSource.orders.Remove(DataSource.orders[i]);
                 return;
             }
         }
-        throw new Exception("object not found");
-
-
+        throw new ExceptionObjectNotFound();
     }
 
-    static public Order[] Read()
+     public IEnumerable<Order> GetAll()
     {
-
-        Order[] orders = new Order[DataSource.Config.OrderIndex];
-        for (int i = 0; i < DataSource.Config.OrderIndex; i++)
+        List<Order> orders = new List<Order>();
+        for (int i = 0; i < DataSource.orders.Count(); i++)
         {
-            orders[i] = DataSource.orders[i];
+            orders.Add(DataSource.orders[i]);
         }
         return orders;
-
-
-
-        throw new Exception("failed to read orders");
+        throw new ExceptionFailedToRead();
     }
 
-    static public Order ReadSingle(int Id)
+     public Order Get(int Id)
     {
         int i;
-        for (i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (i = 0; i < DataSource.orders.Count(); i++)
         {
             if (DataSource.orders[i].OrderID == Id)
             {
                 return DataSource.orders[i];
             }
         }
-        throw new Exception("object not found");
-
-
-
+        throw new ExceptionObjectNotFound();
     }
 
-    static public void Update(Order obj)
+    public void Update(Order obj)
     {
         int i;
         Order o = obj;
-        for (i = 0; i < DataSource.Config.OrderIndex; i++)
+        for (i = 0; i < DataSource.orders.Count(); i++)
         {
             if (DataSource.orders[i].OrderID == o.OrderID)
             {
@@ -80,7 +63,7 @@ static public class DalOrder
                 return;
             }
         }
-        throw new Exception("object not found");
+        throw new ExceptionObjectNotFound();
 
     }
 }

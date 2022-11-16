@@ -1,69 +1,58 @@
 ﻿using Dal.DO;
+using DalApi;
 namespace DalList;
 
 
-static public class DalProduct
+internal class DalProduct : IProduct
 {
-
-    const int MAXPRODUCTS = 99;
-    static public void Create(Product obj)
+    public void Add(Product obj)
     {
-        if (DataSource.Config.ProductIndex > MAXPRODUCTS)
-            throw new Exception("not enough space");
-        DataSource.products[DataSource.Config.ProductIndex] = (Product)obj;
-        DataSource.Config.ProductIndex++;
+        DataSource.products.Add(obj);
     }
-
-    static public void Delete(int Id)
+    public void Delete(int Id)
     {
-        int i;
-        for (i = 0; i < DataSource.Config.ProductIndex; i++)
+        for (int i = 0; i < DataSource.products.Count(); i++)
         {
             if (DataSource.products[i].ID == Id)
             {
-                for (int k = i; k < DataSource.Config.ProductIndex; k++)
-                {
-                    DataSource.products[k] = DataSource.products[k + 1];
-
-                }
-                DataSource.Config.ProductIndex--;
+                DataSource.products.Remove(DataSource.products[i]);
                 return;
             }
         }
-        throw new Exception("object not found");
+        throw new ExceptionObjectNotFound();
 
     }
 
-    static public Product[] Read()
+    public IEnumerable<Product> GetAll()
     {
-        Product[] products = new Product[DataSource.Config.ProductIndex];
-        for (int i = 0; i < DataSource.Config.ProductIndex; i++)
+        List<Product> products = new List<Product>();
+        for (int i = 0; i < DataSource.products.Count(); i++)
         {
-            products[i] = DataSource.products[i];
+            products.Add(DataSource.products[i]);
         }
         return products;
-        throw new Exception("failed to read products");
+        throw new ExceptionFailedToRead();
     }
 
-    static public Product ReadSingle(int Id)
+    public Product Get(int Id)
     {
         int i;
-        for (i = 0; i < DataSource.Config.ProductIndex; i++)
+        for (i = 0; i < DataSource.products.Count(); i++)
         {
             if (DataSource.products[i].ID == Id)
             {
                 return DataSource.products[i];
             }
         }
-        throw new Exception("object not found");
+        throw new ExceptionObjectNotFound();
 
     }
 
-    static public void Update(Product obj)
+    public void Update(Product obj)
     {
         int i;
         Product p = obj;
-        for (i = 0; i < DataSource.Config.ProductIndex; i++)
+        for (i = 0; i < DataSource.products.Count(); i++)
         {
             if (DataSource.products[i].ID == p.ID)
             {
@@ -71,7 +60,7 @@ static public class DalProduct
                 return;
             }
         }
-        throw new Exception("object not found");
+        throw new ExceptionObjectNotFound();
 
     }
 }

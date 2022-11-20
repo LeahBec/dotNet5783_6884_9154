@@ -6,7 +6,34 @@ using System.Threading.Tasks;
 
 namespace BO
 {
-    internal class Exceptions
+
+    public class EntityNotFoundException : Exception
     {
+        public EntityNotFoundException(string message) :
+                                base(message)
+        {
+        }
+
+    }
+
+    public class EntityAlreadyExistException : Exception
+    {
+        public EntityAlreadyExistException(string message) :
+                                        base(message)
+        {
+        }
+
+    }
+
+    public class NoEntitiesFound : Exception
+    {
+    
+        public NoEntitiesFound(string message) :
+                                        base(message)
+        {
+        }
+
     }
 }
+
+

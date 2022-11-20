@@ -8,11 +8,11 @@ namespace BO
 {
     public class Product
     {
-        int ID { get; set; }
-        string Name { get; set; }
-        double Price { get; set; }
-        Category Category { get; set; }
-        int inStock { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public double Price { get; set; }
+        public Category Category { get; set; }
+        public int inStock { get; set; }
 
         public override string ToString()
         {

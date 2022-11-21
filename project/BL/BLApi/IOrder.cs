@@ -10,9 +10,9 @@ namespace BLApi
     public interface IOrder
     {
         public IEnumerable<OrderForList> GetOrderList();
-        public Order GetOrderInfoForManager(int id);
-        public BO.Order UpdateOrderShippingForManager(int id);
-        public BO.Order UpdateOrderDeliveryForManager(int id);
+        public Order GetOrderItem(int id);
+        public BO.Order UpdateOrderShipping(int id);
+        public BO.Order UpdateOrderDelivery(int id);
         //BONUS.
         public BO.Order UpdateOrderForManager(int id);
 

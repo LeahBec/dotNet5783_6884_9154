@@ -13,9 +13,13 @@ namespace BlImplementation
     {
         
 
-        public Order GetOrderInfoForManager(int id)
+        public Order GetOrderItem(int id)
         {
+            IEnumerable<Dal.DO.Order> existingOrdersList = Dal.DO.Order.get;
 
+            List<OrderForList> ordersList = new List<OrderForList>();
+
+            List<ProductForList> productList = new List<ProductForList>();
             throw new NotImplementedException();
         }
 
@@ -24,19 +28,20 @@ namespace BlImplementation
             throw new NotImplementedException();
         }
 
-        public Order UpdateOrderDeliveryForManager(int id)
+        public Order UpdateOrderDelivery(int id)
         {
             throw new NotImplementedException();
         }
-
+        public Order UpdateOrderShipping(int id)
+        {
+            throw new NotImplementedException();
+        }
+        //bonus
         public Order UpdateOrderForManager(int id)
         {
             throw new NotImplementedException();
         }
 
-        public Order UpdateOrderShippingForManager(int id)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

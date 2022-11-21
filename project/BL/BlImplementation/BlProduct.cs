@@ -16,7 +16,7 @@ namespace BlImplementation
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            throw new N otImplementedException();
         }
 
         public IEnumerable<ProductForList> GetProductList()

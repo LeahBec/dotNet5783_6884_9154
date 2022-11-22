@@ -13,9 +13,9 @@ namespace BLApi
         public IEnumerable<ProductItem> GetCatalog();
         public Product GetProductManager(int id);
         public Product GetProductCustomer(int id);
-        public void Add(Product p);
+        public void Add(Dal.DO.Product p);
         public void Delete(int id);
-        public void Update(Product p);
+        public void Update(Dal.DO.Product p);
 
     }
 }

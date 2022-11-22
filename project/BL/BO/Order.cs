@@ -12,11 +12,11 @@ namespace BO
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
         public string CustomerAdress { get; set; }
-        public DateTime OrderDate { get; set; }
-        public OrderStatus Status { get; set; }
-        public DateTime ShipDate { get; set; }
-        public DateTime DeiveryDate { get; set; }
-        public OrderItem Item { get; set; }
+        public DateTime? OrderDate { get; set; }
+        public OrderStatus? Status { get; set; }
+        public DateTime? ShipDate { get; set; }
+        public DateTime? DeiveryDate { get; set; }
+        public OrderItem? Item { get; set; }
         public double TotalPrice { get; set; }
 
         public override string ToString()

@@ -8,7 +8,7 @@ namespace BlImplementation
     {
         private IDal Dal = new Dal.DalList();
 
-        public void Add(Product p)
+        public void Add(Dal.DO.Product p)
         {
             Dal.Product.Add(p);
             throw new NotImplementedException();
@@ -16,7 +16,7 @@ namespace BlImplementation
 
         public void Delete(int id)
         {
-            throw new N otImplementedException();
+            throw new NotImplementedException();
         }
 
         public IEnumerable<ProductForList> GetProductList()
@@ -90,7 +90,7 @@ namespace BlImplementation
 
         }
 
-        public void Update(Product p)
+        public void Update(Dal.DO.Product p)
         {
             throw new NotImplementedException();
         }

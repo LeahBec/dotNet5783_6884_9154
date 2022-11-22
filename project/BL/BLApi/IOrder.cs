@@ -10,7 +10,7 @@ namespace BLApi
     public interface IOrder
     {
         public IEnumerable<OrderForList> GetOrderList();
-        public Order GetOrderItem(int id);
+        public Order GetOrderDetails(int id);
         public BO.Order UpdateOrderShipping(int id);
         public BO.Order UpdateOrderDelivery(int id);
         //BONUS.

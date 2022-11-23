@@ -1,5 +1,4 @@
-﻿//using BO;
-using DalApi;
+﻿using DalApi;
 namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
@@ -7,7 +6,6 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
-
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
         BO.ProductForList p = new BO.ProductForList();
         foreach (var item in existingProductsList)
@@ -18,9 +16,8 @@ internal class BlProduct : BLApi.IProduct
             p.Category = (BO.Category)item.Category;
             productList.Add(p);
         }
-
         if (productList.Count() == 0)
-            throw new NoEntitiesFound("No products found");
+            throw new Exception();//NoEntitiesFound("No products found");
         return productList;
 
     }
@@ -41,7 +38,7 @@ internal class BlProduct : BLApi.IProduct
         }
 
         if (productList.Count() == 0)
-            throw new NoEntitiesFound("No products found");
+            throw new Exception();//NoEntitiesFound("No products found");
         return productList;
     }
     public BO.Product GetProductCustomer(int id)
@@ -63,13 +60,19 @@ internal class BlProduct : BLApi.IProduct
         }
         else
         {
-            throw new BO.EntityNotFoundException("this product does not exist");
+            throw new Exception();//EntityNotFoundException("this product does not exist");
         }
     }
     public void AddProduct(BO.Product p)
     {
         //check input!!!!
         // add try and catch on all the block
+        if (p.ID <= 0)
+            throw new Exception();// ProductIdIsImpossible
+        if (p.Name == "")
+            throw new Exception();// ProductNameIsImpossible
+        if (p.Price <= 0)
+            throw new Exception();//ProductPriceIsImpossible
         Dal.DO.Product DOProduct = new Dal.DO.Product();
         DOProduct.ID = p.ID;
         DOProduct.Name = p.Name;

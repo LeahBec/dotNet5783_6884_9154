@@ -27,17 +27,17 @@ internal class BlOrder : BLApi.IOrder
         if (id < 0)
             throw new NotImplementedException();
         Dal.DO.Order o = Dal.Order.Get(id);
-        BO.Order o1 = new BO.Order();
-        o1.ID = o.OrderID;
-        o1.OrderDate = o.OrderDate;
-        o1.ShipDate = o.ShipDate;
-        o1.CustomerAdress = o.CustomerAdress;
-        o1.CustomerEmail = o.CustomerEmail;
-        o1.CustomerName = o.CustomerName;
-        o1.DeiveryDate = o.DeliveryDate;
-        o1.TotalPrice = 0;
-        if (o1.CustomerName != null)
-            return o1;
+        BO.Order oi = new BO.Order();
+        oi.ID = o.OrderID;
+        oi.OrderDate = o.OrderDate;
+        oi.ShipDate = o.ShipDate;
+        oi.CustomerAdress = o.CustomerAdress;
+        oi.CustomerEmail = o.CustomerEmail;
+        oi.CustomerName = o.CustomerName;
+        oi.DeiveryDate = o.DeliveryDate;
+        oi.TotalPrice = 0;
+        if (oi.CustomerName != null)
+            return oi;
         return null;
     }
     void setShip(Dal.DO.Order o)

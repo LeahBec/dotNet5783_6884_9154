@@ -30,7 +30,7 @@ internal class BlCart : ICart
             return cart;
         }
         else
-            throw new OutOfStockException();
+            throw new Exception();//OutOfStockException();
     }
 
     bool IsValidEmail(string email)
@@ -55,10 +55,10 @@ internal class BlCart : ICart
     public void CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
     {
         if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
-            throw;
+            throw new Exception();
         foreach (var item in c.items)
         {
-            if (item.Amount < 0 || (Dal.Product.Get(item.ID).InStock - item.Amount) < 0) throw;
+            if (item.Amount < 0 || (Dal.Product.Get(item.ID).InStock - item.Amount) < 0) throw new Exception();
             int amountInStock = Dal.Product.Get(item.ID).InStock;
             Dal.Order.Add(new Dal.DO.Order());
 
@@ -97,6 +97,6 @@ internal class BlCart : ICart
         }
         else
 
-            throw new OutOfStockException();
+            throw new Exception();//OutOfStockException();
     }
 }

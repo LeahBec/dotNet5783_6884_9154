@@ -43,7 +43,22 @@ internal class BlProduct : BLApi.IProduct
     }
     public BO.Product GetProductCustomer(int id)
     {
-        throw new NotImplementedException();
+
+        BO.Product p = new BO.Product();
+        if (id > 0)
+        {
+            Dal.DO.Product product = Dal.Product.Get(id);
+            p.ID = product.ID;
+            p.Name = product.Name;
+            p.Price = product.Price;
+            p.Category = (BO.Category)product.Category;
+            p.inStock = product.InStock;
+            return p;
+        }
+        else
+        {
+            throw new Exception();//EntityNotFoundException("this product does not exist");
+        }
     }
     public BO.Product GetProductManager(int id)
     {

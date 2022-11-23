@@ -47,21 +47,57 @@ internal class BlOrder : BLApi.IOrder
     }
     public BO.Order UpdateOrderDelivery(int id)
     {
-        IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
-        foreach (var order in existingOrdersList)
+        Dal.DO.Order o = new Dal.DO.Order();
+        o = Dal.Order.Get(id);
+        BO.Order order = new BO.Order();
+        order.ID = o.OrderID;
+        order.OrderDate = o.OrderDate;
+        order.DeiveryDate = o.DeliveryDate;
+        order.ShipDate = o.ShipDate;
+        order.CustomerAdress = o.CustomerAdress;
+        order.CustomerEmail = o.CustomerEmail;
+        order.CustomerName = o.CustomerName;
+
+        if (o.CustomerName != "" && o.DeliveryDate == DateTime.MinValue)
         {
-            if (order.OrderID == id && order.ShipDate == DateTime.MinValue)
-            {
-                setShip(order);
-                //return order;
-                //order.ShipDate = DateTime.Now;
-            }
+            o.DeliveryDate = DateTime.Now;
+
+            Dal.Order.Delete(id);
+            Dal.Order.Add(o);
+            order.ShipDate = o.ShipDate;
+            order.Status = (BO.OrderStatus)2;
+            //ליצור כאן רשימה של items לפי orderItem?
+            //כנל לגבי total price.
+            return order;
         }
-        //BO.Order.get
         throw new NotImplementedException();
     }
     public BO.Order UpdateOrderShipping(int id)
     {
+        Dal.DO.Order o = new Dal.DO.Order();
+        o = Dal.Order.Get(id);
+        BO.Order order = new BO.Order();
+        order.ID = o.OrderID;
+        order.OrderDate = o.OrderDate;
+        order.DeiveryDate = o.DeliveryDate;
+        order.ShipDate = o.ShipDate;
+        order.CustomerAdress = o.CustomerAdress;
+        order.CustomerEmail = o.CustomerEmail;
+        order.CustomerName = o.CustomerName;
+
+        if (o.CustomerName != "" && o.ShipDate == DateTime.MinValue)
+        {
+            o.ShipDate = DateTime.Now;
+
+            Dal.Order.Delete(id);
+            Dal.Order.Add(o);
+            order.ShipDate = o.ShipDate;
+            order.Status = (BO.OrderStatus)2;
+            //ליצור כאן רשימה של items לפי orderItem?
+            //כנל לגבי total price.
+            return order;
+        }
+        
         throw new NotImplementedException();
     }
     //bonus

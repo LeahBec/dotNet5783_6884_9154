@@ -1,7 +1,7 @@
-﻿
-
-namespace Dal.DO;
-
+﻿namespace Dal.DO;
+/// <summary>
+/// defining order-item struct
+/// </summary>
 public struct OrderItem {
     public int ID { get; set; }
     public int OrderID { get; set; }

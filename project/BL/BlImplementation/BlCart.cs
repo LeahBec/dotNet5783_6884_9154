@@ -35,11 +35,36 @@ namespace BlImplementation
                 throw new OutOfStockException();
         }
 
+        bool IsValidEmail(string email)
+{
+    var trimmedEmail = email.Trim();
+
+    if (trimmedEmail.EndsWith(".")) {
+        return false; // suggested by @TK-421
+    }
+    try {
+        var addr = new System.Net.Mail.MailAddress(email);
+        return addr.Address == trimmedEmail;
+    }
+    catch {
+        return false;
+    }
+}
+
         public void CartConfirmation(Cart c, string customerName, string customerEmail, string customerAddress)
         {
-            if(customerAddress != "" && customerEmail != "" &&customerName!= "")
-
-else 
+            if(customerAddress == "" || !IsValidEmail(customerEmail)|| customerEmail =="" || customerName== "")
+                throw;
+            foreach(var item in c.items)
+            {
+                if(item.Amount < 0 ||( Dal.Product.Get(item.ID).InStock - item.Amount) < 0) throw ;
+                int amountInStock = Dal.Product.Get(item.ID).InStock;
+                Dal.Order.Add (new Dal.DO.Order());
+                
+                Dal.DO.Order o = new Dal.DO.Order();
+                o.OrderID = item.ID;
+                
+            }
             throw new NotImplementedException();
         }
 

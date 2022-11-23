@@ -1,9 +1,7 @@
-﻿
-using DalFacade.DO;
-
+﻿using DalFacade.DO;
 namespace Dal.DO;
 /// <summary>
-///  product describes each product in the store.
+/// defining product struct
 /// </summary>
 public struct Product { 
     public int ID { get; set; }

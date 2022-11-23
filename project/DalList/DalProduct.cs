@@ -1,8 +1,6 @@
 ﻿using Dal.DO;
 using DalApi;
 namespace DalList;
-
-
 internal class DalProduct : IProduct
 {
     public void Add(Product obj)

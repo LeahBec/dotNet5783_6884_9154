@@ -16,7 +16,7 @@ namespace BO
         public OrderStatus? Status { get; set; }
         public DateTime? ShipDate { get; set; }
         public DateTime? DeiveryDate { get; set; }
-        public OrderItem? Item { get; set; }
+        public List<OrderItem> Items { get; set; }
         public double TotalPrice { get; set; }
 
         public override string ToString()
@@ -30,7 +30,7 @@ namespace BO
     	Status : {Status}
         Ship Date : {ShipDate}
         Deivery Date : {DeiveryDate}
-        Item : {Item}
+        Item : {Items}
         total price: {TotalPrice}";
             return order;
         }

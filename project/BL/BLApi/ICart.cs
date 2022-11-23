@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BO;
-
-namespace BLApi
+﻿namespace BLApi
 {
     public interface ICart
     {
-        public Cart AddProductToCart(Cart c, int id);
-        public Cart Update(Cart c, int id, double newAmount);
-        public void CartConfirmation(Cart c, string customerName, string customerEmail, string customerAddress);
+        public BO.Cart AddProductToCart(BO.Cart c, int id);
+        public BO.Cart Update(BO.Cart c, int id, double newAmount);
+        public void CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress);
     }
 }

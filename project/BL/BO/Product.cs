@@ -1,28 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BO
+﻿namespace BO;
+public class Product
 {
-    public class Product
-    {
-        public int ID { get; set; }
-        public string Name { get; set; }
-        public double Price { get; set; }
-        public Category Category { get; set; }
-        public int inStock { get; set; }
+    public int ID { get; set; }
+    public string Name { get; set; }
+    public double Price { get; set; }
+    public Category Category { get; set; }
+    public int inStock { get; set; }
 
-        public override string ToString()
-        {
-            string product = $@"
+    public override string ToString()
+    {
+        string product = $@"
         Order id: {ID}
         Name: {Name}, 
         Price : {Price}
         Category : {Category}
         in Stock : {inStock}";
-            return product;
-        }
+        return product;
     }
 }
+

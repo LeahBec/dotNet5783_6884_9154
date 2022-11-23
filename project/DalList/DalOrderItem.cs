@@ -1,7 +1,4 @@
-﻿
-
-using Dal.DO;
-using DalList;
+﻿using Dal.DO;
 using DalApi;
 namespace DalList;
 

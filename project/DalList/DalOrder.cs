@@ -1,18 +1,14 @@
-﻿
-
-using Dal.DO;
+﻿using Dal.DO;
 using DalApi;
-using DalList;
 namespace DalList;
 
- internal class DalOrder: IOrder 
+internal class DalOrder : IOrder
 {
-    const int MAXORDERS = 49;
-     public void Add(Order obj)
+    public void Add(Order obj)
     {
         DataSource.orders.Add(obj);
     }
-     public void Delete(int Id)
+    public void Delete(int Id)
     {
 
         int i;
@@ -27,7 +23,7 @@ namespace DalList;
         throw new ExceptionObjectNotFound();
     }
 
-     public IEnumerable<Order> GetAll()
+    public IEnumerable<Order> GetAll()
     {
         List<Order> orders = new List<Order>();
         for (int i = 0; i < DataSource.orders.Count(); i++)
@@ -38,7 +34,7 @@ namespace DalList;
         throw new ExceptionFailedToRead();
     }
 
-     public Order Get(int Id)
+    public Order Get(int Id)
     {
         int i;
         for (i = 0; i < DataSource.orders.Count(); i++)

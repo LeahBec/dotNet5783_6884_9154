@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using BO;
-
-namespace BLApi
+﻿namespace BLApi
 {
     public interface IOrder
     {
-        public IEnumerable<OrderForList> GetOrderList();
-        public Order GetOrderDetails(int id);
+        public IEnumerable<BO.OrderForList> GetOrderList();
+        public BO.Order GetOrderDetails(int id);
         public BO.Order UpdateOrderShipping(int id);
         public BO.Order UpdateOrderDelivery(int id);
         //BONUS.

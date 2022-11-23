@@ -1,8 +1,9 @@
-﻿
+﻿namespace Dal.DO;
 
-namespace Dal.DO;
-
-public struct Order:IDataObject { 
+/// <summary>
+/// defining order struct
+/// </summary>
+public struct Order { 
     public int OrderID { get; set; }
     public string? CustomerName { get; set; }
     public string? CustomerEmail { get; set; }

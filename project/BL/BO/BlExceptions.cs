@@ -25,6 +25,14 @@ public class OutOfStockException : Exception
     public override string Message => ("product is out of stock");
 }
 
+
+public class InvalidIntegerException : Exception
+{
+
+    public InvalidIntegerException() : base("invalid input: not integer") { }
+    public override string Message => ("invalid input: not integer");
+}
+
 public class CustomerDetailsAreInValid : Exception
 {
     public CustomerDetailsAreInValid(Exception inner) : base("the details are invalid", inner) { }

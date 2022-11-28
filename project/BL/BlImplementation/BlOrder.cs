@@ -88,6 +88,8 @@ internal class BlOrder : BLApi.IOrder
     {
         Dal.DO.Order o = new Dal.DO.Order();
         o = Dal.Order.Get(id);
+        if (o.ShipDate != DateTime.MinValue)
+            throw new NotImplementedException();
         o.ShipDate = DateTime.Now;
         Dal.Order.Update(o);
         BO.Order order = new BO.Order();
@@ -99,7 +101,7 @@ internal class BlOrder : BLApi.IOrder
         order.CustomerEmail = o.CustomerEmail;
         order.CustomerName = o.CustomerName;
 
-        if (o.CustomerName != "" && o.ShipDate == DateTime.MinValue)
+        if (o.CustomerName != "" )
         {
 
             Dal.Order.Delete(id);

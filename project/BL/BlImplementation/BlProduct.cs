@@ -2,6 +2,9 @@
 namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
+
+    static Random rand = new Random();
+
     private IDal Dal = new Dal.DalList();
     public IEnumerable<BO.ProductForList> GetProductList()
     {
@@ -23,16 +26,17 @@ internal class BlProduct : BLApi.IProduct
     }
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
+
         IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
         List<BO.ProductItem> productList = new List<BO.ProductItem>();
-        BO.ProductItem p = new BO.ProductItem();
         foreach (var item in existingProductsList)
         {
+        BO.ProductItem p = new BO.ProductItem();
             p.ID = item.ID;
             p.Name = item.Name;
             p.Price = item.Price;
             p.Category = (BO.Category)item.Category;
-            //p.Amount = 1; במה לאתחל????
+            p.Amount = (int)rand.NextInt64(0, 10);
             p.inStock = item.InStock >= p.Amount;
             productList.Add(p);
         }

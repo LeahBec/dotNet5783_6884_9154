@@ -6,7 +6,8 @@ namespace DalList;
 
 public class DataSource
 {
-    private static void s_Initialize() {  //initializing the program
+    private static void s_Initialize()
+    {  //initializing the program
         CreateProductList();
         CreateOrderList();
         CreateOrderItemList();
@@ -31,7 +32,7 @@ public class DataSource
         int uniqueID = 100000;
         Tuple<eCategory, string>[] productsNamesCategories = {
             Tuple.Create( eCategory.Drones, "mini mavic"),
-            Tuple.Create( eCategory.Computers, "ASUS_x470rv"),  
+            Tuple.Create( eCategory.Computers, "ASUS_x470rv"),
             Tuple.Create( eCategory.Cameras, "canon_x740"),
             Tuple.Create( eCategory.Headphones, "JBL_flip4"),
             Tuple.Create( eCategory.SmartWatches, "RBS753"),
@@ -47,7 +48,7 @@ public class DataSource
             p.Name = productsNamesCategories[x].Item2;
             p.Price = IdxPrice;
             p.ID = uniqueID++;
-            p.InStock = (int)rand.NextInt64(10, 5000);
+            p.InStock = (int)rand.NextInt64(10, 30);
             p.Category = productsNamesCategories[x].Item1;
             products.Add(p);
         }
@@ -75,19 +76,23 @@ public class DataSource
             TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
             //orders[i].ShipDate = orders[i].OrderDate + shipSpan;
             //orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
+            o.OrderDate = DateTime.Now;
             if (i % 10 < 8)  // 80% have ship date
-                o.OrderDate = DateTime.Now;
+                o.ShipDate = o.OrderDate + shipSpan;
             else
-                o.OrderDate = DateTime.MinValue;
-            o.ShipDate = o.OrderDate + shipSpan;
-            if (i % 10 < 6)// 60% from them have delivery date
+                o.ShipDate = DateTime.MinValue;
+            if (i % 10 < 6)
+            { // 60% from them have delivery date
+                if (o.ShipDate == DateTime.MinValue)
+                    o.ShipDate = o.OrderDate + shipSpan;
                 o.DeliveryDate = o.ShipDate + deliverySpan;
+            }
             else
                 o.DeliveryDate = DateTime.MinValue;
             orders.Add(o);
         }
     }
-   
+
     static private void CreateOrderItemList()
     {
         for (int i = 0; i < 40;)
@@ -125,12 +130,13 @@ public class DataSource
         //static public int ProductIndex = 0;
         //static public int OrderIndex = 0;
         //static public int OrderItemIndex = 0;
-        static private int  orderId = 500000;
+        static private int orderId = 500000;
         static private int orderItemId = 100000;
         static public int OrderId
         {
             get { return orderId++; }
-        }static public int OrderItemId
+        }
+        static public int OrderItemId
         {
             get { return orderItemId++; }
         }

@@ -10,10 +10,11 @@ internal class BlCart : ICart
     {
         int productInStock = Dal.Product.Get(productId).InStock;
         double productPrice = Dal.Product.Get(productId).Price;
+        string productName = Dal.Product.Get(productId).Name;
         BO.OrderItem oi = cart.items.Find(oi => oi.ProductID == productId);
         if (productInStock > 0)
         {
-            if (oi.ID != 0)
+            if (oi != null)
             {
                 oi.Amount++;
                 oi.TotalPrice += productPrice;
@@ -22,8 +23,12 @@ internal class BlCart : ICart
             }
             else
             {
+                oi = new BO.OrderItem();
                 oi.Price = productPrice;
                 oi.TotalPrice = productPrice;
+                oi.ID = productId;
+                oi.ProductName = productName;
+                oi.Amount = 1;
                 cart.items.Add(oi);
                 cart.TotalPrice += productPrice;
             }

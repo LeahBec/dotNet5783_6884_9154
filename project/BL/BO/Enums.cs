@@ -17,7 +17,7 @@ namespace BO
 
     public enum OrderStatus
     {
-        Payed,
+        Payed=1,
         Shiped,
         Delivered,
     }

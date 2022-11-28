@@ -7,9 +7,9 @@ internal class BlProduct : BLApi.IProduct
     {
         IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
-        BO.ProductForList p = new BO.ProductForList();
         foreach (var item in existingProductsList)
         {
+            BO.ProductForList p = new BO.ProductForList();
             p.ID = item.ID;
             p.Name = item.Name;
             p.Price = item.Price;

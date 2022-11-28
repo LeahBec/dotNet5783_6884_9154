@@ -15,6 +15,18 @@ internal class BlOrder : BLApi.IOrder
             BO.OrderForList o = new BO.OrderForList();
             o.ID = item.OrderID;
             o.CustomerName = item.CustomerName;
+            var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
+            foreach (var orderItem in orderItems)
+            {
+                o.AmountOfItems++;
+                o.TotalPrice += orderItem.Price * orderItem.Amount;
+            }
+            if (item.DeliveryDate>DateTime.MinValue)
+                o.Status = (BO.OrderStatus)3;
+            else if (item.ShipDate>DateTime.MinValue)
+                o.Status = (BO.OrderStatus)2;
+            else
+                o.Status = (BO.OrderStatus)1;
             ordersList.Add(o);
         }
         if (ordersList.Count() == 0)
@@ -76,6 +88,8 @@ internal class BlOrder : BLApi.IOrder
     {
         Dal.DO.Order o = new Dal.DO.Order();
         o = Dal.Order.Get(id);
+        o.ShipDate = DateTime.Now;
+        Dal.Order.Update(o);
         BO.Order order = new BO.Order();
         order.ID = o.OrderID;
         order.OrderDate = o.OrderDate;
@@ -87,7 +101,6 @@ internal class BlOrder : BLApi.IOrder
 
         if (o.CustomerName != "" && o.ShipDate == DateTime.MinValue)
         {
-            o.ShipDate = DateTime.Now;
 
             Dal.Order.Delete(id);
             Dal.Order.Add(o);
@@ -97,7 +110,7 @@ internal class BlOrder : BLApi.IOrder
             //כנל לגבי total price.
             return order;
         }
-        
+
         throw new NotImplementedException();
     }
     //bonus

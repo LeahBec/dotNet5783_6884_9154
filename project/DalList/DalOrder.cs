@@ -56,9 +56,10 @@ internal class DalOrder : IOrder
             if (DataSource.orders[i].OrderID == o.OrderID)
             {
                 DataSource.orders[i] = o;
-                return;
+                break;
             }
         }
+        if(i==DataSource.orders.Count())
         throw new ExceptionObjectNotFound();
 
     }

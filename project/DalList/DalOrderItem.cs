@@ -2,15 +2,15 @@
 using DalApi;
 namespace DalList;
 
- internal class DalOrderItem: IOrderItem
+internal class DalOrderItem : IOrderItem
 {
-     public void Add(OrderItem obj)
+    public void Add(OrderItem obj)
     {
         DataSource.orderItems.Add(obj);
 
     }
 
-     public void Delete(int Id)
+    public void Delete(int Id)
     {
         int i;
         for (i = 0; i < DataSource.orderItems.Count(); i++)
@@ -37,7 +37,21 @@ namespace DalList;
         throw new ExceptionFailedToRead();
     }
 
-     public OrderItem Get(int Id)
+    public IEnumerable<OrderItem> getByOrderId(int orderId)
+    {
+        List<OrderItem> OrderItemList = new List<OrderItem>();
+        for (int i = 0; i < DataSource.orderItems.Count(); i++)
+        {
+            if (DataSource.orderItems[i].OrderID == orderId)
+            {
+                OrderItemList.Add(DataSource.orderItems[i]);
+            }
+        }
+        return OrderItemList;
+    }
+
+
+    public OrderItem Get(int Id)
     {
         int i;
         for (i = 0; i < DataSource.orderItems.Count(); i++)

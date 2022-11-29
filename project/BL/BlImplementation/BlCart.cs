@@ -69,9 +69,8 @@ internal class BlCart : ICart
 
             Dal.DO.Order o = new Dal.DO.Order();
             o.OrderID = item.ID;
-
         }
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
 
     public BO.Cart Update(BO.Cart c, int id, double newAmount)
@@ -79,7 +78,7 @@ internal class BlCart : ICart
 
         int productInStock = Dal.Product.Get(id).InStock;
         BO.OrderItem oi = c.items.Find(oi => oi.ProductID == id);
-        if (oi.ID != 0)
+        if (oi!=null)
         {
             if (newAmount == 0)
             {

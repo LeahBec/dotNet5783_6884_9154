@@ -14,7 +14,7 @@ public struct Product {
     {
         string product = $@"
         Product ID = {ID}: {Name}, 
-        category - {Category}
+        category: {Category}
     	Price: {Price}
     	Amount in stock: {InStock}";
         return product;

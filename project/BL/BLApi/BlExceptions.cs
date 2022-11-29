@@ -28,7 +28,6 @@ public class OutOfStockException : Exception
 
 public class InvalidIntegerException : Exception
 {
-
     public InvalidIntegerException() : base("invalid input: not integer") { }
     public override string Message => ("invalid input: not integer");
 }
@@ -37,6 +36,13 @@ public class CustomerDetailsAreInValid : Exception
 {
     public CustomerDetailsAreInValid(Exception inner) : base("the details are invalid", inner) { }
     public override string Message => ("the details are invalid");
+}
+
+public class BlExceptionFailedToRead : Exception
+{
+    public readonly string  msg;
+    public BlExceptionFailedToRead(string m) { msg = m; }
+    public override string Message => msg;    
 }
 
 

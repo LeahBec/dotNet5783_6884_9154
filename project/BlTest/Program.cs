@@ -4,9 +4,6 @@ Bl bl = new Bl();
 BO.Cart cart = new BO.Cart();
 
 //=============orders==================
-
-
-
 void getOrders()
 {
     IEnumerable<BO.OrderForList> orderList = bl.order.GetOrderList();
@@ -102,8 +99,20 @@ void getProCustomer()
 
 void addPro()
 {
+    Random rand = new Random();
+    bool idExist = false;
+    int proId;
+    do
+    {
+        idExist = true;
+        proId = (int)rand.NextInt64(100009, 999999);
+        for (int j = 0; j < DalList.DataSource.products.Count(); j++)
+            if (DalList.DataSource.products[j].ID == proId)
+                idExist = false;
+    } while (!idExist);
     BO.Product pro = new BO.Product();
     Console.WriteLine("enter name, price, amount in stock");
+    pro.ID = proId;
     pro.Name = Console.ReadLine();
     pro.Price = int.Parse(Console.ReadLine());
     pro.inStock = int.Parse(Console.ReadLine());

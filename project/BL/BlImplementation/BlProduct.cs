@@ -2,13 +2,12 @@
 namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
-
     static Random rand = new Random();
-
     private IDal Dal = new Dal.DalList();
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
+
         List<BO.ProductForList> productList = new List<BO.ProductForList>();
         foreach (var item in existingProductsList)
         {
@@ -16,11 +15,16 @@ internal class BlProduct : BLApi.IProduct
             p.ID = item.ID;
             p.Name = item.Name;
             p.Price = item.Price;
+            p.Price = item.Price;
             p.Category = (BO.Category)item.Category;
             productList.Add(p);
         }
         if (productList.Count() == 0)
             throw new Exception();//NoEntitiesFound("No products found");
+        catch (ExceptionFailedToRead ex)
+        {
+            throw new BO.BlExceptionFailedToRead("");
+        }
         return productList;
 
     }
@@ -31,7 +35,7 @@ internal class BlProduct : BLApi.IProduct
         List<BO.ProductItem> productList = new List<BO.ProductItem>();
         foreach (var item in existingProductsList)
         {
-        BO.ProductItem p = new BO.ProductItem();
+            BO.ProductItem p = new BO.ProductItem();
             p.ID = item.ID;
             p.Name = item.Name;
             p.Price = item.Price;
@@ -99,7 +103,7 @@ internal class BlProduct : BLApi.IProduct
         DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
         DOProduct.InStock = p.inStock;
         Dal.Product.Add(DOProduct);
-        throw new NotImplementedException();
+        //throw new NotImplementedException();
     }
     public void DeleteProduct(int id)
     {
@@ -110,6 +114,7 @@ internal class BlProduct : BLApi.IProduct
         {
             if (oi.ID == id)
                 throw new Exception("product exists in an order");
+            //cant delete the product because a customer ordered it!
         }
         Dal.Product.Delete(id);
         //throw new NotImplementedException();

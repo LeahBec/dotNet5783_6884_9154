@@ -185,7 +185,7 @@ void addProduct()
     Console.WriteLine("enter product id");
     int productId;
     if (!(int.TryParse(Console.ReadLine(), out productId)))
-        throw new BO.InvalidIntegerException();
+        throw new BO.BlInvalidIntegerException();
     cart = bl.cart.AddProductToCart(cart, productId);
 }
 
@@ -195,10 +195,10 @@ void updateProductAmount()
     int productId, newAmount;
     Console.WriteLine("enter product id");
     if (!(int.TryParse(Console.ReadLine(), out productId)))
-        throw new BO.InvalidIntegerException();
+        throw new BO.BlInvalidIntegerException();
     Console.WriteLine("enter new amount for the product");
     if (!(int.TryParse(Console.ReadLine(), out newAmount)))
-        throw new BO.InvalidIntegerException();
+        throw new BO.BlInvalidIntegerException();
     cart = bl.cart.Update(cart, productId, newAmount);
 }
 
@@ -212,7 +212,6 @@ void confirmCart()
     string CustomerEmail = Console.ReadLine();
     Console.WriteLine("enter the customer's address");
     string CustomerAddress = Console.ReadLine();
-
     bl.cart.CartConfirmation(cart, CustomerName, CustomerEmail, CustomerAddress);
 }
 

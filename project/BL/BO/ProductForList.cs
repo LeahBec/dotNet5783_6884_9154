@@ -16,7 +16,7 @@ namespace BO
         public override string ToString()
         {
             string productForList = $@"
-        Order id: {ID}
+        Product id: {ID}
         Name: {Name}, 
         Price : {Price}
         Category : {Category}";

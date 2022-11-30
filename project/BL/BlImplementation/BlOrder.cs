@@ -108,8 +108,14 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
+           
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(id);
+            if (o.DeliveryDate != DateTime.MinValue)
+                throw new BO.BlInvalidIdToken("");
+            o.DeliveryDate = DateTime.Now;
+            
+            Dal.Order.Update(o);
             BO.Order order = new BO.Order();
             order.ID = o.OrderID;
             order.OrderDate = o.OrderDate;

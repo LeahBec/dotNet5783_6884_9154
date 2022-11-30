@@ -4,10 +4,11 @@ namespace DalList;
 
 internal class DalOrder : IOrder
 {
-    public void Add(Order obj)
+    public int Add(Order obj)
     {
         obj.OrderID = DataSource.Config.OrderId;
         DataSource.orders.Add(obj);
+        return obj.OrderID;
     }
     public void Delete(int Id)
     {

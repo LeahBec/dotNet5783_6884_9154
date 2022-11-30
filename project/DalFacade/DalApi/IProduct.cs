@@ -8,6 +8,6 @@ namespace DalApi
 {
     public interface IProduct : ICrud<Product>
     {
-
+        public void updateAmount(int id, int am);
     }
 }

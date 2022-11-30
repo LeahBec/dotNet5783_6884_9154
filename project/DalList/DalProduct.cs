@@ -3,7 +3,7 @@ using DalApi;
 namespace DalList;
 internal class DalProduct : IProduct
 {
-    public void Add(Product obj)
+    public int Add(Product obj)
     {
         Random rand = new Random();
         bool idExist = false;
@@ -18,6 +18,7 @@ internal class DalProduct : IProduct
         } while (!idExist);
         obj.ID = proId;
         DataSource.products.Add(obj);
+       return  obj.ID;
     }
     public void Delete(int Id)
     {
@@ -66,6 +67,23 @@ internal class DalProduct : IProduct
         {
             if (DataSource.products[i].ID == p.ID)
             {
+                DataSource.products[i] = p;
+                return;
+            }
+        }
+        throw new ExceptionObjectNotFound();
+
+    }
+    public void updateAmount(int id, int am)
+    {
+        int i;
+        Product p;
+        for (i = 0; i < DataSource.products.Count(); i++)
+        {
+            if (DataSource.products[i].ID == id)
+            {
+                p = DataSource.products[i];
+                p.InStock = am;
                 DataSource.products[i] = p;
                 return;
             }

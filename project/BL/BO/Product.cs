@@ -10,7 +10,7 @@ public class Product
     public override string ToString()
     {
         string product = $@"
-        Order id: {ID}
+        Product id: {ID}
         Name: {Name}, 
         Price : {Price}
         Category : {Category}

@@ -23,7 +23,7 @@ public class BlNoEntitiesFound : Exception
 public class BlOutOfStockException : Exception
 {
 
-    public BlOutOfStockException(Exception inner) : base("product is out of stock", inner) { }
+    public BlOutOfStockException() : base("product is out of stock") { }
     public override string Message => ("product is out of stock");
 }
 

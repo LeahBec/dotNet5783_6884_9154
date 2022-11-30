@@ -8,7 +8,7 @@ namespace DalApi
 {
     public interface ICrud<T>
     {
-        public void Add(T obj);
+        public int Add(T obj);
         public void Delete(int id);
         public void Update(T obj);
         public IEnumerable<T> GetAll();

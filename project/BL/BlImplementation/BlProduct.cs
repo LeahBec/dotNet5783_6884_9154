@@ -162,6 +162,9 @@ internal class BlProduct : BLApi.IProduct
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException();
+        } catch (BO.BlProductExistsInAnOrder)
+        {
+            throw new BO.BlProductExistsInAnOrder("object is ordered");
         }
         catch (Exception)
         {

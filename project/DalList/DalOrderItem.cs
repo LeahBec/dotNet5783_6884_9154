@@ -2,14 +2,30 @@
 using DalApi;
 namespace DalList;
 
+/// <summary>
+/// The class implements all functions of the OrderItem entity.
+/// </summary>
 internal class DalOrderItem : IOrderItem
 {
+    /// <summary>
+    /// The function gets a Dal OrderItem entity, add an id and add it to the main orderItems list
+    /// </summary>
+    /// <param name="obj"> the oderItem that the function inserts to the orderItem list</param>
+
     public int Add(OrderItem obj)
     {
         obj.OrderID = DataSource.Config.OrderItemId;
         DataSource.orderItems.Add(obj);
         return obj.OrderID;
     }
+
+    /// <summary>
+    /// The function gets an id of Product that have to be deleted from the orderItem list
+    /// and deletes it from the main orderItem list.
+    /// </summary>
+    /// <param name="Id">the id of the object has to be deleted</param>
+    /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
+    /// orderItem, it can't be deleted and the user will get an exception</exception>
 
     public void Delete(int Id)
     {
@@ -25,6 +41,13 @@ internal class DalOrderItem : IOrderItem
         throw new ExceptionObjectNotFound();
     }
 
+    /// <summary>
+    /// the function return the whole list of the orderItem
+    /// </summary>
+    /// <returns>the whole list of the orderItems</returns>
+    /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
+    /// orderItems list</exception>
+
     public IEnumerable<OrderItem> GetAll()
     {
         List<OrderItem> orderItems = new List<OrderItem>();
@@ -36,6 +59,14 @@ internal class DalOrderItem : IOrderItem
 
         throw new ExceptionFailedToRead();
     }
+
+    /// <summary>
+    /// the function gets and id and return the orderItem with this id.
+    /// </summary>
+    /// <param name="Id">the id that was given in order to get that orderItem</param>
+    /// <returns>the orderItem with the same given id</returns>
+    /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
+    /// orderItem, it can't be deleted and the user will get an exception</exception>
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
     {
@@ -49,7 +80,12 @@ internal class DalOrderItem : IOrderItem
         } return OrderItemList;
     }
 
-
+    /// <summary>
+    /// get a obj with this id
+    /// </summary>
+    /// <param name="Id">the given id</param>
+    /// <returns>the obj</returns>
+    /// <exception cref="ExceptionObjectNotFound">if not found</exception>
     public OrderItem Get(int Id)
     {
         int i;
@@ -62,6 +98,13 @@ internal class DalOrderItem : IOrderItem
         }
         throw new ExceptionObjectNotFound();
     }
+
+
+    /// <summary>
+    /// update the obj with the same id as the diven one
+    /// </summary>
+    /// <param name="obj">the given obj</param>
+    /// <exception cref="ExceptionObjectNotFound">if no obj as the given one</exception>
 
     public void Update(OrderItem obj)
     {

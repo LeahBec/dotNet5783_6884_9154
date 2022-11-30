@@ -1,33 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace DalApi;
 
-namespace DalApi
+/// <summary>
+/// The exception will be scheduled when the required object is not found
+/// </summary>
+public class ExceptionObjectNotFound : Exception
 {
-    public class ExceptionObjectNotFound : Exception
-    {
-        public override string Message =>"object not found";
-    }
-    
-    public class ExceptionNoMoreSpace : Exception
-    {
-        public override string Message => "there is no more space";
-    }
-    public class ExceptionObjectAlreadyExist : Exception 
-    {
-        public override string Message => "Object already exists";
-        
-    }
-    public class ExceptionFailedToRead : Exception
-    {
-        public override string Message => "Faild to read properties";
-
-    } public class ExceptionNoMatchingItems : Exception
-    {
-        public override string Message => "no matching items";
-
-    }
+    public override string Message => "object not found";
+}
+/// <summary>
+/// The exception will be scheduled when error occurd while rading an entity list
+/// </summary>
+public class ExceptionFailedToRead : Exception
+{
+    public override string Message => "Faild to read properties";
 
 }
+/// <summary>
+/// The exception will be scheduled when the given detail is not 
+/// matching to any entity
+/// </summary>
+public class ExceptionNoMatchingItems : Exception
+{
+    public override string Message => "no matching items";
+
+}
+

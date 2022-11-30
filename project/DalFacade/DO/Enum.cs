@@ -1,5 +1,8 @@
 ﻿namespace DalFacade.DO;
 
+/// <summary>
+/// the enum implements all categorys for the Product entity
+/// </summary>
 public enum eCategory
 {
     Drones,
@@ -9,6 +12,9 @@ public enum eCategory
     SmartWatches
 }
 
+/// <summary>
+/// the enum implements all names for the Product entity
+/// </summary>
 public enum eProductNames { 
     miniMavic, 
     canon_x740, 

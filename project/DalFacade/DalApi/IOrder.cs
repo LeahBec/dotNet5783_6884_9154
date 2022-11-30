@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Dal.DO;
-namespace DalApi
-{
-    public interface IOrder : ICrud<Order>
-    {  
-    
-    }
-}
+﻿using Dal.DO;
+namespace DalApi;
+
+/// <summary>
+/// used to implement the additional required functions that are not 
+/// implemented in the base template CRUD interface
+/// </summary>
+public interface IOrder : ICrud<Order> { }

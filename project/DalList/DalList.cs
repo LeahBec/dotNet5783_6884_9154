@@ -1,6 +1,11 @@
 ﻿using DalApi;
 using DalList;
 
+
+/// <summary>
+/// the file implements all interfaces of all entities 
+/// </summary>
+
 namespace Dal
 {
     sealed public class DalList : IDal

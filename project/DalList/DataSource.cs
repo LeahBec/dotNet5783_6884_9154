@@ -3,9 +3,16 @@ using Dal.DO;
 using DalFacade.DO;
 namespace DalList;
 
-
+/// <summary>
+/// the class contains all entities data,
+/// and initializes all entities data list while the program is starting.
+/// </summary>
 public class DataSource
 {
+    /// <summary>
+    /// the function is called at the program starting and calls all 3 entities - 
+    /// initialize functions.
+    /// </summary>
     private static void s_Initialize()
     {  //initializing the program
         CreateProductList();
@@ -13,20 +20,21 @@ public class DataSource
         CreateOrderItemList();
     }
 
-    //default constructor
+    /// <summary>
+    /// default constructor
+    /// </summary>
     static DataSource() { s_Initialize(); }
     static Random rand = new Random();
 
     public static readonly int random;
 
-    // creating the arrays
-    //public static Product[] products = new Product[50];
-    //public static Order[] orders = new Order[100];
-    //public static OrderItem[] orderItems = new OrderItem[200];
     public static List<Product> products = new List<Product>();
     public static List<Order> orders = new List<Order>();
     public static List<OrderItem> orderItems = new List<OrderItem>();
 
+    /// <summary>
+    /// the function create the product list and initilizes it with 10 products
+    /// </summary>
     public static void CreateProductList()
     {
         int uniqueID = 100000;
@@ -53,7 +61,9 @@ public class DataSource
             products.Add(p);
         }
     }
-
+    /// <summary>
+    /// the function create the orders list and initilizes it with 20 orders
+    /// </summary>
     public static void CreateOrderList()
     {
         string[] CustomerName = { "aaa", "bbb", "ccc" };
@@ -93,6 +103,9 @@ public class DataSource
         }
     }
 
+    /// <summary>
+    /// the function orderItems the product list and initilizes it with 40 orderItems
+    /// </summary>
     static private void CreateOrderItemList()
     {
         for (int i = 0; i < 40;)

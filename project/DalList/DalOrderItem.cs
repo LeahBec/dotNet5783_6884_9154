@@ -38,18 +38,14 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
     {
-        bool flag = false;
         List<OrderItem> OrderItemList = new List<OrderItem>();
         for (int i = 0; i < DataSource.orderItems.Count(); i++)
         {
             if (DataSource.orderItems[i].OrderID == orderId)
             {
                 OrderItemList.Add(DataSource.orderItems[i]);
-                flag = true;
             }
-        }
-        if (flag == true) return OrderItemList;
-        throw new DalApi.ExceptionNoMatchingItems();
+        } return OrderItemList;
     }
 
 

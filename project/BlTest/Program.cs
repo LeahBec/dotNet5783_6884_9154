@@ -1,4 +1,5 @@
 ﻿using BlImplementation;
+using DalApi;
 
 Bl bl = new Bl();
 BO.Cart cart = new BO.Cart();
@@ -38,6 +39,7 @@ void getOrderItems()
         Console.WriteLine("enter order id");
         int id = int.Parse(Console.ReadLine());
         BO.Order orderItems = bl.order.GetOrderDetails(id);
+        //List<Dal.DO.OrderItem> items = Dal.OrderItem.getByOrderId(id);
         Console.WriteLine(orderItems);
     }
     catch (BO.BlInvalidIntegerException ex)

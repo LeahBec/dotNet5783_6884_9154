@@ -1,4 +1,5 @@
 ﻿using DalApi;
+using Dal;
 namespace BlImplementation;
 internal class BlOrder : BLApi.IOrder
 {
@@ -63,7 +64,27 @@ internal class BlOrder : BLApi.IOrder
             oi.CustomerEmail = o.CustomerEmail;
             oi.CustomerName = o.CustomerName;
             oi.DeiveryDate = o.DeliveryDate;
-            oi.TotalPrice = 0;
+            if (o.DeliveryDate > DateTime.MinValue)
+                oi.Status = (BO.OrderStatus)3;
+            else if (o.ShipDate > DateTime.MinValue)
+                oi.Status = (BO.OrderStatus)2;
+            else
+                oi.Status = (BO.OrderStatus)1;
+            IEnumerable<Dal.DO.OrderItem> orderItems = Dal.OrderItem.getByOrderId(id);
+            List<BO.OrderItem> items = new();
+            foreach (Dal.DO.OrderItem item in orderItems)
+            {
+                BO.OrderItem orderItem = new();
+                orderItem.ID = item.ID;
+                orderItem.ProductName = Dal.Product.Get(item.ProductID).Name;
+                orderItem.ProductID = item.ProductID;
+                orderItem.Price = item.Price;
+                orderItem.Amount = item.Amount;
+                orderItem.TotalPrice = orderItem.Amount * orderItem.Price;
+                oi.TotalPrice += orderItem.TotalPrice;
+                items.Add(orderItem);
+            }
+            oi.Items = items;
             if (oi.CustomerName != null)
                 return oi;
             return null;

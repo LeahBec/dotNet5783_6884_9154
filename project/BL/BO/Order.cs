@@ -31,8 +31,12 @@ namespace BO
         Ship Date : {ShipDate}
         Deivery Date : {DeiveryDate}
         total price: {TotalPrice}
-        Items : {Items}";
-            foreach (var i in Items) { order += "\n \t " + i; };
+        Items :";
+            if (Items != null)
+            {
+                foreach (var i in Items)  order +=$"\n \t   {i}"; ;
+            }
+           // else order += "-----------";
             return order;
         }
 

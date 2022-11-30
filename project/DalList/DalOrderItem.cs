@@ -6,8 +6,8 @@ internal class DalOrderItem : IOrderItem
 {
     public void Add(OrderItem obj)
     {
+        obj.OrderID = DataSource.Config.OrderItemId;
         DataSource.orderItems.Add(obj);
-
     }
 
     public void Delete(int Id)
@@ -22,7 +22,6 @@ internal class DalOrderItem : IOrderItem
             }
         }
         throw new ExceptionObjectNotFound();
-
     }
 
     public IEnumerable<OrderItem> GetAll()
@@ -39,15 +38,18 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
     {
+        bool flag = false;
         List<OrderItem> OrderItemList = new List<OrderItem>();
         for (int i = 0; i < DataSource.orderItems.Count(); i++)
         {
             if (DataSource.orderItems[i].OrderID == orderId)
             {
                 OrderItemList.Add(DataSource.orderItems[i]);
+                flag = true;
             }
         }
-        return OrderItemList;
+        if (flag == true) return OrderItemList;
+        throw new DalApi.ExceptionNoMatchingItems();
     }
 
 

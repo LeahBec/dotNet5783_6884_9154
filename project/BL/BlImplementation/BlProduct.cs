@@ -22,17 +22,17 @@ internal class BlProduct : BLApi.IProduct
                 productList.Add(p);
             }
             if (productList.Count() == 0)
-                throw new BO.BlNoEntitiesFound("");//NoEntitiesFound("No products found");
+                throw new BO.BlNoEntitiesFound("");
             return productList;
         }
         catch (ExceptionFailedToRead)
         {
-            throw new BO.BlExceptionFailedToRead("");
+            throw new BO.BlExceptionFailedToRead();
         }
 
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error");
         }
     }
 
@@ -61,11 +61,11 @@ internal class BlProduct : BLApi.IProduct
         }
         catch (ExceptionFailedToRead)
         {
-            throw new BO.BlExceptionFailedToRead("");
+            throw new BO.BlExceptionFailedToRead();
         }
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error");
         }
     }
     public BO.Product GetProductCustomer(int id)
@@ -83,15 +83,15 @@ internal class BlProduct : BLApi.IProduct
                 p.inStock = product.InStock;
                 return p;
             }
-            throw new BO.BlEntityNotFoundException("");
+            throw new BO.BlEntityNotFoundException();
         }
-        catch (ExceptionObjectNotFound)
+        catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException("");
+            throw new BO.BlEntityNotFoundException();
         }
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error");
         }
     }
 
@@ -115,30 +115,34 @@ internal class BlProduct : BLApi.IProduct
                 throw new BO.BlInvalidIntegerException();
             }
         }
-        catch (ExceptionObjectNotFound)
+        catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException("");
+            throw new BO.BlEntityNotFoundException();
         }
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error");
         }
     }
     public void AddProduct(BO.Product p)
     {
-        if (p.ID <= 0)
-            throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
-        if (p.Name == "")
-            throw new BO.BlInvalidNameToken("");// ProductNameIsImpossible
-        if (p.Price <= 0)
-            throw new BO.BlInvalidPriceToken("");//ProductPriceIsImpossible
-        Dal.DO.Product DOProduct = new Dal.DO.Product();
-        DOProduct.ID = p.ID;
-        DOProduct.Name = p.Name;
-        DOProduct.Price = (float)p.Price;
-        DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
-        DOProduct.InStock = p.inStock;
-        Dal.Product.Add(DOProduct);
+        try
+        {
+            if (p.ID <= 0)
+                throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
+            if (p.Name == "")
+                throw new BO.BlInvalidNameToken("");// ProductNameIsImpossible
+            if (p.Price <= 0)
+                throw new BO.BlInvalidPriceToken("");//ProductPriceIsImpossible
+            Dal.DO.Product DOProduct = new Dal.DO.Product();
+            DOProduct.ID = p.ID;
+            DOProduct.Name = p.Name;
+            DOProduct.Price = (float)p.Price;
+            DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
+            DOProduct.InStock = p.inStock;
+            Dal.Product.Add(DOProduct);
+        }
+        catch (Exception ) { throw new BO.BlDefaultException(""); }
     }
     public void DeleteProduct(int id)
     {
@@ -155,13 +159,13 @@ internal class BlProduct : BLApi.IProduct
             }
             Dal.Product.Delete(id);
         }
-        catch (ExceptionObjectNotFound)
+        catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException("");
+            throw new BO.BlEntityNotFoundException();
         }
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error occured");
         }
     }
 
@@ -204,13 +208,13 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.InStock = p.inStock;
             Dal.Product.Update(DOProduct);
         }
-        catch (ExceptionObjectNotFound)
+        catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException("");
+            throw new BO.BlEntityNotFoundException();
         }
         catch (Exception)
         {
-            throw new Exception();
+            throw new BO.BlDefaultException("unexpected error occured");
         }
     }
 }

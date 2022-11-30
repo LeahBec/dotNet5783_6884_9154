@@ -24,6 +24,10 @@ namespace DalApi
     {
         public override string Message => "Faild to read properties";
 
+    } public class ExceptionNoMatchingItems : Exception
+    {
+        public override string Message => "no matching items";
+
     }
 
 }

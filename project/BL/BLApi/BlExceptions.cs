@@ -2,8 +2,9 @@
 
 public class BlEntityNotFoundException : Exception
 {
-    public BlEntityNotFoundException(Exception inner) : base("Entity not found", inner) { }
-    public override string Message => "Entity not found";
+    public BlEntityNotFoundException(DalApi.ExceptionObjectNotFound? inner = null) : base("entity not found", inner) { }
+    public override string Message =>
+                    "entity not found";
 }
 
 public class BlEntityAlreadyExistException : Exception
@@ -41,8 +42,14 @@ public class CustomerDetailsAreInValid : Exception
 
 public class BlExceptionFailedToRead : Exception
 {
-    public BlExceptionFailedToRead(Exception inner) : base("failed to read", inner) { }
-    public override string Message => ("failed to read");
+    public BlExceptionFailedToRead(DalApi.ExceptionFailedToRead? inner = null) : base("entity not found", inner) { }
+    public override string Message =>
+                    "entity not found";
+}public class BlExceptionNoMatchingItems : Exception
+{
+    public BlExceptionNoMatchingItems(DalApi.ExceptionNoMatchingItems? inner = null) : base("no matching items", inner) { }
+    public override string Message =>
+                    "no matching items";
 }
 public class BlInvalidIdToken : Exception
 {
@@ -54,6 +61,18 @@ public class BlInvalidNameToken : Exception
 {
     public readonly string msg;
     public BlInvalidNameToken(string m) { msg = m; }
+    public override string Message => msg;
+}
+public class BlOrderAlreadyDelivered : Exception
+{
+    public readonly string msg;
+    public BlOrderAlreadyDelivered(string m) { msg = m; }
+    public override string Message => msg;
+}
+public class BlDefaultException : Exception
+{
+    public readonly string msg;
+    public BlDefaultException(string m) { msg = m; }
     public override string Message => msg;
 }
 

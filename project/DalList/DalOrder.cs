@@ -6,6 +6,7 @@ internal class DalOrder : IOrder
 {
     public void Add(Order obj)
     {
+        obj.OrderID = DataSource.Config.OrderId;
         DataSource.orders.Add(obj);
     }
     public void Delete(int Id)

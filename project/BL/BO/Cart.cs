@@ -20,8 +20,9 @@ namespace BO
         Customer Name: {CustomerName}, 
         Customer Adress : {CustomerAddress}
         Customer E-mail : {CustomerEmail}
-    	Items: {items}
-        total price: {TotalPrice}";
+        total price: {TotalPrice}
+        Items: {items}";
+            foreach (var i in items) { cart += "\n \t " + i; };
             return cart;
         }
 

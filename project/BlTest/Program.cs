@@ -6,34 +6,75 @@ BO.Cart cart = new BO.Cart();
 //=============orders==================
 void getOrders()
 {
-    IEnumerable<BO.OrderForList> orderList = bl.order.GetOrderList();
-    foreach (var item in orderList)
+    try
     {
-        Console.WriteLine(item);
+        IEnumerable<BO.OrderForList> orderList = bl.order.GetOrderList();
+        foreach (var item in orderList)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    catch (BO.BlNoEntitiesFound ex)
+    {
+        Console.WriteLine(ex.Message);
+    }catch (BO.BlExceptionFailedToRead ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    catch (BO.BlExceptionNoMatchingItems ex)
+    {
+        Console.WriteLine(ex.Message);
+    }
+    catch (BO.BlDefaultException ex)
+    {
+        Console.WriteLine(ex.Message);
     }
 }
 
 void getOrderItems()
 {
-    Console.WriteLine("enter order id");
-    int id = int.Parse(Console.ReadLine());
-    BO.Order orderItems = bl.order.GetOrderDetails(id);
-    Console.WriteLine(orderItems);
+    try
+    {
+        Console.WriteLine("enter order id");
+        int id = int.Parse(Console.ReadLine());
+        BO.Order orderItems = bl.order.GetOrderDetails(id);
+        Console.WriteLine(orderItems);
+    }
+    catch (BO.BlInvalidIntegerException ex)
+    {
+        Console.WriteLine(ex.Message);
+    } 
+    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); } 
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
+
 }
 
 void updateOrderShipping()
 {
-    Console.WriteLine("enter order id");
-    int id = int.Parse(Console.ReadLine());
-    bl.order.UpdateOrderShipping(id);
+    try
+    {
+        Console.WriteLine("enter order id");
+        int id = int.Parse(Console.ReadLine());
+        bl.order.UpdateOrderShipping(id);
+    }
+    catch (BO.BlInvalidIdToken ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlInvalidNameToken ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
 }
 
 void updateOrderDelivery()
 {
-
+    try
+    {
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
     bl.order.UpdateOrderDelivery(id);
+    }
+    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
 }
 
 void orders()
@@ -66,81 +107,120 @@ void orders()
 
 void getProducts()
 {
-    IEnumerable<BO.ProductForList> products = bl.product.GetProductList();
-    foreach (var item in products)
+    try
     {
-        Console.WriteLine(item);
+        IEnumerable<BO.ProductForList> products = bl.product.GetProductList();
+        foreach (var item in products)
+        {
+            Console.WriteLine(item);
+        }
+    }
+    catch (BO.BlExceptionFailedToRead ex)
+    {
+        Console.WriteLine(ex.Message);
+    }catch (Exception ex)
+    {
+        Console.WriteLine(ex.Message);
     }
 }
 
 void getCatalog()
 {
-    IEnumerable<BO.ProductItem> catalog = bl.product.GetCatalog();
-    foreach (var item in catalog)
+    try
     {
-        Console.WriteLine(item);
+        IEnumerable<BO.ProductItem> catalog = bl.product.GetCatalog();
+        foreach (var item in catalog)
+        {
+            Console.WriteLine(item);
+        }
     }
+    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }
 }
 
 void getProManager()
 {
-    Console.WriteLine("enter product id");
-    int id = int.Parse(Console.ReadLine());
-    BO.Product pro = bl.product.GetProductManager(id);
-    Console.WriteLine(pro);
+    try
+    {
+        Console.WriteLine("enter product id");
+        int id = int.Parse(Console.ReadLine());
+        BO.Product pro = bl.product.GetProductManager(id);
+        Console.WriteLine(pro);
+    }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }
 }
 void getProCustomer()
 {
-    Console.WriteLine("enter product id");
-    int id = int.Parse(Console.ReadLine());
-    BO.Product pro = bl.product.GetProductCustomer(id);
-    Console.WriteLine(pro);
+    try
+    {
+        Console.WriteLine("enter product id");
+        int id = int.Parse(Console.ReadLine());
+        BO.Product pro = bl.product.GetProductCustomer(id);
+        Console.WriteLine(pro);
+    }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }
 }
 
 void addPro()
 {
-    Random rand = new Random();
-    bool idExist = false;
-    int proId;
-    do
+    try
     {
-        idExist = true;
-        proId = (int)rand.NextInt64(100009, 999999);
-        for (int j = 0; j < DalList.DataSource.products.Count(); j++)
-            if (DalList.DataSource.products[j].ID == proId)
-                idExist = false;
-    } while (!idExist);
-    BO.Product pro = new BO.Product();
-    Console.WriteLine("enter name, price, amount in stock");
-    pro.ID = proId;
-    pro.Name = Console.ReadLine();
-    pro.Price = int.Parse(Console.ReadLine());
-    pro.inStock = int.Parse(Console.ReadLine());
-    Console.WriteLine("enter the Product's category: 1.Drones,2.Cameras, 3.Headphones, 4.Computers, 5.SmartWatches");
-    int choice = Convert.ToInt32(Console.ReadLine());
-    pro.Category = (BO.Category)choice;
-    bl.product.AddProduct(pro);
+        Random rand = new Random();
+        bool idExist = false;
+        int proId;
+        do
+        {
+            idExist = true;
+            proId = (int)rand.NextInt64(100009, 999999);
+            for (int j = 0; j < DalList.DataSource.products.Count(); j++)
+                if (DalList.DataSource.products[j].ID == proId)
+                    idExist = false;
+        } while (!idExist);
+        BO.Product pro = new BO.Product();
+        Console.WriteLine("enter name, price, amount in stock");
+        pro.ID = proId;
+        pro.Name = Console.ReadLine();
+        pro.Price = int.Parse(Console.ReadLine());
+        pro.inStock = int.Parse(Console.ReadLine());
+        Console.WriteLine("enter the Product's category: 1.Drones,2.Cameras, 3.Headphones, 4.Computers, 5.SmartWatches");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        pro.Category = (BO.Category)choice;
+        bl.product.AddProduct(pro);
+    }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }
 }
 
 void deletePro()
 {
-    Console.WriteLine("enter product id");
-    int id = int.Parse( Console.ReadLine());
-    bl.product.DeleteProduct(id);
+    try
+    {
+        Console.WriteLine("enter product id");
+        int id = int.Parse(Console.ReadLine());
+        bl.product.DeleteProduct(id);
+    }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
 }
 
 void updatePro()
 {
-    BO.Product pro = new BO.Product();
-    Console.WriteLine("enter id, name, price, amount in stock");
-    pro.ID = int.Parse(Console.ReadLine());
-    pro.Name = Console.ReadLine();
-    pro.Price = int.Parse(Console.ReadLine());
-    pro.inStock = int.Parse(Console.ReadLine());
-    Console.WriteLine("enter the Product's category: 1.Drones,2.Cameras, 3.Headphones, 4.Computers, 5.SmartWatches");
-    int choice = Convert.ToInt32(Console.ReadLine());
-    pro.Category = (BO.Category)choice;
-    bl.product.Update(pro);
+    try
+    {
+        BO.Product pro = new BO.Product();
+        Console.WriteLine("enter id, name, price, amount in stock");
+        pro.ID = int.Parse(Console.ReadLine());
+        pro.Name = Console.ReadLine();
+        pro.Price = int.Parse(Console.ReadLine());
+        pro.inStock = int.Parse(Console.ReadLine());
+        Console.WriteLine("enter the Product's category: 1.Drones,2.Cameras, 3.Headphones, 4.Computers, 5.SmartWatches");
+        int choice = Convert.ToInt32(Console.ReadLine());
+        pro.Category = (BO.Category)choice;
+        bl.product.Update(pro);
+    }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
 }
 
 
@@ -182,37 +262,51 @@ void products()
 
 void addProduct()
 {
-    Console.WriteLine("enter product id");
-    int productId;
-    if (!(int.TryParse(Console.ReadLine(), out productId)))
-        throw new BO.BlInvalidIntegerException();
-    cart = bl.cart.AddProductToCart(cart, productId);
+    try
+    {
+        Console.WriteLine("enter product id");
+        int productId;
+        if (!(int.TryParse(Console.ReadLine(), out productId)))
+            throw new BO.BlInvalidIntegerException();
+        cart = bl.cart.AddProductToCart(cart, productId);
+    }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
 }
 
 
 void updateProductAmount()
 {
-    int productId, newAmount;
-    Console.WriteLine("enter product id");
-    if (!(int.TryParse(Console.ReadLine(), out productId)))
-        throw new BO.BlInvalidIntegerException();
-    Console.WriteLine("enter new amount for the product");
-    if (!(int.TryParse(Console.ReadLine(), out newAmount)))
-        throw new BO.BlInvalidIntegerException();
-    cart = bl.cart.Update(cart, productId, newAmount);
+    try
+    {
+        int productId, newAmount;
+        Console.WriteLine("enter product id");
+        if (!(int.TryParse(Console.ReadLine(), out productId)))
+            throw new BO.BlInvalidIntegerException();
+        Console.WriteLine("enter new amount for the product");
+        if (!(int.TryParse(Console.ReadLine(), out newAmount)))
+            throw new BO.BlInvalidIntegerException();
+        cart = bl.cart.Update(cart, productId, newAmount);
+    }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
 }
 
 
 void confirmCart()
 {
-
-    Console.WriteLine("enter the customer's name");
-    string CustomerName = Console.ReadLine();
-    Console.WriteLine("enter the customer's email");
-    string CustomerEmail = Console.ReadLine();
-    Console.WriteLine("enter the customer's address");
-    string CustomerAddress = Console.ReadLine();
-    bl.cart.CartConfirmation(cart, CustomerName, CustomerEmail, CustomerAddress);
+    try
+    {
+        Console.WriteLine("enter the customer's name");
+        string CustomerName = Console.ReadLine();
+        Console.WriteLine("enter the customer's email");
+        string CustomerEmail = Console.ReadLine();
+        Console.WriteLine("enter the customer's address");
+        string CustomerAddress = Console.ReadLine();
+        bl.cart.CartConfirmation(cart, CustomerName, CustomerEmail, CustomerAddress);
+    }
+    catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
+    catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
 }
 
 

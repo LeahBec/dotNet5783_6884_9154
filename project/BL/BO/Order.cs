@@ -23,15 +23,16 @@ namespace BO
         {
             string order = $@"
         Order id: {ID}
-        Customer Name: {CustomerName}, 
+        Customer Name: {CustomerName}
         Customer Adress : {CustomerAdress}
         Customer E-mail : {CustomerEmail}
         Order Date : {OrderDate}
     	Status : {Status}
         Ship Date : {ShipDate}
         Deivery Date : {DeiveryDate}
-        Item : {Items}
-        total price: {TotalPrice}";
+        total price: {TotalPrice}
+        Items : {Items}";
+            foreach (var i in Items) { order += "\n \t " + i; };
             return order;
         }
 

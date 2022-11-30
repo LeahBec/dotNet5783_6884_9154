@@ -5,6 +5,18 @@ internal class DalProduct : IProduct
 {
     public void Add(Product obj)
     {
+        Random rand = new Random();
+        bool idExist = false;
+        int proId;
+        do
+        {
+            idExist = true;
+            proId = (int)rand.NextInt64(100009, 999999);
+            for (int j = 0; j < DalList.DataSource.products.Count(); j++)
+                if (DalList.DataSource.products[j].ID == proId)
+                    idExist = false;
+        } while (!idExist);
+        obj.ID = proId;
         DataSource.products.Add(obj);
     }
     public void Delete(int Id)

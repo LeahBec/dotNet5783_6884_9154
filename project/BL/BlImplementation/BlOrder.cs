@@ -6,51 +6,77 @@ internal class BlOrder : BLApi.IOrder
 
     public IEnumerable<BO.OrderForList> GetOrderList()
     {
-        IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
-
-        List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
-
-        foreach (var item in existingOrdersList)
+        try
         {
-            BO.OrderForList o = new BO.OrderForList();
-            o.ID = item.OrderID;
-            o.CustomerName = item.CustomerName;
-            var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
-            foreach (var orderItem in orderItems)
+            IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
+
+            List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
+
+            foreach (var item in existingOrdersList)
             {
-                o.AmountOfItems++;
-                o.TotalPrice += orderItem.Price * orderItem.Amount;
+                BO.OrderForList o = new BO.OrderForList();
+                o.ID = item.OrderID;
+                o.CustomerName = item.CustomerName;
+                var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
+                foreach (var orderItem in orderItems)
+                {
+                    o.AmountOfItems++;
+                    o.TotalPrice += orderItem.Price * orderItem.Amount;
+                }
+                if (item.DeliveryDate > DateTime.MinValue)
+                    o.Status = (BO.OrderStatus)3;
+                else if (item.ShipDate > DateTime.MinValue)
+                    o.Status = (BO.OrderStatus)2;
+                else
+                    o.Status = (BO.OrderStatus)1;
+                ordersList.Add(o);
             }
-            if (item.DeliveryDate>DateTime.MinValue)
-                o.Status = (BO.OrderStatus)3;
-            else if (item.ShipDate>DateTime.MinValue)
-                o.Status = (BO.OrderStatus)2;
-            else
-                o.Status = (BO.OrderStatus)1;
-            ordersList.Add(o);
+            if (ordersList.Count() == 0)
+                throw new BO.BlNoEntitiesFound("");
+            return ordersList;
         }
-        if (ordersList.Count() == 0)
-            throw new NotImplementedException();
-        return ordersList;
+        catch (DalApi.ExceptionFailedToRead)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }catch (DalApi.ExceptionNoMatchingItems)
+        {
+            throw new BO.BlExceptionNoMatchingItems();
+        }
+        catch (Exception)
+        {
+            throw new BO.BlDefaultException("Unknown exception occured");
+        }
     }
 
     public BO.Order GetOrderDetails(int id)
     {
-        if (id < 0)
-            throw new NotImplementedException();
-        Dal.DO.Order o = Dal.Order.Get(id);
-        BO.Order oi = new BO.Order();
-        oi.ID = o.OrderID;
-        oi.OrderDate = o.OrderDate;
-        oi.ShipDate = o.ShipDate;
-        oi.CustomerAdress = o.CustomerAdress;
-        oi.CustomerEmail = o.CustomerEmail;
-        oi.CustomerName = o.CustomerName;
-        oi.DeiveryDate = o.DeliveryDate;
-        oi.TotalPrice = 0;
-        if (oi.CustomerName != null)
-            return oi;
-        return null;
+        try
+        {
+            if (id < 0)
+                throw new BO.BlInvalidIntegerException();
+            Dal.DO.Order o = Dal.Order.Get(id);
+            BO.Order oi = new BO.Order();
+            oi.ID = o.OrderID;
+            oi.OrderDate = o.OrderDate;
+            oi.ShipDate = o.ShipDate;
+            oi.CustomerAdress = o.CustomerAdress;
+            oi.CustomerEmail = o.CustomerEmail;
+            oi.CustomerName = o.CustomerName;
+            oi.DeiveryDate = o.DeliveryDate;
+            oi.TotalPrice = 0;
+            if (oi.CustomerName != null)
+                return oi;
+            return null;
+        }
+        catch (DalApi.ExceptionFailedToRead)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
+        catch (Exception)
+        {
+
+            throw new BO.BlDefaultException("");
+        }
     }
     void setShip(Dal.DO.Order o)
     {
@@ -59,61 +85,101 @@ internal class BlOrder : BLApi.IOrder
     }
     public BO.Order UpdateOrderDelivery(int id)
     {
-        Dal.DO.Order o = new Dal.DO.Order();
-        o = Dal.Order.Get(id);
-        BO.Order order = new BO.Order();
-        order.ID = o.OrderID;
-        order.OrderDate = o.OrderDate;
-        order.DeiveryDate = o.DeliveryDate;
-        order.ShipDate = o.ShipDate;
-        order.CustomerAdress = o.CustomerAdress;
-        order.CustomerEmail = o.CustomerEmail;
-        order.CustomerName = o.CustomerName;
-
-        if (o.CustomerName != "" && o.DeliveryDate == DateTime.MinValue)
+        try
         {
-            o.DeliveryDate = DateTime.Now;
-
-            Dal.Order.Delete(id);
-            Dal.Order.Add(o);
+            Dal.DO.Order o = new Dal.DO.Order();
+            o = Dal.Order.Get(id);
+            BO.Order order = new BO.Order();
+            order.ID = o.OrderID;
+            order.OrderDate = o.OrderDate;
+            order.DeiveryDate = o.DeliveryDate;
             order.ShipDate = o.ShipDate;
-            order.Status = (BO.OrderStatus)2;
-            //ליצור כאן רשימה של items לפי orderItem?
-            //כנל לגבי total price.
-            return order;
+            order.CustomerAdress = o.CustomerAdress;
+            order.CustomerEmail = o.CustomerEmail;
+            order.CustomerName = o.CustomerName;
+
+            if (o.CustomerName != "" && o.DeliveryDate == DateTime.MinValue)
+            {
+                o.DeliveryDate = DateTime.Now;
+
+                Dal.Order.Delete(id);
+                Dal.Order.Add(o);
+                order.ShipDate = o.ShipDate;
+                order.Status = (BO.OrderStatus)2;
+                //ליצור כאן רשימה של items לפי orderItem?
+                //כנל לגבי total price.
+                return order;
+            }
+            else
+            {
+                if (o.CustomerName == "" )
+                throw new BO.BlInvalidNameToken("");
+                else
+                {
+                    throw new BO.BlOrderAlreadyDelivered("");
+                }
+            }
         }
-        throw new NotImplementedException();
+        catch (DalApi.ExceptionFailedToRead)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        } catch (DalApi.ExceptionObjectNotFound)
+        {
+            throw new BO.BlEntityNotFoundException();
+        }
+        catch (Exception)
+        {
+
+            throw new BO.BlDefaultException("unexpected error");
+        }
     }
     public BO.Order UpdateOrderShipping(int id)
     {
-        Dal.DO.Order o = new Dal.DO.Order();
-        o = Dal.Order.Get(id);
-        if (o.ShipDate != DateTime.MinValue)
-            throw new NotImplementedException();
-        o.ShipDate = DateTime.Now;
-        Dal.Order.Update(o);
-        BO.Order order = new BO.Order();
-        order.ID = o.OrderID;
-        order.OrderDate = o.OrderDate;
-        order.DeiveryDate = o.DeliveryDate;
-        order.ShipDate = o.ShipDate;
-        order.CustomerAdress = o.CustomerAdress;
-        order.CustomerEmail = o.CustomerEmail;
-        order.CustomerName = o.CustomerName;
+        try
+        {
+            Dal.DO.Order o = new Dal.DO.Order();
+            o = Dal.Order.Get(id);
+            if (o.ShipDate != DateTime.MinValue)
+                throw new BO.BlInvalidIdToken("");
+            o.ShipDate = DateTime.Now;
+            Dal.Order.Update(o);
+            BO.Order order = new BO.Order();
+            order.ID = o.OrderID;
+            order.OrderDate = o.OrderDate;
+            order.DeiveryDate = o.DeliveryDate;
+            order.ShipDate = o.ShipDate;
+            order.CustomerAdress = o.CustomerAdress;
+            order.CustomerEmail = o.CustomerEmail;
+            order.CustomerName = o.CustomerName;
 
-        if (o.CustomerName != "" )
+            if (o.CustomerName != "")
+            {
+
+                Dal.Order.Delete(id);
+                Dal.Order.Add(o);
+                order.ShipDate = o.ShipDate;
+                order.Status = (BO.OrderStatus)2;
+                return order;
+            }
+            else
+            {
+                throw new BO.BlInvalidNameToken("");
+            }
+
+        }
+        catch (DalApi.ExceptionFailedToRead)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
+        catch (DalApi.ExceptionObjectNotFound)
+        {
+            throw new BO.BlEntityNotFoundException();
+        }
+        catch (Exception)
         {
 
-            Dal.Order.Delete(id);
-            Dal.Order.Add(o);
-            order.ShipDate = o.ShipDate;
-            order.Status = (BO.OrderStatus)2;
-            //ליצור כאן רשימה של items לפי orderItem?
-            //כנל לגבי total price.
-            return order;
+            throw new BO.BlDefaultException("");
         }
-
-        throw new NotImplementedException();
     }
     //bonus
     public BO.Order UpdateOrderForManager(int id)

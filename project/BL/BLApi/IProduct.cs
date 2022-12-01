@@ -1,7 +1,9 @@
 ﻿namespace BLApi
 {
     public interface IProduct
-    {
+    {/// <summary>
+/// the interface implements additional functions for the BL - Product entity
+/// </summary>
         public IEnumerable<BO.ProductForList> GetProductList();
         public IEnumerable<BO.ProductItem> GetCatalog();
         public BO.Product GetProductManager(int id);

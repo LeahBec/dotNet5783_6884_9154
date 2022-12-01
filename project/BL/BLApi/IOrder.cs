@@ -1,5 +1,7 @@
 ﻿namespace BLApi
-{
+{/// <summary>
+/// the interface implements additional functions for the BL - Order entity
+/// </summary>
     public interface IOrder
     {
         public IEnumerable<BO.OrderForList> GetOrderList();

@@ -104,7 +104,7 @@ internal class BlCart : ICart
                     cartItem.OrderID = o.OrderID;
                     cartItem.ProductID = item1.ProductID;
                     Dal.OrderItem.Add(cartItem);
-                    Dal.Product.updateAmount(item1.ID, item1.Amount);
+                    Dal.Product.updateAmount(item1.ProductID, item1.Amount);
                 }
 
             }

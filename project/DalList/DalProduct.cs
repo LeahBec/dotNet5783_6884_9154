@@ -128,8 +128,7 @@ internal class DalProduct : IProduct
             if (DataSource.products[i].ID == id)
             {
                 p = DataSource.products[i];
-                p.InStock = am;
-                DataSource.products[i] = p;
+                p.InStock = p.InStock - am; DataSource.products[i] = p;
                 return;
             }
         }

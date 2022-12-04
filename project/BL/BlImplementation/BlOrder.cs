@@ -5,7 +5,7 @@ internal class BlOrder : BLApi.IOrder
 {
     private IDal Dal = new Dal.DalList();
 
-    public IEnumerable<BO.OrderForList> GetOrderList()
+    public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         try
         {

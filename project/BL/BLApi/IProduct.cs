@@ -11,6 +11,6 @@
         public void AddProduct(BO.Product p);
         public void DeleteProduct(int ProductId);
         public void Update(BO.Product p);
-
+        public IEnumerable<BO.Product> GetListByCategory(BO.Category category);
     }
 }

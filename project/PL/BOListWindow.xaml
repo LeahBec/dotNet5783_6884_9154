@@ -21,17 +21,19 @@ VerticalAlignment="Stretch" Width="auto">
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions >
-            <ComboBox Name="AttributeSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1" />
         </Grid>
         <Grid>
-            <Label Grid.Column="0"/>
+            <Label Grid.Column="0" Margin="0,0,685,0">
+                <ComboBox Name="categorySelectorBox" Height="38" Width="77" SelectionChanged="categorySelectorBox_SelectionChanged"/>
+            </Label>
         </Grid>
-        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="ProductsListview">
+        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="ProductsListview" SelectionChanged="ProductsListview_SelectionChanged">
             <ListView.View >
                 <GridView>
                     <GridViewColumn/>
                 </GridView>
             </ListView.View>
         </ListView>
+        <Button x:Name="addProductBtn" Content="Button" HorizontalAlignment="Left" Margin="162,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click"/>
     </Grid>
 </Window>

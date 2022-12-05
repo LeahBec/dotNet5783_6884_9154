@@ -142,7 +142,7 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.InStock = p.inStock;
             Dal.Product.Add(DOProduct);
         }
-        catch (Exception ) { throw new BO.BlDefaultException(""); }
+        catch (Exception) { throw new BO.BlDefaultException(""); }
     }
     public void DeleteProduct(int id)
     {
@@ -162,7 +162,8 @@ internal class BlProduct : BLApi.IProduct
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException();
-        } catch (BO.BlProductExistsInAnOrder)
+        }
+        catch (BO.BlProductExistsInAnOrder)
         {
             throw new BO.BlProductExistsInAnOrder("object is ordered");
         }
@@ -220,6 +221,53 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error occured");
         }
     }
+
+    public IEnumerable<BO.Product> GetListByCategory(BO.Category category)
+    {
+        IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
+        List<BO.Product> returnList = new List<BO.Product>();
+        foreach (var item in products)
+        {
+            if ((BO.Category)item.Category ==category)
+            {
+                BO.Product BOProduct = new BO.Product();
+                BOProduct.ID = item.ID;
+                BOProduct.Name = item.Name;
+                BOProduct.Price = (float)item.Price;
+                BOProduct.Category = (BO.Category)item.Category;
+                BOProduct.inStock = item.InStock;
+                returnList.Add(BOProduct);
+            }
+        }
+        return returnList;
+    }
+
+
+    //public IEnumerable<BO.ProductForList> GetProductByCategoty(BO.eCategory category)
+    //{
+    //    IEnumerable<Dal.DO.Product> lst = Dal.Product.GetProductByCategory((Dal.DO.eCategory)category);
+
+    //    List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
+
+
+    //    foreach (Dal.DO.Product DoProduct in lst)
+    //    {
+    //        BO.ProductForList ProductForList = new BO.ProductForList();
+
+    //        ProductForList.ID = BO.BoConfig.ProductForListID;
+    //        ProductForList.Name = DoProduct.Name;
+    //        ProductForList.Price = DoProduct.Price;
+    //        ProductForList.Category = (BO.eCategory)DoProduct.Category;
+    //        productsForList.Add(ProductForList);
+    //    }
+
+
+    //    if (productsForList.Count() == 0)
+    //        throw new BO.BlNoEntitiesFound("No products found");
+
+    //    return productsForList;
+    //}
+
 }
 
 

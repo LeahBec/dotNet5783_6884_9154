@@ -222,20 +222,19 @@ internal class BlProduct : BLApi.IProduct
         }
     }
 
-    public IEnumerable<BO.Product> GetListByCategory(BO.Category category)
+    public IEnumerable<BO.ProductForList> GetListByCategory(BO.Category category)
     {
         IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
-        List<BO.Product> returnList = new List<BO.Product>();
+        List<BO.ProductForList> returnList = new List<BO.ProductForList>();
         foreach (var item in products)
         {
             if ((BO.Category)item.Category ==category)
             {
-                BO.Product BOProduct = new BO.Product();
+                BO.ProductForList BOProduct = new BO.ProductForList();
                 BOProduct.ID = item.ID;
                 BOProduct.Name = item.Name;
                 BOProduct.Price = (float)item.Price;
                 BOProduct.Category = (BO.Category)item.Category;
-                BOProduct.inStock = item.InStock;
                 returnList.Add(BOProduct);
             }
         }

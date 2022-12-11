@@ -8,7 +8,7 @@ namespace BO
 {    
     public enum Category
     {
-        Drones=1,
+        Drones,
         Cameras,
         Headphones,
         Computers,

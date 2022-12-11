@@ -75,7 +75,7 @@ internal class BlProduct : BLApi.IProduct
             BO.Product p = new BO.Product();
             if (id > 0)
             {
-                Dal.DO.Product product = Dal.Product.Get(id);
+                Dal.DO.Product product = Dal.Product.Get(p => p.ID == id);
                 p.ID = product.ID;
                 p.Name = product.Name;
                 p.Price = product.Price;
@@ -102,7 +102,7 @@ internal class BlProduct : BLApi.IProduct
             BO.Product p = new BO.Product();
             if (id > 0)
             {
-                Dal.DO.Product product = Dal.Product.Get(id);
+                Dal.DO.Product product = Dal.Product.Get(p => p.ID == id);
                 p.ID = product.ID;
                 p.Name = product.Name;
                 p.Price = product.Price;
@@ -228,7 +228,7 @@ internal class BlProduct : BLApi.IProduct
         List<BO.ProductForList> returnList = new List<BO.ProductForList>();
         foreach (var item in products)
         {
-            if ((BO.Category)item.Category ==category)
+            if ((BO.Category)item.Category == category)
             {
                 BO.ProductForList BOProduct = new BO.ProductForList();
                 BOProduct.ID = item.ID;

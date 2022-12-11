@@ -56,7 +56,7 @@ void viewOrder()
     Console.WriteLine("enter order id");
     int id = int.Parse(Console.ReadLine());
     Order order = new Order();
-    order = i.Order.Get(id);
+    order = i.Order.Get(o => o.OrderID == id);
     Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAdress + order.OrderDate + order.ShipDate + order.DeliveryDate);
 }
 
@@ -197,7 +197,7 @@ void viewOrderItem()
     Console.WriteLine("enter order item id");
     int id = int.Parse(Console.ReadLine());
     OrderItem orderItem = new OrderItem();
-    orderItem = i.OrderItem.Get(id);
+    orderItem = i.OrderItem.Get(oi => oi.OrderID == id);
     Console.WriteLine(orderItem.ID + " " + orderItem.OrderID + " " + orderItem.ProductID + " " + orderItem.Price + " " + orderItem.Amount);
 }
 /// <summary>
@@ -389,7 +389,7 @@ void viewProduct()
     Console.WriteLine("enter id of the product you want to watch");
     id = int.Parse(Console.ReadLine());
     Product product = new Product();
-    product = i.Product.Get(id);
+    product = i.Product.Get(p => p.ID == id);
     Console.WriteLine(product.ID + " " + product.Name + " " + product.Price + " " + product.InStock + " " + product.Category);
 
 }

@@ -58,15 +58,16 @@ internal class DalProduct : IProduct
     /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
     /// product list</exception>
 
-    public IEnumerable<Product> GetAll()
+    public IEnumerable<Product> GetAll(Func<Product, bool> func = null)
     {
-        List<Product> products = new List<Product>();
-        for (int i = 0; i < DataSource.products.Count(); i++)
-        {
-            products.Add(DataSource.products[i]);
-        }
-        return products;
-        throw new ExceptionFailedToRead();
+        /*        List<Product> products = new List<Product>();
+                for (int i = 0; i < DataSource.products.Count(); i++)
+                {
+                    products.Add(DataSource.products[i]);
+                }
+                return products;
+                throw new ExceptionFailedToRead();*/
+        return (func == null ? DataSource.products : DataSource.products.Where(func).ToList());
     }
 
     /// <summary>
@@ -77,17 +78,19 @@ internal class DalProduct : IProduct
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// product, it can't be deleted and the user will get an exception</exception>
 
-    public Product Get(int Id)
+    public Product Get(Func<Product, bool> func)
     {
-        int i;
-        for (i = 0; i < DataSource.products.Count(); i++)
-        {
-            if (DataSource.products[i].ID == Id)
-            {
-                return DataSource.products[i];
-            }
-        }
-        throw new ExceptionObjectNotFound();
+        /*        int i;
+                for (i = 0; i < DataSource.products.Count(); i++)
+                {
+                    if (DataSource.products[i].ID == Id)
+                    {
+                        return DataSource.products[i];
+                    }
+                }
+                throw new ExceptionObjectNotFound();*/
+        return DataSource.products.Where(func).ToArray()[0];
+
 
     }
     /// <summary>

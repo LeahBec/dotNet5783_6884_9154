@@ -10,9 +10,9 @@ internal class BlCart : ICart
     {
         try
         {
-            int productInStock = Dal.Product.Get(productId).InStock;
-            double productPrice = Dal.Product.Get(productId).Price;
-            string productName = Dal.Product.Get(productId).Name;
+            int productInStock = Dal.Product.Get(p => p.ID == productId).InStock;
+            double productPrice = Dal.Product.Get(p => p.ID == productId).Price;
+            string productName = Dal.Product.Get(p => p.ID == productId).Name;
             //int orderId = Dal.OrderItem.Get()
             BO.OrderItem oi = cart.items.Find(item => item.ProductID == productId);
             if (productInStock > 0)
@@ -81,9 +81,9 @@ internal class BlCart : ICart
                 throw new Exception();
             foreach (var item in c.items)
             {
-                if (item.Amount < 0 || (Dal.Product.Get(item.ProductID).InStock - item.Amount) < 0)
+                if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
                     throw new Exception();
-                int amountInStock = Dal.Product.Get(item.ProductID).InStock;
+                int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
 
                 Dal.DO.Order o = new Dal.DO.Order();
                 o.OrderID = 0;
@@ -124,7 +124,7 @@ internal class BlCart : ICart
         try
         {
 
-            int productInStock = Dal.Product.Get(id).InStock;
+            int productInStock = Dal.Product.Get(p => p.ID == id).InStock;
             BO.OrderItem oi = c.items.Find(item => item.ProductID == id);
             if (oi != null)
             {

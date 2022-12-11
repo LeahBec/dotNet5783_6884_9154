@@ -12,7 +12,6 @@ internal class BlOrder : BLApi.IOrder
             IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
 
             List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
-
             foreach (var item in existingOrdersList)
             {
                 BO.OrderForList o = new BO.OrderForList();
@@ -39,7 +38,8 @@ internal class BlOrder : BLApi.IOrder
         catch (DalApi.ExceptionFailedToRead)
         {
             throw new BO.BlExceptionFailedToRead();
-        }catch (DalApi.ExceptionNoMatchingItems)
+        }
+        catch (DalApi.ExceptionNoMatchingItems)
         {
             throw new BO.BlExceptionNoMatchingItems();
         }
@@ -55,7 +55,7 @@ internal class BlOrder : BLApi.IOrder
         {
             if (id < 0)
                 throw new BO.BlInvalidIntegerException();
-            Dal.DO.Order o = Dal.Order.Get(id);
+            Dal.DO.Order o = Dal.Order.Get(o => o.OrderID == id);
             BO.Order oi = new BO.Order();
             oi.ID = o.OrderID;
             oi.OrderDate = o.OrderDate;
@@ -76,7 +76,7 @@ internal class BlOrder : BLApi.IOrder
             {
                 BO.OrderItem orderItem = new();
                 orderItem.ID = item.ID;
-                orderItem.ProductName = Dal.Product.Get(item.ProductID).Name;
+                orderItem.ProductName = Dal.Product.Get(p => p.ID == item.ProductID).Name;
                 orderItem.ProductID = item.ProductID;
                 orderItem.Price = item.Price;
                 orderItem.Amount = item.Amount;
@@ -108,13 +108,13 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-           
+
             Dal.DO.Order o = new Dal.DO.Order();
-            o = Dal.Order.Get(id);
+            o = Dal.Order.Get(o => o.OrderID == id);
             if (o.DeliveryDate != DateTime.MinValue)
                 throw new BO.BlInvalidIdToken("");
             o.DeliveryDate = DateTime.Now;
-            
+
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();
             order.ID = o.OrderID;
@@ -139,8 +139,8 @@ internal class BlOrder : BLApi.IOrder
             }
             else
             {
-                if (o.CustomerName == "" )
-                throw new BO.BlInvalidNameToken("");
+                if (o.CustomerName == "")
+                    throw new BO.BlInvalidNameToken("");
                 else
                 {
                     throw new BO.BlOrderAlreadyDelivered("");
@@ -150,7 +150,8 @@ internal class BlOrder : BLApi.IOrder
         catch (DalApi.ExceptionFailedToRead)
         {
             throw new BO.BlExceptionFailedToRead();
-        } catch (DalApi.ExceptionObjectNotFound)
+        }
+        catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException();
         }
@@ -165,7 +166,7 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             Dal.DO.Order o = new Dal.DO.Order();
-            o = Dal.Order.Get(id);
+            o = Dal.Order.Get(o => o.OrderID == id);
             if (o.ShipDate != DateTime.MinValue)
                 throw new BO.BlInvalidIdToken("");
             o.ShipDate = DateTime.Now;

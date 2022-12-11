@@ -45,15 +45,16 @@ internal class DalOrder : IOrder
     /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
     /// order list</exception>
 
-    public IEnumerable<Order> GetAll()
+    public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
-        List<Order> orders = new List<Order>();
-        for (int i = 0; i < DataSource.orders.Count(); i++)
-        {
-            orders.Add(DataSource.orders[i]);
-        }
-        return orders;
-        throw new ExceptionFailedToRead();
+        /*      List<Order> orders = new List<Order>();
+                for (int i = 0; i < DataSource.orders.Count(); i++)
+                {
+                    orders.Add(DataSource.orders[i]);
+                }
+                return orders;
+                throw new ExceptionFailedToRead();*/
+        return (func == null ? DataSource.orders : DataSource.orders.Where(func).ToList());
     }
     /// <summary>
     /// the function gets and id and return the order with this id.
@@ -63,17 +64,18 @@ internal class DalOrder : IOrder
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// order, it can't be deleted and the user will get an exception</exception>
 
-    public Order Get(int Id)
+    public Order Get(Func<Order, bool> func)
     {
-        int i;
-        for (i = 0; i < DataSource.orders.Count(); i++)
-        {
-            if (DataSource.orders[i].OrderID == Id)
-            {
-                return DataSource.orders[i];
-            }
-        }
-        throw new ExceptionObjectNotFound();
+        //int i;
+        /*        for (i = 0; i < DataSource.orders.Count(); i++)
+                {
+                    if (DataSource.orders[i].OrderID == Id)
+                    {
+                        return DataSource.orders[i];
+                    }
+                }*/
+        return DataSource.orders.Where(func).ToArray()[0];
+        //throw new ExceptionObjectNotFound();
     }
 
     /// <summary>

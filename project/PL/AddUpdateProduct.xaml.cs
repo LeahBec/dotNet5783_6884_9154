@@ -49,13 +49,13 @@ public partial class AddUpdateProduct : Window
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
         updateProductBtn.Visibility = Visibility.Hidden;
-
         p.ID = 10;
         p.Price = double.Parse(input_product_price.Text);
         p.inStock = int.Parse(input_product_instock.Text);
         p.Name = input_product_name.Text;
-
         bl.product.AddProduct(p);
+        BOListWindow w = new BOListWindow(bl);
+        w.Show();
     }
 
     private void updateProductBtn_Click(object sender, RoutedEventArgs e)
@@ -64,7 +64,7 @@ public partial class AddUpdateProduct : Window
         pro.Price = double.Parse(input_product_price.Text);
         pro.inStock = int.Parse(input_product_instock.Text);
         pro.Name = input_product_name.Text;
-
+        pro.Category = (BO.Category)categorySelectorBox.SelectedItem;
         bl.product.Update(pro);
         BOListWindow w = new BOListWindow(bl);
         w.Show();

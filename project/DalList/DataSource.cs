@@ -125,9 +125,9 @@ public class DataSource
                 oi.ProductID = products[ProductIndex].ID;
                 oi.OrderID = orders[OrderIndex].OrderID;
                 oi.Amount = (int)rand.NextInt64(1, products[ProductIndex].InStock);
-                p.InStock -= oi.Amount;
+                //p.InStock -= oi.Amount;
                 oi.Price = oi.Amount * products[ProductIndex].Price;
-                products[ProductIndex] = p;
+                //products[ProductIndex] = p;
                 orderItems.Add(oi);
                 i++;
             }

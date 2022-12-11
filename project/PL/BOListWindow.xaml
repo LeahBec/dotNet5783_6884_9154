@@ -9,6 +9,7 @@
 
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
+            
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -30,10 +31,11 @@ VerticalAlignment="Stretch" Width="auto">
         <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="ProductsListview" SelectionChanged="ProductsListview_SelectionChanged" MouseDoubleClick="itemClicked">
             <ListView.View >
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn>
+                    </GridViewColumn>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="addProductBtn" Content="Add product" HorizontalAlignment="Left" Margin="162,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click"/>
+        <Button x:Name="addProductBtn" Content="Add new product" HorizontalAlignment="Left" Margin="162,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click"/>
     </Grid>
 </Window>

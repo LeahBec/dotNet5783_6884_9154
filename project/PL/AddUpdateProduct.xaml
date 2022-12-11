@@ -11,15 +11,16 @@
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Name="input_product_name" HorizontalAlignment="Left" Margin="73,42,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
-        <TextBox Name="input_product_price" HorizontalAlignment="Left" Margin="73,93,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
-        <TextBox Name="input_product_instock" HorizontalAlignment="Left" Margin="73,145,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
-        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="73,179,607,72"/>
+        <TextBox Name="input_product_name" HorizontalAlignment="Left" Margin="73,104,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <TextBox Name="input_product_price" HorizontalAlignment="Left" Margin="73,155,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <TextBox Name="input_product_instock" HorizontalAlignment="Left" Margin="73,207,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="120" />
+        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="73,241,607,10"/>
         <Button x:Name="addProductBtn" Content="add" HorizontalAlignment="Left" Margin="208,85,0,0" Grid.Row="1" VerticalAlignment="Top" Click="addProductBtn_Click"/>
-        <Label Content="product name" HorizontalAlignment="Left" Margin="73,10,0,0" VerticalAlignment="Top"/>
-        <Label Content="price" HorizontalAlignment="Left" Margin="73,65,0,0" VerticalAlignment="Top"/>
-        <Label Content="amount in stock" HorizontalAlignment="Left" Margin="73,111,0,0" VerticalAlignment="Top"/>
-        <Button x:Name="updateProductBtn" Content="update" HorizontalAlignment="Left" Margin="323,79,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateProductBtn_Click"/>
+        <Label Content="product name" HorizontalAlignment="Left" Margin="73,72,0,0" VerticalAlignment="Top"/>
+        <Label Content="price" HorizontalAlignment="Left" Margin="73,127,0,0" VerticalAlignment="Top"/>
+        <Label Content="amount in stock" HorizontalAlignment="Left" Margin="73,183,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="updateProductBtn" Content="update" HorizontalAlignment="Left" Margin="285,85,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateProductBtn_Click"/>
+        <Button x:Name="deleteProductBtn" Content="delete" HorizontalAlignment="Left" Margin="360,85,0,0" Grid.Row="1" VerticalAlignment="Top" Click="deleteProductBtn_Click"/>
 
     </Grid>
 </Window>

@@ -35,6 +35,8 @@ public partial class BOListWindow : Window
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
+       // updateProductBtn.Visibility = Visibility.Hidden;
+
         Window window = new AddUpdateProduct(bl, p);
         window.Show();
     }
@@ -50,6 +52,7 @@ public partial class BOListWindow : Window
         // p.ID = sender.AnchorItem.
         p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
         Window window = new AddUpdateProduct(bl, p);
+       // addProductBtn.Visibility = Visibility.Hidden;
         window.Show();
 
         

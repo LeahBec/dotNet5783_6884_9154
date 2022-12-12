@@ -9,7 +9,7 @@
 
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
-            
+
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -24,18 +24,34 @@ VerticalAlignment="Stretch" Width="auto">
             </Grid.ColumnDefinitions >
         </Grid>
         <Grid>
-            <Label Grid.Column="0" Margin="0,0,685,0">
-                <ComboBox Name="categorySelectorBox" Height="38" Width="77" SelectionChanged="categorySelectorBox_SelectionChanged"/>
+            <Label Grid.Column="0" Margin="0,0,685,0" RenderTransformOrigin="0.504,0.087">
+                <ComboBox Name="categorySelectorBox" Height="25" Width="92" SelectionChanged="categorySelectorBox_SelectionChanged" RenderTransformOrigin="0.59,3.642">
+                    <ComboBox.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="0"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0"/>
+                        </TransformGroup>
+                    </ComboBox.RenderTransform>
+                </ComboBox>
             </Label>
         </Grid>
-        <ListView Grid.Row="1" d:ItemsSource="{d:SampleData ItemCount=5}" x:Name="ProductsListview" SelectionChanged="ProductsListview_SelectionChanged" MouseDoubleClick="itemClicked">
-            <ListView.View >
-                <GridView>
-                    <GridViewColumn>
-                    </GridViewColumn>
+        <ListView Grid.Row="1" x:Name="ProductsListview" MouseDoubleClick="itemClicked" SelectionChanged="ProductsListview_SelectionChanged" FontFamily="Amatic SC" FontSize="16" Cursor="Hand">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="category" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button x:Name="addProductBtn" Content="Add new product" HorizontalAlignment="Left" Margin="162,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click"/>
+       
+        <Button x:Name="addProductBtn" Content="Add new product" HorizontalAlignment="Center" Margin="0,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
     </Grid>
 </Window>

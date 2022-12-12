@@ -15,7 +15,6 @@ public partial class AddUpdateProduct : Window
 
     public AddUpdateProduct(BLApi.IBL bl, BO.Product pro)
     {
-
         InitializeComponent();
         this.bl = bl;
         this.pro = pro;
@@ -68,6 +67,7 @@ public partial class AddUpdateProduct : Window
         bl.product.Update(pro);
         BOListWindow w = new BOListWindow(bl);
         w.Show();
+        this.Close();
     }
 
     private void deleteProductBtn_Click(object sender, RoutedEventArgs e)

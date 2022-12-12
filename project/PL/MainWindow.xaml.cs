@@ -18,7 +18,7 @@ namespace PL
         {
             BOListWindow w = new BOListWindow(bl);
             w.Show();
-            //this.Hide();
+            this.Close();
         }
     }
 }

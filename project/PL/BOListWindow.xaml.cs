@@ -39,6 +39,8 @@ public partial class BOListWindow : Window
 
         Window window = new AddUpdateProduct(bl, p);
         window.Show();
+        InitializeComponent();
+        ProductsListview.ItemsSource = bl.product.GetProductList();
     }
 
     private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -54,8 +56,8 @@ public partial class BOListWindow : Window
         Window window = new AddUpdateProduct(bl, p);
        // addProductBtn.Visibility = Visibility.Hidden;
         window.Show();
-
-        
+        InitializeComponent();
+        ProductsListview.ItemsSource = bl.product.GetProductList();
 
     }
 }

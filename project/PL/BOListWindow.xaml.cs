@@ -82,5 +82,10 @@ public partial class BOListWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
+
+    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
 }
 

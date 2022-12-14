@@ -67,6 +67,8 @@ internal class DalProduct : IProduct
                 }
                 return products;
                 throw new ExceptionFailedToRead();*/
+        if (DataSource.products.Count < 0)
+            throw new ExceptionObjectNotFound();
         return (func == null ? DataSource.products : DataSource.products.Where(func).ToList());
     }
 

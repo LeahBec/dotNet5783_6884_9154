@@ -19,46 +19,68 @@ public partial class BOListWindow : Window
         categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
         ProductsListview.ItemsSource = bl.product.GetProductList();
     }
-    
-    private void categorySelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
-
-
-
     private void categorySelectorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-        BO.Category cat =(BO.Category) categorySelectorBox.SelectedItem;
-        var list = bl.product.GetListByCategory(cat);
-        ProductsListview.ItemsSource = list;
+        try
+        {
+            BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
+            var list = bl.product.GetListByCategory(cat);
+            ProductsListview.ItemsSource = list;
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
-       // updateProductBtn.Visibility = Visibility.Hidden;
-
-        Window window = new AddUpdateProduct(bl, p);
-        window.Show();
-        InitializeComponent();
-        ProductsListview.ItemsSource = bl.product.GetProductList();
-    }
-
-    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
+        // updateProductBtn.Visibility = Visibility.Hidden;
+        try
+        {
+            Window window = new AddUpdateProduct(bl, p);
+            window.Show();
+            InitializeComponent();
+            ProductsListview.ItemsSource = bl.product.GetProductList();
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        } 
+        catch (BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        } 
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 
     private void itemClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
-
-        // p.ID = sender.AnchorItem.
-        p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
-        Window window = new AddUpdateProduct(bl, p);
-       // addProductBtn.Visibility = Visibility.Hidden;
-        window.Show();
-        InitializeComponent();
-        ProductsListview.ItemsSource = bl.product.GetProductList();
-
+        try
+        {
+            // p.ID = sender.AnchorItem.
+            p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
+            Window window = new AddUpdateProduct(bl, p);
+            // addProductBtn.Visibility = Visibility.Hidden;
+            window.Show();
+            InitializeComponent();
+            ProductsListview.ItemsSource = bl.product.GetProductList();
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 }
 

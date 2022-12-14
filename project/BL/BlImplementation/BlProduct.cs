@@ -224,21 +224,28 @@ internal class BlProduct : BLApi.IProduct
 
     public IEnumerable<BO.ProductForList> GetListByCategory(BO.Category category)
     {
-        IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
-        List<BO.ProductForList> returnList = new List<BO.ProductForList>();
-        foreach (var item in products)
+        try
         {
-            if ((BO.Category)item.Category == category)
+            IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
+            List<BO.ProductForList> returnList = new List<BO.ProductForList>();
+            foreach (var item in products)
             {
-                BO.ProductForList BOProduct = new BO.ProductForList();
-                BOProduct.ID = item.ID;
-                BOProduct.Name = item.Name;
-                BOProduct.Price = (float)item.Price;
-                BOProduct.Category = (BO.Category)item.Category;
-                returnList.Add(BOProduct);
+                if ((BO.Category)item.Category == category)
+                {
+                    BO.ProductForList BOProduct = new BO.ProductForList();
+                    BOProduct.ID = item.ID;
+                    BOProduct.Name = item.Name;
+                    BOProduct.Price = (float)item.Price;
+                    BOProduct.Category = (BO.Category)item.Category;
+                    returnList.Add(BOProduct);
+                }
             }
+            return returnList;
         }
-        return returnList;
+        catch (ExceptionObjectNotFound)
+        {
+            throw new BO.BlNoEntitiesFound("");
+        }
     }
 
 

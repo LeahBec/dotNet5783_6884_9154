@@ -59,20 +59,72 @@ public partial class AddUpdateProduct : Window
 
     private void updateProductBtn_Click(object sender, RoutedEventArgs e)
     {
-        addProductBtn.Visibility = Visibility.Hidden;
-        pro.Price = double.Parse(input_product_price.Text);
-        pro.inStock = int.Parse(input_product_instock.Text);
-        pro.Name = input_product_name.Text;
-        pro.Category = (BO.Category)categorySelectorBox.SelectedItem;
-        bl.product.Update(pro);
-        BOListWindow w = new BOListWindow(bl);
-        w.Show();
-        this.Close();
+        try
+        {
+            addProductBtn.Visibility = Visibility.Hidden;
+            pro.Price = double.Parse(input_product_price.Text);
+            pro.inStock = int.Parse(input_product_instock.Text);
+            pro.Name = input_product_name.Text;
+            pro.Category = (BO.Category)categorySelectorBox.SelectedItem;
+            bl.product.Update(pro);
+            BOListWindow w = new BOListWindow(bl);
+            w.Show();
+            this.Close();
+        }
+        catch ( BO.blInvalidAmountToken ex)
+        {
+            MessageBox.Show(ex.Message);
+        } 
+        catch ( BO.BlInvalidPriceToken ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch ( BO.BlInvalidNameToken ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch ( BO.BlInvalidIdToken ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch ( BO.BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch ( BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
     }
 
     private void deleteProductBtn_Click(object sender, RoutedEventArgs e)
     {
-        bl.product.DeleteProduct(pro.ID);
+        try
+        {
+            bl.product.DeleteProduct(pro.ID);
+        }
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlProductExistsInAnOrder ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlInvalidIdToken ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+     
     }
 }
 

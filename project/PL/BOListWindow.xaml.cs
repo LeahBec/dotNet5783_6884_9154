@@ -1,5 +1,4 @@
-﻿using BlImplementation;
-using System;
+﻿using System;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -10,7 +9,7 @@ using BLApi;
 /// </summary>
 public partial class BOListWindow : Window
 {
-    private BLApi.IBL bl;
+    BLApi.IBL? bl = BLApi.Factory.get();
     private BO.Product p = new BO.Product();
     public BOListWindow(BLApi.IBL bl)
     {

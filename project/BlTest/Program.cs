@@ -1,7 +1,8 @@
 ﻿using BlImplementation;
 using DalApi;
 
-Bl bl = new Bl();
+
+BLApi.IBL? bl = BLApi.Factory.get();
 BO.Cart cart = new BO.Cart();
 
 //=============orders==================

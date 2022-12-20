@@ -1,9 +1,8 @@
-﻿using DalApi;
-namespace BlImplementation;
+﻿namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
     static Random rand = new Random();
-    private IDal Dal = new Dal.DalList();
+    DalApi.IDal? Dal = DalApi.Factory.Get();
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         try
@@ -25,7 +24,7 @@ internal class BlProduct : BLApi.IProduct
                 throw new BO.BlNoEntitiesFound("");
             return productList;
         }
-        catch (ExceptionFailedToRead)
+        catch (DalApi.ExceptionFailedToRead)
         {
             throw new BO.BlExceptionFailedToRead();
         }
@@ -59,7 +58,7 @@ internal class BlProduct : BLApi.IProduct
                 throw new Exception();//NoEntitiesFound("No products found");
             return productList;
         }
-        catch (ExceptionFailedToRead)
+        catch (DalApi.ExceptionFailedToRead)
         {
             throw new BO.BlExceptionFailedToRead();
         }
@@ -242,7 +241,7 @@ internal class BlProduct : BLApi.IProduct
             }
             return returnList;
         }
-        catch (ExceptionObjectNotFound)
+        catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlNoEntitiesFound("");
         }

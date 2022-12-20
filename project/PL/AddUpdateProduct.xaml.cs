@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Windows;
 
-
 namespace PL;
 
 /// <summary>
@@ -9,7 +8,7 @@ namespace PL;
 /// </summary>
 public partial class AddUpdateProduct : Window
 {
-    private BLApi.IBL bl;
+    BLApi.IBL? bl = BLApi.Factory.get();
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
 

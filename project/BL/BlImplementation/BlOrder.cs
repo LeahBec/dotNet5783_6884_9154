@@ -1,9 +1,7 @@
-﻿using DalApi;
-using Dal;
-namespace BlImplementation;
+﻿namespace BlImplementation;
 internal class BlOrder : BLApi.IOrder
 {
-    private IDal Dal = new Dal.DalList();
+    DalApi.IDal? Dal = DalApi.Factory.Get();
 
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {

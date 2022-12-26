@@ -25,6 +25,21 @@ public partial class AddUpdateProduct : Window
             input_product_instock.Text = pro.inStock.ToString();
             input_product_price.Text = pro.Price.ToString();
             addProductBtn.Visibility = Visibility.Hidden;
+            if (pro.Category == null)
+                throw new PLEmptyCategoryField();
+            if (pro.Name == "")
+                throw new PLEmptyNameField();
+            if (pro.inStock.ToString() == "")
+                throw new PLEmptyAmountField();
+            if (pro.Price.ToString() == "")
+                throw new PLEmptyPriceField();
+            if (pro.Price < 0 || pro.Price > 100000 || pro.Price.GetType().ToString() != "double")
+                throw new PlInvalidValueExeption("price");
+            if (pro.Name.GetType().ToString() != "string" || pro.Name.Length > 50)
+                throw new PlInvalidValueExeption("name");
+             if (pro.inStock.GetType().ToString() != "int" || pro.inStock>5000000)
+                throw new PlInvalidValueExeption("amount");
+
         }
         //else if() // if product is ordered do not show the delete btn
         else
@@ -46,14 +61,36 @@ public partial class AddUpdateProduct : Window
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
-        updateProductBtn.Visibility = Visibility.Hidden;
-        p.ID = 10;
-        p.Price = double.Parse(input_product_price.Text);
-        p.inStock = int.Parse(input_product_instock.Text);
-        p.Name = input_product_name.Text;
-        bl.product.AddProduct(p);
-        BOListWindow w = new BOListWindow(bl);
-        w.Show();
+        try
+        {
+            updateProductBtn.Visibility = Visibility.Hidden;
+            p.ID = 10;
+            p.Price = double.Parse(input_product_price.Text);
+            p.inStock = int.Parse(input_product_instock.Text);
+            p.Name = input_product_name.Text;
+            bl.product.AddProduct(p);
+            BOListWindow w = new BOListWindow(bl);
+            w.Show();
+        }
+        catch (BO.blInvalidAmountToken ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlInvalidPriceToken ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch (BO.BlInvalidNameToken ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+
+        }
     }
 
     private void updateProductBtn_Click(object sender, RoutedEventArgs e)

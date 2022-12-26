@@ -13,10 +13,21 @@ public partial class BOListWindow : Window
     private BO.Product p = new BO.Product();
     public BOListWindow(BLApi.IBL bl)
     {
-        InitializeComponent();
-        this.bl = bl;
-        categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        ProductsListview.ItemsSource = bl.product.GetProductList();
+        try
+        {
+            InitializeComponent();
+            this.bl = bl;
+            categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            ProductsListview.ItemsSource = bl.product.GetProductList();
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
     private void categorySelectorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
@@ -27,6 +38,10 @@ public partial class BOListWindow : Window
             ProductsListview.ItemsSource = list;
         }
         catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
         }
@@ -45,11 +60,11 @@ public partial class BOListWindow : Window
         catch (BO.BlNoEntitiesFound ex)
         {
             MessageBox.Show(ex.Message);
-        } 
+        }
         catch (BO.BlExceptionFailedToRead ex)
         {
             MessageBox.Show(ex.Message);
-        } 
+        }
         catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);

@@ -8,7 +8,7 @@ using DalList;
 
 namespace Dal
 {
-    sealed internal  class DalList : IDal
+    sealed internal class DalList : IDal
     {
         //private Lazy<DalList> instance { get; } = new Lazy<DalList>();
 
@@ -20,23 +20,30 @@ namespace Dal
         //private DalList()
         //{
         //}
-        static private Lazy<DalList> instance { get; set; } = null;
+
+        // stack overflow
+        // private static readonly Lazy<DalList> _Instance = 
+        //    new Lazy<DalList>(() => new DalList());
+        //
+
+        static private DalList? instance  = null;
         public static IDal Instance { get => GetInstance(); }
 
+        
         public IProduct Product => new DalProduct() { };
         public IOrder Order => new DalOrder() { };
         public IOrderItem OrderItem => new DalOrderItem() { };
-        private static readonly object padlock = new object();
+        //private static readonly object padlock = new object();
 
         private DalList() { }
         public static DalList GetInstance()
         {
-            lock (padlock)
+            lock (instance??=new DalList () )
             {
-                if (instance == null)
-                    instance = new Lazy<DalList>();
+                //if (instance == null)
+                //    instance = new DalList();
 
-                return instance.Value;
+                return instance;//??new DalList();
             }
 
         }

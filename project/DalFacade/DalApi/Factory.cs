@@ -22,8 +22,9 @@ public static class Factory
 
         Type? type = Type.GetType($"Dal.{dal}, {dal}")
             ?? throw new DalConfigException($"Class Dal.{dal} was not found in {dal}.dll");
-
-        return type.GetProperty("Instance", BindingFlags.Public | BindingFlags.Static)?
+        var x = type.GetProperty("Instance");
+        var x2 = type.GetProperty("Instance").GetValue(null);
+        return type.GetProperty("Instance")?
                    .GetValue(null) as IDal
             ?? throw new DalConfigException($"Class {dal} is not singleton or Instance property not found");
     }

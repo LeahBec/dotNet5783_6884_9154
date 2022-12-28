@@ -1,0 +1,14 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using DalApi;
+using Dal.DO;
+
+namespace Dal;
+
+    internal class DalProduct : IProduct
+    {
+    }
+

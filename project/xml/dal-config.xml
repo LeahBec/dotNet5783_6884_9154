@@ -5,5 +5,10 @@
 		<list>DalList</list>
 		<xml>DalXml</xml>
 	</dal-packages>
+	<ids>
+		<productId>100010</productId>
+		<orderId>500010</orderId>
+		<orderItemId>100010</orderItemId>
+	</ids>
 </config>
 

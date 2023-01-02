@@ -15,9 +15,9 @@ public static class Factory
         {
             Assembly.Load(dal ?? throw new DalConfigException($"Package {dal} is null"));
         }
-        catch (Exception)
+        catch (Exception e)
         {
-            throw new DalConfigException("Failed to load {dal}.dll package");
+            throw new DalConfigException($"Failed to load {dal}.dll package");
         }
 
         Type? type = Type.GetType($"Dal.{dal}, {dal}")

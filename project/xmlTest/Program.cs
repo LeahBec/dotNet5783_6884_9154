@@ -1,24 +1,25 @@
 ﻿using Dal.DO;
 using Dal;
-Dal.DalXml d = new Dal.DalXml();
+using DalApi;
+Dal.DalXml d =(DalXml) DalApi.Factory.Get();
 
-//Order order= new Order();
-//order.ID = 24;
-//order.CustomerName = "ttami";
-//order.CustomerAddress = null;
-//order.CustomerEmail = "ssuri";
-//order.OrderDate= null;
-//order.ShipDate= DateTime.Today;
-//order.DeliveryDate= null;
-////d.Order.Create(order);
+/*Order order = new Order();
+order.OrderID = 500025;
+order.CustomerName = "ttami";
+order.CustomerAdress = null;
+order.CustomerEmail = "ssuri";
+order.OrderDate= null;
+order.ShipDate= DateTime.Today;
+order.DeliveryDate= null;
+//d.Order.Create(order);
 
-////d.Order.Delete(3);
+//d.Order.Delete(3);
 
-//Console.WriteLine(d.Order.Read());
+Console.WriteLine(d.Order.GetAll());
 
-//d.Order.Update(order);
+d.Order.Update(order);
 
-//Console.WriteLine("finish");
+Console.WriteLine("finish");*/
 
 
 Product product = new Product();

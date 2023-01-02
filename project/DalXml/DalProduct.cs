@@ -14,15 +14,22 @@ internal class DalProduct :IProduct
     {
         //XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<DO.Product>));
         //StreamReader reader = new StreamReader("../../../../Product.xml");
-     
-        //List<Product>? products = (List<DO.Product>?)xmlSerializer.Deserialize(reader);
 
-        XmlSerializer ser = new XmlSerializer(typeof(List<DO.Product>));
+        //List<Product>? products = (List<DO.Product>?)xmlSerializer.Deserialize(reader);
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "ArrayOfProduct";
+        // xRoot.Namespace = "http://www.cpandl.com";
+        xRoot.IsNullable = true;
+
+        XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
+
+
+        //XmlSerializer ser = new XmlSerializer(typeof(List<DO.Product>));
         StreamReader reader = new("..\\..\\..\\..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
 
-        XElement? rootConfig = XDocument.Load(@"..\..\xml\dal-config.xml").Root;
-        XElement? id = rootConfig.Element("productId");
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
+        XElement? id = rootConfig.Element("ids").Element("productId");
         int productId = Convert.ToInt32(id?.Value);
         productId++;
         id.Value = productId.ToString();

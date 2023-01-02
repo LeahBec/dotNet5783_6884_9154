@@ -12,12 +12,12 @@ internal class DalOrder : IOrder
 {
     public int Add(Order order)
     {
-        XElement? rootConfig = XDocument.Load(@"..\..\xml\dal-config.xml").Root;
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
         XElement? id = rootConfig?.Element("OrderID");
         int orderID = Convert.ToInt32(id?.Value);
         orderID++;
         id.Value = orderID.ToString();
-        rootConfig?.Save("../../xml/dal-config.xml");
+        rootConfig?.Save("../../../../xml/dal-config.xml");
         XElement o = new("order",
                         new XElement("OrderID", orderID),
                         new XElement("CustomerName", order.CustomerName),
@@ -34,12 +34,12 @@ internal class DalOrder : IOrder
     }
     public void Delete(int id)
     {
-        XElement? root = XDocument.Load("../../xml/Order.xml").Root;
+        XElement? root = XDocument.Load("../../../../xml/Order.xml").Root;
         XElement? order = root?.Elements("order")?.Where(o => o.Element("OrderID")?.Value == id.ToString()).FirstOrDefault();
         if (order == null)
             throw new NotImplementedException(); //
         order.Remove();
-        root?.Save("../../xml/Order.xml");
+        root?.Save("../../../../xml/Order.xml");
     }
 
     public Dal.DO.Order deepCopy(XElement? o)
@@ -62,7 +62,7 @@ internal class DalOrder : IOrder
 
     public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
-        XElement? root = XDocument.Load("../../xml/Order.xml")?.Root;
+        XElement? root = XDocument.Load("../../../../xml/Order.xml")?.Root;
         IEnumerable<XElement>? orderList = root?.Elements("Orders")?.Elements("order")?.ToList();
         List<Dal.DO.Order> orders = new List<Order>();
         foreach(var xOrder in orderList)
@@ -76,7 +76,7 @@ internal class DalOrder : IOrder
 
     public void Update(Order ord)
     {
-        XElement? root = XDocument.Load("../../xml/Order.xml").Root;
+        XElement? root = XDocument.Load("../../../../xml/Order.xml").Root;
         XElement? order = root?.Elements("order")?.Where(o => o.Element("OrderID")?.Value == ord.OrderID.ToString()).FirstOrDefault();
         if (order == null)
             throw new NotImplementedException(); //
@@ -90,8 +90,8 @@ internal class DalOrder : IOrder
                         new XElement("DeliveryDate", ord.DeliveryDate));
         order.Remove();
         root?.Add(o);
-        root?.Save("../../xml/Order.xml");
-        throw new NotImplementedException();
+        root?.Save("../../../../xml/Order.xml");
+       // throw new NotImplementedException();
     }
 }
 

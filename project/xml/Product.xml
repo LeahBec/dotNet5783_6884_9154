@@ -1,59 +1,59 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Products>
+<?xml version="1.0" encoding="utf-8"?>
+<Products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>0</ID>
-    <Price>324</Price>
+    <ID>100000</ID>
     <Name>dsf</Name>
-    <inStock>423</inStock>
-    <caragory>pants</caragory>
-  </Product>
-  <Product>
-    <ID>0</ID>
-    <Price>454</Price>
-    <Name>rfe</Name>
-    <inStock>35</inStock>
-    <caragory>tie</caragory>
-  </Product>
-  <Product>
-    <ID>0</ID>
+    <Category>Cameras</Category>
     <Price>324</Price>
+    <InStock>23</InStock>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>rfe</Name>
+    <Category>Drones</Category>
+    <Price>454</Price>
+    <InStock>42</InStock>
+  </Product>
+  <Product>
+    <ID>100002</ID>
     <Name>ttt</Name>
-    <inStock>24</inStock>
-    <caragory>pants</caragory>
+    <Category>Drones</Category>
+    <Price>324</Price>
+    <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>0</ID>
-    <Price>55</Price>
+    <ID>100003</ID>
     <Name>rte</Name>
-    <inStock>5</inStock>
-    <caragory>tie</caragory>
+    <Category>Drones</Category>
+    <Price>55</Price>
+    <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>111111</ID>
+    <ID>100004</ID>
+    <Name>nesdfw</Name>
+    <Category>Drones</Category>
     <Price>5.5</Price>
-    <Name>new</Name>
-    <inStock>15</inStock>
-    <caragory>Cameras</caragory>
+    <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>111121</ID>
-    <Price>5.5</Price>
-    <Name>new</Name>
-    <inStock>15</inStock>
-    <caragory>Cameras</caragory>
+    <ID>100005</ID>
+    <Name>sss</Name>
+    <Category>Drones</Category>
+    <Price>55555.5</Price>
+    <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>111131</ID>
-    <Price>5.5</Price>
-    <Name>new</Name>
-    <inStock>15</inStock>
-    <caragory>Cameras</caragory>
+    <ID>100007</ID>
+    <Name>updated</Name>
+    <Category>Cameras</Category>
+    <Price>480</Price>
+    <InStock>15</InStock>
   </Product>
   <Product>
-    <ID>111131</ID>
+    <ID>100006</ID>
+    <Name>fff</Name>
+    <Category>Drones</Category>
     <Price>5.5</Price>
-    <Name>new</Name>
-    <inStock>15</inStock>
-    <caragory>Cameras</caragory>
+    <InStock>56</InStock>
   </Product>
 </Products>

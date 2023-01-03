@@ -14,21 +14,25 @@ internal class DalOrder : IOrder
     {
         XElement? orderElement = XDocument.Load(@"../../../../xml/Order.xml").Root;
         XElement? orderId = XDocument.Load(@"../../../../xml/dal-config.xml").Root;
-        orderId = orderId?.Element("ids")?.Element("orderId");
-        XElement? product = new XElement("order",
-        new XElement("OrderID", orderId),
+        XElement? orderId1 = orderId?.Element("ids")?.Element("orderId");
+        XElement? order1 = new XElement("order",
+        new XElement("OrderID", orderId1),
         new XElement("CustomerName", order.CustomerName),
         new XElement("CustomerAdress", order.CustomerAdress),
         new XElement("CustomerEmail", order.CustomerEmail),
         new XElement("ShipDate", order.ShipDate));
         new XElement("DeliveryDate", order.DeliveryDate);
         new XElement("OrderDate", order.OrderDate);
-        orderElement?.Add(product);
+        orderElement?.Add(order1);
         orderElement?.Save(@"../../../../xml/Order.xml");
-        var id = int.Parse(orderId.Value);
+        //var id = int.Parse(orderId.Value);
+        int id = int.Parse(orderId1.Value);
         id++;
+        
+        //orderId.SetAttributeValue("orderId", id);
+        orderId1.Value = Convert.ToString( id);
         //orderId = (XElement)id;
-        orderId?.Save(@"../../../../xml/dal-config.xml");
+        //orderId?.Save(@"../../../../xml/dal-config.xml");
         /* var doc = XElement.Load(fileName);
          var saveGame = doc
        .Element("savegames")

@@ -14,74 +14,96 @@ internal class DalOrderItem : IOrderItem
 {
     public int Add(OrderItem oi)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        StreamWriter writer = new StreamWriter("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? orderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
-        XElement? rootConfig = XDocument.Load(@"..\..\xml\dal-config.xml").Root;
-        XElement? id = rootConfig?.Element("ID");
-        int orderItemId = Convert.ToInt32(id?.Value);
-        orderItemId++;
-        id.Value = orderItemId.ToString();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> orderItems = (List<DO.OrderItem>)ser.Deserialize(reader);
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
+        XElement? id = rootConfig.Element("ids").Element("orderItemId");
+        int oiId = Convert.ToInt32(id?.Value);
+        oiId++;
+        id.Value = oiId.ToString();
         orderItems?.Add(oi);
-        xmlSerializer.Serialize(writer, orderItems);
+        reader.Close();
+        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\OrderItem.xml");
+        ser.Serialize(writer, orderItems);
+        writer.Close();
         return oi.ID;
     }
 
     public void Delete(int id)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        StreamWriter writer = new StreamWriter("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? OrderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> orderItems = (List<DO.OrderItem>)ser.Deserialize(reader);
         reader.Close();
-        OrderItem pro = OrderItems.Where(oi => oi.ID==id).FirstOrDefault();
-        OrderItems.Remove(pro);
-        xmlSerializer.Serialize(writer, OrderItems);
+        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\OrderItem.xml");
+        OrderItem oi = orderItems.Where(p => p.ID == id).FirstOrDefault();
+        orderItems.Remove(oi);
+        ser.Serialize(writer, orderItems);
         writer.Close();
-        throw new NotImplementedException();
     }
 
     public OrderItem Get(Func<OrderItem, bool> func)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? orderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
-        return (func == null ? orderItems : orderItems.Where(func).ToList()).FirstOrDefault();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
+        reader.Close();
+        return (func == null ? ois : ois.Where(func).ToList()).FirstOrDefault();
     }
 
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool> func = null)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? orderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
-        return orderItems;
-        throw new NotImplementedException();
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
+        reader.Close();
+        return ois;
+        //throw new NotImplementedException();
     }
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? OrderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
+        reader.Close();
         List<OrderItem>? ans = new List<OrderItem>();
-        ans = (List<OrderItem>)OrderItems.Where(oit => oit.OrderID==orderId);
+        ans = (List<OrderItem>)ois.Where(oit => oit.OrderID==orderId);
         return ans;
     }
 
     public void Update(OrderItem oi)
     {
-        StreamReader reader = new StreamReader("../../OrderItem.xml");
-        StreamWriter writer = new StreamWriter("../../OrderItem.xml");
-        XmlSerializer xmlSerializer = new XmlSerializer(typeof(OrderItem));
-        List<OrderItem>? OrderItems = (List<OrderItem>?)xmlSerializer.Deserialize(reader);
+        XmlRootAttribute xRoot = new XmlRootAttribute();
+        xRoot.ElementName = "orderItems";
+        xRoot.IsNullable = true;
+        XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
+        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
+        List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
         reader.Close();
-        OrderItem orit = OrderItems.Where(oit => oit.ID==oi.ID).FirstOrDefault();
-        OrderItems.Remove(orit);
-        OrderItems.Add(orit);
-        xmlSerializer.Serialize(writer, OrderItems);
+        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\OrderItem.xml");
+        OrderItem orderItem = ois.Where(p => p.ID == oi.ID).FirstOrDefault();
+        ois.Remove(orderItem);
+        ois.Add(oi);
+        ser.Serialize(writer, ois);
         writer.Close();
-        throw new NotImplementedException();
     }
 }
 

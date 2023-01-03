@@ -10,6 +10,18 @@ using System.Xml.Linq;
 using System.Xml.Serialization;
 internal class DalProduct :IProduct
 {
+    /*    public int Add(DO.Product p)
+        {
+
+            //StreamReader sr = new StreamReader(@"..\xml\Product.xml");
+            //XmlSerializer serializer = new XmlSerializer(typeof(DO.Product));
+            //StreamWriter sw = new StreamWriter(@"..\xml\Product.xml");
+            //serializer.Serialize(sw, p);
+            //sr.Close();
+            //sw.Close();
+        }
+    */
+
     public int Add(DO.Product pro)
     {
         //XmlSerializer xmlSerializer = new XmlSerializer(typeof(List<DO.Product>));
@@ -79,7 +91,7 @@ internal class DalProduct :IProduct
    
     public IEnumerable<Product> GetAll(Func<Product, bool> func = null)
     {
-        StreamReader reader = new StreamReader("../../Product.xml");
+        StreamReader reader = new StreamReader("../../../../../Product.xml");
         XmlSerializer xmlSerializer = new XmlSerializer(typeof(Product));
         List<Product>? products = (List<Product>?)xmlSerializer.Deserialize(reader);
         return products;

@@ -14,20 +14,21 @@ internal class DalOrderItem : IOrderItem
 {
     public int Add(OrderItem oi)
     {
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\config.xml").Root;
+        XElement? id = rootConfig?.Element("orderItemId");
+        int oiId = Convert.ToInt32(id?.Value);
+        oi.ID = oiId;
+        oiId++;
+        id.Value = oiId.ToString();
+        rootConfig?.Save("../../../../xml/config.xml");
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "orderItems";
         xRoot.IsNullable = true;
-
         XmlSerializer ser = new XmlSerializer(typeof(List<OrderItem>), xRoot);
         StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
         List<DO.OrderItem> orderItems = (List<DO.OrderItem>)ser.Deserialize(reader);
-        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
-        XElement? id = rootConfig.Element("ids").Element("orderItemId");
-        int oiId = Convert.ToInt32(id?.Value);
-        oiId++;
-        id.Value = oiId.ToString();
-        orderItems?.Add(oi);
         reader.Close();
+        orderItems?.Add(oi);
         StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\OrderItem.xml");
         ser.Serialize(writer, orderItems);
         writer.Close();
@@ -72,7 +73,6 @@ internal class DalOrderItem : IOrderItem
         List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
         reader.Close();
         return ois;
-        //throw new NotImplementedException();
     }
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
@@ -84,9 +84,7 @@ internal class DalOrderItem : IOrderItem
         StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\OrderItem.xml");
         List<DO.OrderItem> ois = (List<DO.OrderItem>)ser.Deserialize(reader);
         reader.Close();
-        List<OrderItem>? ans = new List<OrderItem>();
-        ans = (List<OrderItem>)ois.Where(oit => oit.OrderID==orderId);
-        return ans;
+        return ois.Where(oit => oit.OrderID==orderId).ToList();
     }
 
     public void Update(OrderItem oi)

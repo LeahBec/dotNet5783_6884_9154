@@ -7,16 +7,23 @@ using System.Text;
 Dal.DalXml d = (DalXml)DalApi.Factory.Get();
 
 /*Order order = new Order();
-order.CustomerName = "blablalba";
-order.CustomerAdress = "ajskdhf";
+order.CustomerName = "ppp";
+order.CustomerAdress = "kkk";
 order.CustomerEmail = "lkj";
 order.OrderDate = null;
 order.ShipDate = null;
 order.DeliveryDate = null;
 d?.Order.Add(order);*/
 //d.Order.Delete(500025);
-/*var a = d.Order.Get(a => a.OrderID == 500002);*/
-/*var a = d.Order.GetAll();*/
+/*var a = d.Order.Get(a => a.OrderID == 500002);
+var a = d.Order.GetAll();*/
+/*
+OrderItem oi = new OrderItem();
+oi.OrderID = 500020;
+oi.ProductID = 100012;
+oi.Price = 8888;
+oi.Amount = 7;
+var a = d.OrderItem.Add(oi);*/
 
 Console.WriteLine("success");
 
@@ -30,15 +37,14 @@ d.Order.Update(order);
 Console.WriteLine("finish");*/
 
 //var a = d.Product.GetAll();
-Product product = new Product();
-product.ID = 100007;
-product.Name = "updated";
-product.Price = (float)480;
+/*Product product = new Product();
+product.Name = "id";
+product.Price = (float)88;
 product.InStock = 15;
-product.Category = DalFacade.DO.eCategory.Cameras;
+product.Category = DalFacade.DO.eCategory.SmartWatches;
 
-d.Product.updateAmount(100006, 56);
-
+d.Product.Add(product);
+*/
 Console.WriteLine("success");
 
 /*using System.Text;

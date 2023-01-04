@@ -13,6 +13,17 @@ internal class DalProduct :IProduct
 
     public int Add(DO.Product pro)
     {
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\config.xml").Root;
+        XElement? id = rootConfig?.Element("productId");
+        int pId = Convert.ToInt32(id?.Value);
+        pro.ID = pId;
+        pId++;
+        id.Value = pId.ToString();
+        rootConfig?.Save("../../../../xml/config.xml");
+
+
+
+
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
@@ -20,20 +31,12 @@ internal class DalProduct :IProduct
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
         StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
-        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
-        XElement? id = rootConfig.Element("ids").Element("productId");
-        int productId = Convert.ToInt32(id?.Value);
-        productId++;
-        id.Value = productId.ToString();
         products?.Add(pro);
         reader.Close();
         StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\Product.xml");
         ser.Serialize(writer, products);
         writer.Close();
         return pro.ID;
-
-
-
     }
 
     public void Delete(int id)
@@ -50,7 +53,6 @@ internal class DalProduct :IProduct
         products.Remove(pro);
         ser.Serialize(writer, products);
         writer.Close();
-       // throw new NotImplementedException();
     }
 
     public Product Get(Func<Product, bool> func)
@@ -117,7 +119,6 @@ internal class DalProduct :IProduct
         products.Add(prod);
         ser.Serialize(writer, products);
         writer.Close();
-      //  throw new NotImplementedException();
     }
 }
 

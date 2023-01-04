@@ -1,2 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<root></root>
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ids>
+  <productId>100000</productId>
+  <orderId>500000</orderId>
+  <orderItemId>100000</orderItemId>
+</ids>

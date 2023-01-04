@@ -1,3 +1,12 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Orders>
+  <order>
+    <OrderID>500016</OrderID>
+    <CustomerName>ppp</CustomerName>
+    <CustomerAdress>kkk</CustomerAdress>
+    <CustomerEmail>lkj</CustomerEmail>
+    <ShipDate />
+    <DeliveryDate />
+    <OrderDate />
+  </order>
 </Orders>

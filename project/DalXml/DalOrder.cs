@@ -12,70 +12,26 @@ internal class DalOrder : IOrder
 {
     public int Add(Order order)
     {
+        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\config.xml").Root;
+        XElement? id = rootConfig?.Element("orderId");
+        int oId = Convert.ToInt32(id?.Value);
+        order.OrderID = oId;
+        oId++;
+        id.Value = oId.ToString();
+        rootConfig?.Save("../../../../xml/config.xml");
         XElement? orderElement = XDocument.Load(@"../../../../xml/Order.xml").Root;
-        XElement? orderId = XDocument.Load(@"../../../../xml/dal-config.xml").Root;
-        XElement? orderId1 = orderId?.Element("ids")?.Element("orderId");
         XElement? order1 = new XElement("order",
-        new XElement("OrderID", orderId1),
+        new XElement("OrderID", order.OrderID),
         new XElement("CustomerName", order.CustomerName),
         new XElement("CustomerAdress", order.CustomerAdress),
         new XElement("CustomerEmail", order.CustomerEmail),
-        new XElement("ShipDate", order.ShipDate));
-        new XElement("DeliveryDate", order.DeliveryDate);
-        new XElement("OrderDate", order.OrderDate);
+        new XElement("ShipDate", order.ShipDate),
+        new XElement("DeliveryDate", order.DeliveryDate),
+        new XElement("OrderDate", order.OrderDate));
         orderElement?.Add(order1);
         orderElement?.Save(@"../../../../xml/Order.xml");
-        //var id = int.Parse(orderId.Value);
-        int id = int.Parse(orderId1.Value);
-        id++;
-        
-        //orderId.SetAttributeValue("orderId", id);
-        orderId1.Value = Convert.ToString( id);
-        //orderId = (XElement)id;
-        //orderId?.Save(@"../../../../xml/dal-config.xml");
-        /* var doc = XElement.Load(fileName);
-         var saveGame = doc
-       .Element("savegames")
-       .Elements("savegame")
-       .Where(e => e.Element("IdNumber").Value == "2")
-       .Single();
-
-         saveGame.Element("balance").Value = "50";*/
-        /*
-                doc.Save(fileName);*/
         return order.OrderID;
-
-        /*       XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\dal-config.xml").Root;
-               XElement? id = rootConfig?.Element("OrderID");
-               int orderID = Convert.ToInt32(id?.Value);
-               orderID++;
-               id.Value = orderID.ToString();
-               rootConfig?.Save("../../../../xml/dal-config.xml");
-               XElement o = new("order",
-                               new XElement("OrderID", orderID),
-                               new XElement("CustomerName", order.CustomerName),
-                               new XElement("CustomerEmail", order.CustomerEmail),
-                               new XElement("CustomerAddress", order.CustomerAdress),
-                               new XElement("OrderDate", order.OrderDate),
-                               new XElement("ShipDate", order.ShipDate),
-                               new XElement("DeliveryDate", order.DeliveryDate));
-               XElement? root = XDocument.Load("../../xml/Order.xml").Root;
-               root?.Add(o);
-               root?.Save("../../xml/Order.xml");
-               return order.OrderID;
-               //throw new NotImplementedException();*/
     }
-    /*    public void Delete(int id)
-        {
-            XElement? root = XDocument.Load("../../../../xml/Order.xml").Root;
-            XElement? order = root?.Elements("order")?.
-                Where(o => o.Element("OrderID")?.Value == id.ToString()).FirstOrDefault();
-            if (order == null)
-                throw new NotImplementedException(); //
-            order.Remove();
-            root?.Save("../../../../xml/Order.xml");
-        }*/
-
     public void Delete(int id)
     {
         XElement? root = XDocument.Load("../../../../xml/Order.xml").Root;
@@ -132,7 +88,6 @@ internal class DalOrder : IOrder
         order.Remove();
         root?.Add(o);
         root?.Save("../../../../xml/Order.xml");
-        // throw new NotImplementedException();
     }
 }
 

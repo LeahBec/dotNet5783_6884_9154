@@ -6,35 +6,35 @@ using System.Text;
 
 Dal.DalXml d = (DalXml)DalApi.Factory.Get();
 
-/*Order order = new Order();
+Order order = new Order();
 order.CustomerName = "ppp";
 order.CustomerAdress = "kkk";
 order.CustomerEmail = "lkj";
-order.OrderDate = null;
-order.ShipDate = null;
-order.DeliveryDate = null;
-d?.Order.Add(order);*/
+order.OrderDate = DateTime.Now;
+order.ShipDate = new DateTime(2023 - 01 - 19) ;
+order.DeliveryDate = new DateTime(2023 - 02 - 06);
+d?.Order.Add(order);
 //d.Order.Delete(500025);
-/*var a = d.Order.Get(a => a.OrderID == 500002);
-var a = d.Order.GetAll();*/
-/*
-OrderItem oi = new OrderItem();
+var a = d.Order.Get(a => a.OrderID == 500002);
+var b = d.Order.GetAll();
+
+/*OrderItem oi = new OrderItem();
 oi.OrderID = 500020;
 oi.ProductID = 100012;
 oi.Price = 8888;
-oi.Amount = 7;
-var a = d.OrderItem.Add(oi);*/
+oi.Amount = 7;*/
+//var a = d.Order.GetAll();
 
 Console.WriteLine("success");
 
 
 //d.Order.Delete(3);/*
 /*var a = d.Order.GetAll();
-Console.WriteLine(d.Order.GetAll());*/
-/*
-d.Order.Update(order);
+Console.WriteLine(a.ElementAt(0).ToString());*/
 
-Console.WriteLine("finish");*/
+//d.Order.Update(order);
+
+Console.WriteLine("finish");
 
 //var a = d.Product.GetAll();
 /*Product product = new Product();

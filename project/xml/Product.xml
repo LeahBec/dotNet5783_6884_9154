@@ -22,13 +22,6 @@
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>100007</ID>
-    <Name>updated</Name>
-    <Category>Cameras</Category>
-    <Price>480</Price>
-    <InStock>15</InStock>
-  </Product>
-  <Product>
     <ID>100006</ID>
     <Name>fff</Name>
     <Category>Drones</Category>
@@ -55,5 +48,19 @@
     <Category>Drones</Category>
     <Price>22</Price>
     <InStock>789</InStock>
+  </Product>
+  <Product>
+    <ID>100000</ID>
+    <Name>nothing</Name>
+    <Category>Headphones</Category>
+    <Price>45</Price>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>100007</ID>
+    <Name>updatii</Name>
+    <Category>Cameras</Category>
+    <Price>480</Price>
+    <InStock>54</InStock>
   </Product>
 </Products>

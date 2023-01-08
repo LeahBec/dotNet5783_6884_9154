@@ -151,7 +151,7 @@ internal class BlOrder : BLApi.IOrder
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {
@@ -199,7 +199,7 @@ internal class BlOrder : BLApi.IOrder
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {

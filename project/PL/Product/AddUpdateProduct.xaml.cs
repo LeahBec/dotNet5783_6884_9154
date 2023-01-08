@@ -18,14 +18,12 @@ public partial class AddUpdateProduct : Window
         {
             InitializeComponent();
             this.bl = bl;
-            this.pro = pro;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             if (pro.ID != 0)
             {
-                categorySelectorBox.SelectedItem = pro.Category;
-                input_product_name.Text = pro.Name;
-                input_product_instock.Text = pro.inStock.ToString();
-                input_product_price.Text = pro.Price.ToString();
+                BO.Product prod = bl.product.GetProductCustomer(pro.ID);
+                this.pro = prod;
+                this.DataContext = this.pro;
                 addProductBtn.Visibility = Visibility.Hidden;
                 if (pro.Category == null)
                     throw new PLEmptyCategoryField();
@@ -46,9 +44,7 @@ public partial class AddUpdateProduct : Window
             //else if() // if product is ordered do not show the delete btn
             else
             {
-                input_product_price.Text = "0";
-                input_product_instock.Text = "0";
-                categorySelectorBox.Text = "None";
+                this.DataContext = this.pro;
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
@@ -71,9 +67,10 @@ public partial class AddUpdateProduct : Window
         {
             updateProductBtn.Visibility = Visibility.Hidden;
             p.ID = 10;
-            p.Price = double.Parse(input_product_price.Text);
-            p.inStock = int.Parse(input_product_instock.Text);
-            p.Name = input_product_name.Text;
+            p.Price = this.pro.Price;
+            p.inStock = this.pro.inStock;
+            p.Name = this.pro.Name;
+            p.Category = this.pro.Category;
             bl.product.AddProduct(p);
             BOListWindow w = new BOListWindow(bl);
             w.Show();
@@ -108,7 +105,7 @@ public partial class AddUpdateProduct : Window
             pro.inStock = int.Parse(input_product_instock.Text);
             pro.Name = input_product_name.Text;
             pro.Category = (BO.Category)categorySelectorBox.SelectedItem;
-            bl.product.Update(pro);
+            bl.product.Update(pro);/////
             BOListWindow w = new BOListWindow(bl);
             w.Show();
             this.Close();
@@ -132,11 +129,12 @@ public partial class AddUpdateProduct : Window
             MessageBox.Show(ex.Message);
 
         }
-        catch ( BO.BlEntityNotFoundException ex)
+        catch (BO.BlEntityNotFoundException ex)
         {
             MessageBox.Show(ex.Message);
 
         }
+       
         catch ( BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
@@ -153,10 +151,7 @@ public partial class AddUpdateProduct : Window
             w.Show();
             this.Close();
         }
-        catch (BO.BlDefaultException ex)
-        {
-            MessageBox.Show(ex.Message);
-        }
+        
         catch (BO.BlProductExistsInAnOrder ex)
         {
             MessageBox.Show(ex.Message);
@@ -169,7 +164,10 @@ public partial class AddUpdateProduct : Window
         {
             MessageBox.Show(ex.Message);
         }
-     
+     catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 }
 

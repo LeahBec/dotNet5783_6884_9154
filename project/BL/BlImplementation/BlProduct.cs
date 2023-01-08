@@ -1,4 +1,6 @@
-﻿namespace BlImplementation;
+﻿using BO;
+
+namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
 {
     static Random rand = new Random();
@@ -82,11 +84,11 @@ internal class BlProduct : BLApi.IProduct
                 p.inStock = product.InStock;
                 return p;
             }
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {
@@ -116,7 +118,7 @@ internal class BlProduct : BLApi.IProduct
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {
@@ -139,7 +141,7 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.Price = (float)p.Price;
             DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
             DOProduct.InStock = p.inStock;
-            Dal.Product.Add(DOProduct);
+            Dal?.Product.Add(DOProduct);
         }
         catch (Exception) { throw new BO.BlDefaultException(""); }
     }
@@ -160,7 +162,7 @@ internal class BlProduct : BLApi.IProduct
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (BO.BlProductExistsInAnOrder)
         {
@@ -193,7 +195,7 @@ internal class BlProduct : BLApi.IProduct
     }
     public void Update(BO.Product p)
     {
-        try
+       try
         {
             if (p.ID <= 0)
                 throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
@@ -209,12 +211,29 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.Price = (float)p.Price;
             DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
             DOProduct.InStock = p.inStock;
-            Dal.Product.Update(DOProduct);
+            Dal?.Product.Update(DOProduct);
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("product not found");
         }
+        catch (BO.BlInvalidIdToken)
+        {
+            throw new BO.BlInvalidIdToken("invalid id token");
+        }
+        catch (BO.BlInvalidNameToken)
+        {
+            throw new BO.BlInvalidNameToken("invalid name token");
+        }
+        catch (BO.BlInvalidPriceToken)
+        {
+            throw new BO.BlInvalidPriceToken("invalid price token");
+        }
+        catch (BO.blInvalidAmountToken)
+        {
+            throw new BO.blInvalidAmountToken("invalid amount token");
+        }
+
         catch (Exception)
         {
             throw new BO.BlDefaultException("unexpected error occured");

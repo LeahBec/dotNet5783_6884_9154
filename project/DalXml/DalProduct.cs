@@ -1,6 +1,6 @@
 ﻿
 namespace Dal;
-
+//using BO;
 using Dal.DO;
 using DalApi;
 using System;
@@ -21,9 +21,6 @@ internal class DalProduct :IProduct
         id.Value = pId.ToString();
         rootConfig?.Save("../xml/config.xml");
 
-
-
-
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
@@ -31,6 +28,9 @@ internal class DalProduct :IProduct
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
         StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
+        Product p = products.Where(p=> p.ID == pro.ID).FirstOrDefault();
+        if (p.ID > 0)
+            throw new xmlEntityAlreadyExistException("this product already exists");
         products?.Add(pro);
         reader.Close();
         StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
@@ -50,6 +50,8 @@ internal class DalProduct :IProduct
         reader.Close();
         StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==id).FirstOrDefault();
+        if (pro.ID == 0)
+            throw new xmlExceptionNoMatchingItems();
         products.Remove(pro);
         ser.Serialize(writer, products);
         writer.Close();
@@ -64,7 +66,10 @@ internal class DalProduct :IProduct
         StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
-        return (func == null ? products : products.Where(func).ToList()).FirstOrDefault();
+        var pro = products.Where(func).FirstOrDefault();
+        if(pro.ID == 0)
+            throw new xmlExceptionNoMatchingItems();
+        return (func == null ? products.FirstOrDefault() : pro);
     }
 
    
@@ -77,8 +82,9 @@ internal class DalProduct :IProduct
         StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
+        if (products.Count() == 0)
+            throw new xmlNoEntitiesFound("there are no products");
         return products;
-        throw new NotImplementedException();
     }
 
    
@@ -95,6 +101,11 @@ internal class DalProduct :IProduct
         reader.Close();
         StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==product.ID).FirstOrDefault();
+        if (pro.ID == 0)
+            throw new xmlExceptionNoMatchingItems();
+        if (product.InStock < 0)
+            throw new xmlInvalidAmountToken("invalid amount");
+
         products.Remove(pro);
         products.Add(product);
         ser.Serialize(writer, products);
@@ -104,6 +115,7 @@ internal class DalProduct :IProduct
     
     public void updateAmount(int id, int amount)
     {
+        if (amount < 0) throw new xmlInvalidAmountToken("invalid amount");
         XmlRootAttribute xRoot = new XmlRootAttribute();
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
@@ -113,6 +125,7 @@ internal class DalProduct :IProduct
         reader.Close();
         StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==id).FirstOrDefault();
+        if (pro.ID == 0) throw new xmlExceptionNoMatchingItems();
         Product prod = pro;
         prod.InStock = amount;
         products.Remove(pro);

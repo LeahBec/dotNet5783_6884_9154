@@ -39,7 +39,7 @@ internal class BlCart : ICart
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }catch (BO.BlOutOfStockException)
         {
             throw new BO.BlOutOfStockException();
@@ -108,7 +108,7 @@ internal class BlCart : ICart
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {
@@ -151,7 +151,7 @@ internal class BlCart : ICart
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new BO.BlEntityNotFoundException();
+            throw new BO.BlEntityNotFoundException("");
         }
         catch (Exception)
         {

@@ -1,52 +1,54 @@
-﻿namespace BO;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Dal;
 /// <summary>
 /// The exception will be scheduled when the required object is not found
 /// </summary>
 
-/*public class BlEntityNotFoundException : Exception
+public class xmlEntityNotFoundException : Exception
 {
-    public BlEntityNotFoundException(DalApi.ExceptionObjectNotFound? inner = null) : base("entity not found", inner) { }
+    public xmlEntityNotFoundException(DalApi.ExceptionObjectNotFound? inner = null) : base("entity not found", inner) { }
     public override string Message =>
                     "entity not found";
-}*/
-public class BlEntityNotFoundException : Exception
-{
-    public readonly string msg;
-    public BlEntityNotFoundException(string m) { msg = m; }
-    public override string Message => msg;
 }
 /// <summary>
 /// The exception will be scheduled when the object is already exist
 /// </summary>
 
-public class BlEntityAlreadyExistException : Exception
+public class xmlEntityAlreadyExistException : Exception
 {
-    public BlEntityAlreadyExistException(Exception inner) : base("entity already exists", inner) { }
-    public override string Message => "entity already exists";
+    public readonly string msg;
+    public xmlEntityAlreadyExistException(string m) { msg = m; }
+    public override string Message => msg;
 }
 /// <summary>
 /// The exception will be scheduled when no entities found
 /// </summary>
 
-public class BlNoEntitiesFound : Exception
+public class xmlNoEntitiesFound : Exception
 {
     public readonly string msg;
-    public BlNoEntitiesFound(string m) { msg = m; }
+    public xmlNoEntitiesFound(string m) { msg = m; }
     public override string Message => msg;
+
 }
-public class BlOutOfStockException : Exception
+public class xmlOutOfStockException : Exception
 {
 
-    public BlOutOfStockException() : base("product is out of stock") { }
+    public xmlOutOfStockException() : base("product is out of stock") { }
     public override string Message => ("product is out of stock");
 }
 
 /// <summary>
 /// The exception will be scheduled when invalid integer was taken
 /// </summary>
-public class BlInvalidIntegerException : Exception
+public class xmlInvalidIntegerException : Exception
 {
-    public BlInvalidIntegerException() : base("invalid input: not integer") { }
+    public xmlInvalidIntegerException() : base("invalid input: not integer") { }
     public override string Message => ("invalid input: not integer");
 }
 /// <summary>
@@ -61,80 +63,73 @@ public class CustomerDetailsAreInValid : Exception
 /// The exception will be scheduled when error occured while reading an
 /// entity list
 /// </summary>
-public class BlExceptionFailedToRead : Exception
+public class xmlExceptionFailedToRead : Exception
 {
-    public BlExceptionFailedToRead(DalApi.ExceptionFailedToRead? inner = null) : base("entity not found", inner) { }
+    public xmlExceptionFailedToRead(DalApi.ExceptionFailedToRead? inner = null) : base("entity not found", inner) { }
     public override string Message =>
                     "entity not found";
 }
 /// <summary>
 /// The exception will be scheduled when no matching items as the given one.
 /// </summary>
-public class BlExceptionNoMatchingItems : Exception
+public class xmlExceptionNoMatchingItems : Exception
 {
-    public BlExceptionNoMatchingItems(DalApi.ExceptionNoMatchingItems? inner = null) : base("no matching items", inner) { }
+    public xmlExceptionNoMatchingItems(DalApi.ExceptionNoMatchingItems? inner = null) : base("no matching items", inner) { }
     public override string Message =>
                     "no matching items";
 }
 /// <summary>
 /// The exception will be scheduled when invalid id was taken
 /// </summary>
-public class BlInvalidIdToken : Exception
+public class xmlInvalidIdToken : Exception
 {
     public readonly string msg;
-    public BlInvalidIdToken(string m) { msg = m; }
+    public xmlInvalidIdToken(string m) { msg = m; }
     public override string Message => msg;
 }/// <summary>
 /// The exception will be scheduled when invalid name was taken
 /// </summary>
-public class BlInvalidNameToken : Exception
+public class xmlInvalidNameToken : Exception
 {
     public readonly string msg;
-    public BlInvalidNameToken(string m) { msg = m; }
+    public xmlInvalidNameToken(string m) { msg = m; }
     public override string Message => msg;
 }/// <summary>
 /// The exception will be scheduled when order already delivered
 /// </summary>
-public class BlOrderAlreadyDelivered : Exception
+public class xmlOrderAlreadyDelivered : Exception
 {
     public readonly string msg;
-    public BlOrderAlreadyDelivered(string m) { msg = m; }
+    public xmlOrderAlreadyDelivered(string m) { msg = m; }
     public override string Message => msg;
 }
 /// <summary>
 /// The exception will be scheduled when unknown error was occured
 /// </summary>
-public class BlDefaultException : Exception
+public class xmlDefaultException : Exception
 {
     public readonly string msg;
-    public BlDefaultException(string m) { msg = m; }
+    public xmlDefaultException(string m) { msg = m; }
     public override string Message => msg;
 }
 /// <summary>
 /// The exception will be scheduled when invalid price was taken
 /// </summary>
-public class BlInvalidPriceToken : Exception
+public class xmlInvalidPriceToken : Exception
 {
     public readonly string msg;
-    public BlInvalidPriceToken(string m) { msg = m; }
+    public xmlInvalidPriceToken(string m) { msg = m; }
     public override string Message => msg;
 }
-/// <summary>
-/// The exception will be scheduled when product already exists in an order
-/// </summary>
-public class BlProductExistsInAnOrder : Exception
-{
-    public readonly string msg;
-    public BlProductExistsInAnOrder(string m) { msg = m; }
-    public override string Message => msg;
-}
+
 /// <summary>
 /// The exception will be scheduled when invalid amount was taken
 /// </summary>
-public class blInvalidAmountToken : Exception
+public class xmlInvalidAmountToken : Exception
 {
     public readonly string msg;
-    public blInvalidAmountToken(string m) { msg = m; }
+    public xmlInvalidAmountToken(string m) { msg = m; }
     public override string Message => msg;
 }
+
 

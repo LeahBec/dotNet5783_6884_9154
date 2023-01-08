@@ -1,0 +1,55 @@
+﻿<Window x:Class="PL.orderListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="orderListWindow" Height="640" Width="800">
+
+    <Grid Name="MainGrid">
+        <Grid.RowDefinitions>
+
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid Name="UpGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="0"
+VerticalAlignment="Stretch" Width="auto">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions >
+        </Grid>
+        <Grid>
+            <Label Grid.Column="0" Margin="0,0,685,0" RenderTransformOrigin="0.504,0.087">
+               
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="0"/>
+                            <RotateTransform/>
+                            <TranslateTransform X="0"/>
+                        </TransformGroup>
+                
+            </Label>
+        </Grid>
+        <ListView Grid.Row="1" x:Name="OrdersListview" MouseDoubleClick="itemClicked" SelectionChanged="ProductsListview_SelectionChanged" FontFamily="Amatic SC" FontSize="16" Cursor="Hand">
+            <ListView.View>
+                <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="100"/>
+
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="category" Width="100"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="addOrderBtn" Content="Add new order" HorizontalAlignment="Center" Margin="0,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addOrderBtn_Click" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
+    </Grid>
+</Window>

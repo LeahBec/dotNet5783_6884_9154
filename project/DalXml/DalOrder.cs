@@ -25,9 +25,9 @@ internal class DalOrder : IOrder
         new XElement("CustomerName", order.CustomerName),
         new XElement("CustomerAdress", order.CustomerAdress),
         new XElement("CustomerEmail", order.CustomerEmail),
-        new XElement("ShipDate", order.ShipDate),
-        new XElement("DeliveryDate", order.DeliveryDate),
-        new XElement("OrderDate", order.OrderDate));
+        new XElement("ShipDate", order.ShipDate?.ToShortDateString()),
+        new XElement("DeliveryDate", order.DeliveryDate?.ToShortDateString()),
+        new XElement("OrderDate", order.OrderDate?.ToShortDateString()));
         orderElement?.Add(order1);
         orderElement?.Save(@"../../../../xml/Order.xml");
         return order.OrderID;

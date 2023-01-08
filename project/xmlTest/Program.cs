@@ -6,18 +6,19 @@ using System.Text;
 
 Dal.DalXml d = (DalXml)DalApi.Factory.Get();
 
-Order order = new Order();
+/*Order order = new Order();
 order.CustomerName = "ppp";
 order.CustomerAdress = "kkk";
 order.CustomerEmail = "lkj";
 order.OrderDate = DateTime.Now;
-order.ShipDate = new DateTime(2023 - 01 - 19) ;
+order.ShipDate = new DateTime(2023, 01,19) ;
 order.DeliveryDate = new DateTime(2023 - 02 - 06);
-d?.Order.Add(order);
+d?.Order.Add(order);*/
 //d.Order.Delete(500025);
 var a = d.Order.Get(a => a.OrderID == 500002);
 var b = d.Order.GetAll();
 
+Console.WriteLine(a.ToString());
 /*OrderItem oi = new OrderItem();
 oi.OrderID = 500020;
 oi.ProductID = 100012;

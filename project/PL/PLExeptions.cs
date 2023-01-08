@@ -4,13 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PL
-{
-    internal class PLExeptions
-    {
-    }
-}
-
+namespace PL;
 
 
 /// <summary>
@@ -23,8 +17,8 @@ public class PLEmptyNameField : Exception
     public override string Message =>
                     "please enter name";
 }/// <summary>
-/// The exception will be scheduled when the id field is empty
-/// </summary>
+ /// The exception will be scheduled when the id field is empty
+ /// </summary>
 
 public class PLEmptyIdField : Exception
 {
@@ -52,8 +46,8 @@ public class PLEmptyAmountField : Exception
     public override string Message =>
                     "please enter amount";
 }/// <summary>
-/// The exception will be scheduled when the category field is empty
-/// </summary>
+ /// The exception will be scheduled when the category field is empty
+ /// </summary>
 
 public class PLEmptyCategoryField : Exception
 {

@@ -13,13 +13,13 @@ internal class DalProduct :IProduct
 
     public int Add(DO.Product pro)
     {
-        XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\config.xml").Root;
+        XElement? rootConfig = XDocument.Load(@"..\xml\config.xml").Root;
         XElement? id = rootConfig?.Element("productId");
         int pId = Convert.ToInt32(id?.Value);
         pro.ID = pId;
         pId++;
         id.Value = pId.ToString();
-        rootConfig?.Save("../../../../xml/config.xml");
+        rootConfig?.Save("../xml/config.xml");
 
 
 
@@ -29,11 +29,11 @@ internal class DalProduct :IProduct
         xRoot.IsNullable = true;
 
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         products?.Add(pro);
         reader.Close();
-        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\Product.xml");
+        StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         ser.Serialize(writer, products);
         writer.Close();
         return pro.ID;
@@ -45,10 +45,10 @@ internal class DalProduct :IProduct
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
-        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\Product.xml");
+        StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==id).FirstOrDefault();
         products.Remove(pro);
         ser.Serialize(writer, products);
@@ -61,7 +61,7 @@ internal class DalProduct :IProduct
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
         return (func == null ? products : products.Where(func).ToList()).FirstOrDefault();
@@ -74,7 +74,7 @@ internal class DalProduct :IProduct
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
         return products;
@@ -90,10 +90,10 @@ internal class DalProduct :IProduct
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
-        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\Product.xml");
+        StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==product.ID).FirstOrDefault();
         products.Remove(pro);
         products.Add(product);
@@ -108,10 +108,10 @@ internal class DalProduct :IProduct
         xRoot.ElementName = "Products";
         xRoot.IsNullable = true;
         XmlSerializer ser = new XmlSerializer(typeof(List<Product>), xRoot);
-        StreamReader reader = new StreamReader("..\\..\\..\\..\\xml\\Product.xml");
+        StreamReader reader = new StreamReader("..\\xml\\Product.xml");
         List<DO.Product> products = (List<DO.Product>)ser.Deserialize(reader);
         reader.Close();
-        StreamWriter writer = new StreamWriter("..\\..\\..\\..\\xml\\Product.xml");
+        StreamWriter writer = new StreamWriter("..\\xml\\Product.xml");
         Product pro = products.Where(p => p.ID==id).FirstOrDefault();
         Product prod = pro;
         prod.InStock = amount;

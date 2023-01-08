@@ -6,7 +6,6 @@
 	<Nullable>enable</Nullable>
 	<UseWPF>true</UseWPF>
     <BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
-	<BaseOutputPath>$(SolutionDir)\bin\</BaseOutputPath>
 	<OutputPath>$(SolutionDir)\bin\</OutputPath>
 	<AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
 	<AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>

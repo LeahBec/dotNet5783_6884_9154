@@ -14,41 +14,47 @@ public partial class AddUpdateProduct : Window
 
     public AddUpdateProduct(BLApi.IBL bl, BO.Product pro)
     {
-        InitializeComponent();
-        this.bl = bl;
-        this.pro = pro;
-        categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-        if (pro.ID != 0)
+        try
         {
-            categorySelectorBox.SelectedItem = pro.Category;
-            input_product_name.Text = pro.Name;
-            input_product_instock.Text = pro.inStock.ToString();
-            input_product_price.Text = pro.Price.ToString();
-            addProductBtn.Visibility = Visibility.Hidden;
-            if (pro.Category == null)
-                throw new PLEmptyCategoryField();
-            if (pro.Name == "")
-                throw new PLEmptyNameField();
-            if (pro.inStock.ToString() == "")
-                throw new PLEmptyAmountField();
-            if (pro.Price.ToString() == "")
-                throw new PLEmptyPriceField();
-            if (pro.Price < 0 || pro.Price > 100000 || pro.Price.GetType().ToString() != "double")
-                throw new PlInvalidValueExeption("price");
-            if (pro.Name.GetType().ToString() != "string" || pro.Name.Length > 50)
-                throw new PlInvalidValueExeption("name");
-             if (pro.inStock.GetType().ToString() != "int" || pro.inStock>5000000)
-                throw new PlInvalidValueExeption("amount");
+            InitializeComponent();
+            this.bl = bl;
+            this.pro = pro;
+            categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            if (pro.ID != 0)
+            {
+                categorySelectorBox.SelectedItem = pro.Category;
+                input_product_name.Text = pro.Name;
+                input_product_instock.Text = pro.inStock.ToString();
+                input_product_price.Text = pro.Price.ToString();
+                addProductBtn.Visibility = Visibility.Hidden;
+                if (pro.Category == null)
+                    throw new PLEmptyCategoryField();
+                if (pro.Name == "")
+                    throw new PLEmptyNameField();
+                if (pro.inStock.ToString() == "")
+                    throw new PLEmptyAmountField();
+                if (pro.Price.ToString() == "")
+                    throw new PLEmptyPriceField();
+                if (pro.Price < 0 || pro.Price > 100000)
+                    throw new PlInvalidValueExeption("price");
+                if (pro.Name.GetType().Name != "String" || pro.Name.Length > 50)
+                    throw new PlInvalidValueExeption("name");
+                if (pro.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
+                    throw new PlInvalidValueExeption("amount");
 
-        }
-        //else if() // if product is ordered do not show the delete btn
-        else
+            }
+            //else if() // if product is ordered do not show the delete btn
+            else
+            {
+                input_product_price.Text = "0";
+                input_product_instock.Text = "0";
+                categorySelectorBox.Text = "None";
+                updateProductBtn.Visibility = Visibility.Hidden;
+                deleteProductBtn.Visibility = Visibility.Hidden;
+            }
+        }catch(Exception err)
         {
-            input_product_price.Text = "0";
-            input_product_instock.Text = "0";
-            categorySelectorBox.Text = "None";
-            updateProductBtn.Visibility = Visibility.Hidden;
-            deleteProductBtn.Visibility = Visibility.Hidden;
+            MessageBox.Show(err.Message);
         }
     }
 
@@ -143,6 +149,9 @@ public partial class AddUpdateProduct : Window
         try
         {
             bl.product.DeleteProduct(pro.ID);
+            BOListWindow w = new BOListWindow(bl);
+            w.Show();
+            this.Close();
         }
         catch (BO.BlDefaultException ex)
         {

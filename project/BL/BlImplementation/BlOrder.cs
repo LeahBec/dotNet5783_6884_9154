@@ -106,12 +106,18 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-            if (o.DeliveryDate != DateTime.MinValue)
+            DateTime d_ = (DateTime)o.DeliveryDate;
+            DateTime d2_ = DateTime.MinValue;
+            if (!d_.Equals(d2_))
+            {
                 throw new BO.BlInvalidIdToken("");
-            o.DeliveryDate = DateTime.Now;
+            }
+            double i_ = DateTime.Compare(d_, d2_);
+            if (i_ != 0)
+                throw new BO.BlInvalidIdToken("");
+            o.DeliveryDate = DateTime.UtcNow;
 
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();
@@ -123,7 +129,7 @@ internal class BlOrder : BLApi.IOrder
             order.CustomerEmail = o.CustomerEmail;
             order.CustomerName = o.CustomerName;
 
-            if (o.CustomerName != "" && o.DeliveryDate == DateTime.MinValue)
+            if (o.CustomerName != "")
             {
                 o.DeliveryDate = DateTime.Now;
 
@@ -137,12 +143,8 @@ internal class BlOrder : BLApi.IOrder
             }
             else
             {
-                if (o.CustomerName == "")
-                    throw new BO.BlInvalidNameToken("");
-                else
-                {
-                    throw new BO.BlOrderAlreadyDelivered("");
-                }
+
+                throw new BO.BlInvalidNameToken("");
             }
         }
         catch (DalApi.ExceptionFailedToRead)
@@ -165,8 +167,8 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-            if (o.ShipDate != DateTime.MinValue)
-                throw new BO.BlInvalidIdToken("");
+           /* if (o.ShipDate != DateTime.MinValue)
+                throw new BO.BlInvalidIdToken("");*/
             o.ShipDate = DateTime.Now;
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();
@@ -208,11 +210,26 @@ internal class BlOrder : BLApi.IOrder
         }
     }
     //bonus
-    public BO.Order UpdateOrderForManager(int id)
+    public BO.Order UpdateOrderForManager(BO.Order or)
     {
-        throw new NotImplementedException();
+        try
+        {
+            Dal.DO.Order o = new Dal.DO.Order();
+            o.OrderID = or.ID;
+            o.CustomerName = or.CustomerName;
+            o.OrderDate = or.OrderDate;
+            o.ShipDate = or.ShipDate;
+            o.DeliveryDate = or.DeiveryDate;
+            o.CustomerEmail = or.CustomerEmail;
+            o.CustomerAdress = or.CustomerAdress;
+            o.OrderID = or.ID;
+            Dal.Order.Update(o);
+        }
+        catch (DalApi.ExceptionFailedToRead)      ///////////////////////////
+        {
+            throw new BO.BlExceptionFailedToRead();//////////////////////////
+        }
+        return or; /////////////////////////////////////////////////////////
     }
-
-
 }
 

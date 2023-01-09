@@ -1,20 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Product>
-    <ID>100001</ID>
-    <Name>rfe</Name>
-    <Category>Drones</Category>
-    <Price>454</Price>
-    <InStock>42</InStock>
-  </Product>
-  <Product>
-    <ID>100002</ID>
-    <Name>ttt</Name>
-    <Category>Drones</Category>
-    <Price>324</Price>
-    <InStock>0</InStock>
-  </Product>
-  <Product>
     <ID>100004</ID>
     <Name>nesdfw</Name>
     <Category>Drones</Category>
@@ -22,24 +8,10 @@
     <InStock>0</InStock>
   </Product>
   <Product>
-    <ID>100006</ID>
-    <Name>fff</Name>
-    <Category>Drones</Category>
-    <Price>5.5</Price>
-    <InStock>56</InStock>
-  </Product>
-  <Product>
     <ID>101111</ID>
     <Name>updated</Name>
     <Category>Cameras</Category>
     <Price>480</Price>
-    <InStock>15</InStock>
-  </Product>
-  <Product>
-    <ID>100010</ID>
-    <Name>id</Name>
-    <Category>SmartWatches</Category>
-    <Price>88</Price>
     <InStock>15</InStock>
   </Product>
   <Product>
@@ -62,5 +34,40 @@
     <Category>Cameras</Category>
     <Price>480</Price>
     <InStock>54</InStock>
+  </Product>
+  <Product>
+    <ID>100010</ID>
+    <Name>tigidam</Name>
+    <Category>SmartWatches</Category>
+    <Price>88</Price>
+    <InStock>15</InStock>
+  </Product>
+  <Product>
+    <ID>100006</ID>
+    <Name>fff</Name>
+    <Category>Drones</Category>
+    <Price>5.5</Price>
+    <InStock>34</InStock>
+  </Product>
+  <Product>
+    <ID>100002</ID>
+    <Name>rrrrr</Name>
+    <Category>Drones</Category>
+    <Price>324</Price>
+    <InStock>0</InStock>
+  </Product>
+  <Product>
+    <ID>100001</ID>
+    <Name>cool tamar</Name>
+    <Category>Drones</Category>
+    <Price>454</Price>
+    <InStock>42</InStock>
+  </Product>
+  <Product>
+    <ID>100005</ID>
+    <Name>\zcx</Name>
+    <Category>Cameras</Category>
+    <Price>123</Price>
+    <InStock>1</InStock>
   </Product>
 </Products>

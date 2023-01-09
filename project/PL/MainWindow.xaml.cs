@@ -20,5 +20,12 @@ namespace PL
             w.Show();
             this.Close();
         }
+
+        private void displayAdminWindow(object sender, RoutedEventArgs e)
+        {
+            AdminWindow w = new AdminWindow(bl);
+            w.Show();
+            this.Close();
+        }
     }
 }

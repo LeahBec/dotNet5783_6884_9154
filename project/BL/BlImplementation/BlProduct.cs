@@ -143,7 +143,7 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.InStock = p.inStock;
             Dal?.Product.Add(DOProduct);
         }
-        catch (Exception) { throw new BO.BlDefaultException(""); }
+        catch (Exception err) { throw new BO.BlDefaultException(err.Message); }
     }
     public void DeleteProduct(int id)
     {

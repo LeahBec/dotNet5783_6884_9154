@@ -4,22 +4,21 @@ using System.Windows.Controls;
 
 namespace PL;
 using BLApi;
-using PL.Order;
-
 /// <summary>
 /// Interaction logic for BOListWindow.xaml
 /// </summary>
-public partial class orderListWindow : Window
+public partial class BOListWindow : Window
 {
     BLApi.IBL? bl = BLApi.Factory.get();
-    private BO.Order o = new BO.Order();
-    public orderListWindow(BLApi.IBL bl)
+    private BO.Product p = new BO.Product();
+    public BOListWindow(BLApi.IBL bl)
     {
         try
         {
             InitializeComponent();
             this.bl = bl;
-            OrdersListview.ItemsSource = bl.order.GetOrderList();
+            categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            ProductsListview.ItemsSource = bl.product.GetProductList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -30,17 +29,33 @@ public partial class orderListWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-   
+    private void categorySelectorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+        try
+        {
+            BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
+            var list = bl.product.GetListByCategory(cat);
+            ProductsListview.ItemsSource = list;
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+    }
 
-    private void addOrderBtn_Click(object sender, RoutedEventArgs e)
+    private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new orderWindow(bl, o);
+            Window window = new ProductWindow(bl, p, true);
             window.Show();
             InitializeComponent();
-            OrdersListview.ItemsSource = bl.order.GetOrderList();
+            ProductsListview.ItemsSource = bl.product.GetProductList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -61,12 +76,12 @@ public partial class orderListWindow : Window
         try
         {
             // p.ID = sender.AnchorItem.
-            o = bl.order.GetOrderDetails((OrdersListview.SelectedItem as BO.ProductForList).ID);
-            Window window = new orderWindow(bl, o);
+            p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
+            Window window = new ProductWindow(bl, p, true);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();
-            OrdersListview.ItemsSource = bl.product.GetProductList();
+            ProductsListview.ItemsSource = bl.product.GetProductList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {

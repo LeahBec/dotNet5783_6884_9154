@@ -6,18 +6,23 @@ namespace PL;
 /// <summary>
 /// Interaction logic for AddUpdateProduct.xaml
 /// </summary>
-public partial class AddUpdateProduct : Window
+public partial class ProductWindow : Window
 {
     BLApi.IBL? bl = BLApi.Factory.get();
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
 
-    public AddUpdateProduct(BLApi.IBL bl, BO.Product pro)
+    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool isCustomer)
     {
         try
         {
             InitializeComponent();
             this.bl = bl;
+            categorySelectorBox.IsReadOnly = isCustomer;
+            input_product_instock.IsReadOnly = isCustomer;
+            input_product_price.IsReadOnly = isCustomer;
+            input_product_name.IsReadOnly = isCustomer;
+
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             if (pro.ID != 0)
             {
@@ -72,7 +77,7 @@ public partial class AddUpdateProduct : Window
             p.Name = this.pro.Name;
             p.Category = this.pro.Category;
             bl.product.AddProduct(p);
-            BOListWindow w = new BOListWindow(bl);
+            AdminWindow w = new AdminWindow(bl);
             w.Show();
         }
         catch (BO.blInvalidAmountToken ex)
@@ -101,12 +106,12 @@ public partial class AddUpdateProduct : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            pro.Price = double.Parse(input_product_price.Text);
-            pro.inStock = int.Parse(input_product_instock.Text);
-            pro.Name = input_product_name.Text;
-            pro.Category = (BO.Category)categorySelectorBox.SelectedItem;
+            pro.Price = this.pro.Price;
+            pro.inStock = this.pro.inStock;
+            pro.Name = this.pro.Name;
+            pro.Category = this.pro.Category;
             bl.product.Update(pro);/////
-            BOListWindow w = new BOListWindow(bl);
+            AdminWindow w = new AdminWindow(bl);
             w.Show();
             this.Close();
         }
@@ -147,7 +152,7 @@ public partial class AddUpdateProduct : Window
         try
         {
             bl.product.DeleteProduct(pro.ID);
-            BOListWindow w = new BOListWindow(bl);
+            AdminWindow w = new AdminWindow(bl);
             w.Show();
             this.Close();
         }

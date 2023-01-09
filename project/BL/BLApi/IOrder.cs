@@ -9,7 +9,7 @@
         public BO.Order UpdateOrderShipping(int id);
         public BO.Order UpdateOrderDelivery(int id);
         //BONUS.
-        public BO.Order UpdateOrderForManager(int id);
+        public BO.Order UpdateOrderForManager(BO.Order o);
 
     }
 }

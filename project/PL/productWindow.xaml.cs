@@ -22,8 +22,10 @@ public partial class ProductWindow : Window
             input_product_instock.IsReadOnly = isCustomer;
             input_product_price.IsReadOnly = isCustomer;
             input_product_name.IsReadOnly = isCustomer;
-
+            if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
+            if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+
             if (pro.ID != 0)
             {
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
@@ -53,7 +55,8 @@ public partial class ProductWindow : Window
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
-        }catch(Exception err)
+        }
+        catch (Exception err)
         {
             MessageBox.Show(err.Message);
         }
@@ -115,21 +118,21 @@ public partial class ProductWindow : Window
             w.Show();
             this.Close();
         }
-        catch ( BO.blInvalidAmountToken ex)
+        catch (BO.blInvalidAmountToken ex)
         {
             MessageBox.Show(ex.Message);
-        } 
-        catch ( BO.BlInvalidPriceToken ex)
+        }
+        catch (BO.BlInvalidPriceToken ex)
         {
             MessageBox.Show(ex.Message);
 
         }
-        catch ( BO.BlInvalidNameToken ex)
+        catch (BO.BlInvalidNameToken ex)
         {
             MessageBox.Show(ex.Message);
 
         }
-        catch ( BO.BlInvalidIdToken ex)
+        catch (BO.BlInvalidIdToken ex)
         {
             MessageBox.Show(ex.Message);
 
@@ -139,8 +142,8 @@ public partial class ProductWindow : Window
             MessageBox.Show(ex.Message);
 
         }
-       
-        catch ( BO.BlDefaultException ex)
+
+        catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
 
@@ -156,7 +159,7 @@ public partial class ProductWindow : Window
             w.Show();
             this.Close();
         }
-        
+
         catch (BO.BlProductExistsInAnOrder ex)
         {
             MessageBox.Show(ex.Message);
@@ -169,7 +172,7 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
-     catch (BO.BlDefaultException ex)
+        catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
         }

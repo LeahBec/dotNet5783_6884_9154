@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BO;
+using System;
 using System.Windows;
 
 namespace PL;
@@ -12,14 +13,18 @@ public partial class ProductWindow : Window
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
     bool isCustomer;
+    BO.Cart cart = new BO.Cart();
+    int id;
 
-    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool _isCustomer)
+    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool _isCustomer, BO.Cart c)
     {
         try
         {
             this.isCustomer = _isCustomer;
             InitializeComponent();
             this.bl = bl;
+            this.cart = c;
+            this.id = pro.ID;
             categorySelectorBox.IsReadOnly = isCustomer;
             input_product_instock.IsReadOnly = isCustomer;
             input_product_price.IsReadOnly = isCustomer;
@@ -82,7 +87,7 @@ public partial class ProductWindow : Window
             p.Name = this.pro.Name;
             p.Category = this.pro.Category;
             bl.product.AddProduct(p);
-            AdminWindow w = new AdminWindow(bl);
+            AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
         }
         catch (BO.blInvalidAmountToken ex)
@@ -116,7 +121,7 @@ public partial class ProductWindow : Window
             pro.Name = this.pro.Name;
             pro.Category = this.pro.Category;
             bl.product.Update(pro);/////
-            AdminWindow w = new AdminWindow(bl);
+            AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
             this.Close();
         }
@@ -157,7 +162,7 @@ public partial class ProductWindow : Window
         try
         {
             bl.product.DeleteProduct(pro.ID);
-            AdminWindow w = new AdminWindow(bl);
+            AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
             this.Close();
         }
@@ -184,15 +189,38 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            Window w = new CustomerProductList(bl);
+            Window w = new CustomerProductList(bl,this.cart);
             w.Show();
             this.Close();
         }
         else
         {
-            Window w = new AdminWindow(bl);
+            Window w = new AdminWindow(bl, this.cart);
             w.Show();
             this.Close();
+        }
+    }
+
+    private void addToCart(object sender, RoutedEventArgs e)
+    {
+        try
+        {
+            bl.cart.AddProductToCart(this.cart, this.id);
+            Window w = new CustomerProductList(bl, this.cart);
+            w.Show();
+            this.Close();
+        }
+        catch (BlOutOfStockException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BlDefaultException ex)
+        {
+            MessageBox.Show(ex.Message);
         }
     }
 }

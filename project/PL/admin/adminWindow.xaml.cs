@@ -14,12 +14,14 @@ public partial class AdminWindow : Window
     BLApi.IBL? bl = BLApi.Factory.get();
     private BO.Product p = new BO.Product();
     private BO.Order o = new BO.Order();
-    public AdminWindow(BLApi.IBL bl)
+    BO.Cart cart= new BO.Cart();
+    public AdminWindow(BLApi.IBL bl, BO.Cart c)
     {
         try
         {
             InitializeComponent();
             this.bl = bl;
+            this.cart = c;
             ProductsListview.ItemsSource = bl.product.GetProductList();
             OrdersListview.ItemsSource = bl.order.GetOrderList();
         }
@@ -42,7 +44,7 @@ public partial class AdminWindow : Window
             // p.ID = sender.AnchorItem.
             int pId = (ProductsListview.SelectedItem as BO.ProductForList).ID;
             p = bl.product.GetProductCustomer(pId);
-            Window window = new ProductWindow(bl, p, false);
+            Window window = new ProductWindow(bl, p, false, this.cart);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();
@@ -67,7 +69,7 @@ public partial class AdminWindow : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl, p, false);
+            Window window = new ProductWindow(bl, p, false, this.cart);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -93,7 +95,7 @@ public partial class AdminWindow : Window
             // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as BO.OrderForList).ID;
             o = bl?.order.GetOrderDetails(OId);
-            Window window = new OrderWindow(bl, o, false);
+            Window window = new OrderWindow(bl, o, false,this.cart);
             window.Show();
             InitializeComponent();
             OrdersListview.ItemsSource = bl?.order.GetOrderList();

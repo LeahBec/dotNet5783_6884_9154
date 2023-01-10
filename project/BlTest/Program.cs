@@ -273,6 +273,7 @@ void addProduct()
             throw new BO.BlInvalidIntegerException();
         cart = bl.cart.AddProductToCart(cart, productId);
     }
+    
     catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
     catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
 }

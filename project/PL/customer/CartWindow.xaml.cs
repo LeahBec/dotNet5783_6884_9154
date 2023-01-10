@@ -25,19 +25,33 @@ public partial class CartWindow : Window
     
     BLApi.IBL bl;
     BO.Cart c;
-    public CartWindow(BLApi.IBL _bl)
+    public CartWindow(BLApi.IBL _bl, BO.Cart cart)
     {
         InitializeComponent();
         this.bl = _bl;
-        this.c = new BO.Cart();
-
+        this.c = cart;
+        this.DataContext= this.c;
     }
 
     public void BackToList(object sender, RoutedEventArgs e)
     {
-        /* Window w = new CartWindow(bl);
-         w.Show();
-         this.Close();*/
+        Window w = new CustomerProductList(bl, this.c);
+        w.Show();
+        this.Close();
     }
 
+    private void decreaseProductBtn_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void addProductBtn_Click(object sender, RoutedEventArgs e)
+    {
+
+    }
+
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
+    }
 }

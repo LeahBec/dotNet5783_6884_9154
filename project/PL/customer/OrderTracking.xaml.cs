@@ -23,7 +23,8 @@ namespace PL.customer
         int orderID;
         BO.Order o;
         BLApi.IBL bl;
-        public OrderTracking(BLApi.IBL _bl ,int _orderID)
+        BO.Cart cart = new BO.Cart();
+        public OrderTracking(BLApi.IBL _bl ,int _orderID, BO.Cart c)
         {
             this.bl = _bl;
             this.orderID = _orderID;
@@ -34,7 +35,7 @@ namespace PL.customer
 
         private void show_order_details(object sender, RoutedEventArgs e)
         {
-            Window w = new PL.OrderWindow(this.bl, this.o, true);
+            Window w = new PL.OrderWindow(this.bl, this.o, true, this.cart);
             w.Show();
             this.Close();
         }

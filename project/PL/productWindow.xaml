@@ -23,5 +23,6 @@
         <Button x:Name="deleteProductBtn" Content="delete" HorizontalAlignment="Left" Margin="409,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="deleteProductBtn_Click" FontFamily="Amatic SC" FontSize="16" BorderBrush="Black" Foreground="Black" Background="#FFB19578"/>
         <Label Content="CATEGORY" HorizontalAlignment="Left" Height="35" Margin="318,217,0,0" VerticalAlignment="Top" Width="108" FontFamily="Amatic SC" FontSize="18"/>
         <Button x:Name="back" Content="Back➡" HorizontalAlignment="Left" Margin="713,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="backToList" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
+        <Button x:Name="addBtn" Content="add to cart" HorizontalAlignment="Left" Margin="506,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="addToCart" FontFamily="Amatic SC" FontSize="16" BorderBrush="Black" Foreground="Black" Background="#FFB19578"/>
     </Grid>
 </Window>

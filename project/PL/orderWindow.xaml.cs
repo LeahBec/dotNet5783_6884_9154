@@ -23,14 +23,15 @@ namespace PL
         BO.Order o = new BO.Order();
         BO.Order or = new BO.Order();
         bool isCustomer;
-
-        public OrderWindow(BLApi.IBL bl, BO.Order ord, bool _isCustomer)
+        BO.Cart cart=new BO.Cart();
+        public OrderWindow(BLApi.IBL bl, BO.Order ord, bool _isCustomer, BO.Cart c)
         {
             try
             {
                 this.isCustomer= _isCustomer;
                 InitializeComponent();
                 this.bl = bl;
+                this.cart= c;
                 input_order_ID.IsReadOnly = isCustomer;
                 input_order_totalPrice.IsReadOnly = isCustomer;
                 input_order_deliveryDate.IsReadOnly = isCustomer;
@@ -78,7 +79,7 @@ namespace PL
                 o.DeiveryDate = this.or.DeiveryDate;
                 o.ID = this.or.ID;
                 bl.order.UpdateOrderForManager(o);/////
-                AdminWindow w = new AdminWindow(bl);
+                AdminWindow w = new AdminWindow(bl, this.cart);
                 w.Show();
                 this.Close();
             }
@@ -128,7 +129,7 @@ namespace PL
         {
             if (!this.isCustomer)
             {
-                Window w = new AdminWindow(bl);
+                Window w = new AdminWindow(bl, this.cart);
                 w.Show();
                 this.Close();
             }

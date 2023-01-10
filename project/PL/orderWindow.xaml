@@ -38,7 +38,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-
+        <Button x:Name="back" Content="Back➡" HorizontalAlignment="Left" Margin="713,65,0,0" Grid.Row="1" VerticalAlignment="Top" Click="backToList" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
 
     </Grid>
 </Window>

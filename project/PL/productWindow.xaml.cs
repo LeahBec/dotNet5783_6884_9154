@@ -11,11 +11,13 @@ public partial class ProductWindow : Window
     BLApi.IBL? bl = BLApi.Factory.get();
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
+    bool isCustomer;
 
-    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool isCustomer)
+    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool _isCustomer)
     {
         try
         {
+            this.isCustomer = _isCustomer;
             InitializeComponent();
             this.bl = bl;
             categorySelectorBox.IsReadOnly = isCustomer;
@@ -175,6 +177,22 @@ public partial class ProductWindow : Window
         catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
+        }
+    }
+
+    private void backToList(object sender, RoutedEventArgs e)
+    {
+        if (this.isCustomer)
+        {
+            Window w = new CustomerProductList(bl);
+            w.Show();
+            this.Close();
+        }
+        else
+        {
+            Window w = new AdminWindow(bl);
+            w.Show();
+            this.Close();
         }
     }
 }

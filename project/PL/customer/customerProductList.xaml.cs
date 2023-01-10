@@ -7,11 +7,11 @@ using BLApi;
 /// <summary>
 /// Interaction logic for BOListWindow.xaml
 /// </summary>
-public partial class BOListWindow : Window
+public partial class CustomerProductList : Window
 {
     BLApi.IBL? bl = BLApi.Factory.get();
     private BO.Product p = new BO.Product();
-    public BOListWindow(BLApi.IBL bl)
+    public CustomerProductList(BLApi.IBL bl)
     {
         try
         {
@@ -101,5 +101,7 @@ public partial class BOListWindow : Window
     {
 
     }
+
+   
 }
 

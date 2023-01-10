@@ -22,11 +22,13 @@ namespace PL
         BLApi.IBL? bl = BLApi.Factory.get();
         BO.Order o = new BO.Order();
         BO.Order or = new BO.Order();
+        bool isCustomer;
 
-        public OrderWindow(BLApi.IBL bl, BO.Order ord, bool isCustomer)
+        public OrderWindow(BLApi.IBL bl, BO.Order ord, bool _isCustomer)
         {
             try
             {
+                this.isCustomer= _isCustomer;
                 InitializeComponent();
                 this.bl = bl;
                 input_order_ID.IsReadOnly = isCustomer;
@@ -40,6 +42,12 @@ namespace PL
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
                 this.DataContext = this.or;
+                if(this.isCustomer)
+                {
+                    updateOrderBtn.IsEnabled = false;
+                    updateOrderDeliveryBtn.IsEnabled = false;
+                    updateOrderShippingBtn.IsEnabled = false;
+                }
 /*                if (or.CustomerName == "")
                     throw new PLEmptyNameField();
                 if (or.CustomerEmail == "")
@@ -114,6 +122,22 @@ namespace PL
         {
             int id = this.or.ID;
             bl?.order.UpdateOrderDelivery(id);
+        }
+
+        private void backToList(object sender, RoutedEventArgs e)
+        {
+            if (!this.isCustomer)
+            {
+                Window w = new AdminWindow(bl);
+                w.Show();
+                this.Close();
+            }
+            else
+            {
+               /* Window w = new customer.OrderTracking(bl);
+                w.Show();*/
+                this.Close();
+            }
         }
     }
 }

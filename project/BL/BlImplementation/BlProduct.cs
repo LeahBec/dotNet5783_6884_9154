@@ -1,4 +1,6 @@
 ﻿using BO;
+using System.Collections.Generic;
+using System.Runtime.Intrinsics.Arm;
 
 namespace BlImplementation;
 internal class BlProduct : BLApi.IProduct
@@ -12,7 +14,17 @@ internal class BlProduct : BLApi.IProduct
             IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
 
             List<BO.ProductForList> productList = new List<BO.ProductForList>();
-            foreach (var item in existingProductsList)
+            /*  foreach (var item in existingProductsList)
+              {
+                  BO.ProductForList p = new BO.ProductForList();
+                  p.ID = item.ID;
+                  p.Name = item.Name;
+                  p.Price = item.Price;
+                  p.Price = item.Price;
+                  p.Category = (BO.Category)item.Category;
+                  productList.Add(p);
+              }*/
+            existingProductsList.Select(item =>
             {
                 BO.ProductForList p = new BO.ProductForList();
                 p.ID = item.ID;
@@ -21,7 +33,8 @@ internal class BlProduct : BLApi.IProduct
                 p.Price = item.Price;
                 p.Category = (BO.Category)item.Category;
                 productList.Add(p);
-            }
+                return item;
+            }).ToList();
             if (productList.Count() == 0)
                 throw new BO.BlNoEntitiesFound("");
             return productList;
@@ -43,7 +56,7 @@ internal class BlProduct : BLApi.IProduct
         {
             IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
             List<BO.ProductItem> productList = new List<BO.ProductItem>();
-            foreach (var item in existingProductsList)
+            /*foreach (var item in existingProductsList)
             {
                 BO.ProductItem p = new BO.ProductItem();
                 p.ID = item.ID;
@@ -53,8 +66,19 @@ internal class BlProduct : BLApi.IProduct
                 p.Amount = (int)rand.NextInt64(0, 10);
                 p.inStock = item.InStock >= p.Amount;
                 productList.Add(p);
-            }
-
+            }*/
+            existingProductsList.Select(item =>
+            {
+                BO.ProductItem p = new BO.ProductItem();
+                p.ID = item.ID;
+                p.Name = item.Name;
+                p.Price = item.Price;
+                p.Category = (BO.Category)item.Category;
+                p.Amount = (int)rand.NextInt64(0, 10);
+                p.inStock = item.InStock >= p.Amount;
+                productList.Add(p);
+                return item;
+            }).ToList();
 
             if (productList.Count() == 0)
                 throw new Exception();//NoEntitiesFound("No products found");
@@ -152,12 +176,17 @@ internal class BlProduct : BLApi.IProduct
             if (id <= 0)
                 throw new BO.BlInvalidIdToken("");
             var orderitems = Dal.OrderItem.GetAll();
-            foreach (var oi in orderitems)
+            /*foreach (var oi in orderitems)
             {
                 if (oi.ID == id)
                     throw new BO.BlProductExistsInAnOrder("product exists in an order");
                 //can't delete the product because a customer ordered it!
-            }
+            }*/
+            orderitems.Where(oi => oi.ID == id).Select(oi =>
+            {
+                throw new BO.BlProductExistsInAnOrder("product exists in an order");
+                return oi;
+            });
             Dal.Product.Delete(id);
         }
         catch (DalApi.ExceptionObjectNotFound)
@@ -195,7 +224,7 @@ internal class BlProduct : BLApi.IProduct
     }
     public void Update(BO.Product p)
     {
-       try
+        try
         {
             if (p.ID <= 0)
                 throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
@@ -246,9 +275,9 @@ internal class BlProduct : BLApi.IProduct
         {
             IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
             List<BO.ProductForList> returnList = new List<BO.ProductForList>();
-            foreach (var item in products)
-            {
-                if ((BO.Category)item.Category == category)
+           
+            List<Dal.DO.Product> a = products.Where(item => (Category)item.Category == category).ToList();
+            var b = a.Select(item =>
                 {
                     BO.ProductForList BOProduct = new BO.ProductForList();
                     BOProduct.ID = item.ID;
@@ -256,8 +285,10 @@ internal class BlProduct : BLApi.IProduct
                     BOProduct.Price = (float)item.Price;
                     BOProduct.Category = (BO.Category)item.Category;
                     returnList.Add(BOProduct);
+                    return item;
                 }
-            }
+
+                ).ToList(); 
             return returnList;
         }
         catch (DalApi.ExceptionObjectNotFound)

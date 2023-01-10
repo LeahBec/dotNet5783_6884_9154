@@ -4,7 +4,7 @@ using DalApi;
 
 BLApi.IBL? bl = BLApi.Factory.get();
 BO.Cart cart = new BO.Cart();
-
+DalApi.IDal? DalList = DalApi.Factory.Get();
 //=============orders==================
 void getOrders()
 {
@@ -168,7 +168,7 @@ void getProCustomer()
 
 void addPro()
 {
-    try
+    /*try
     {
         Random rand = new Random();
         bool idExist = false;
@@ -192,7 +192,7 @@ void addPro()
         pro.Category = (BO.Category)choice;
         bl.product.AddProduct(pro);
     }
-    catch (Exception ex) { Console.WriteLine(ex.Message); }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }*/
 }
 
 void deletePro()

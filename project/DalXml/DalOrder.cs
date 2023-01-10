@@ -62,10 +62,12 @@ internal class DalOrder : IOrder
         XElement? root = XDocument.Load("../xml/Order.xml")?.Root;
         IEnumerable<XElement>? orderList = root?.Descendants("order")?.ToList();
         List<Dal.DO.Order> orders = new List<Order>();
-        foreach (var xOrder in orderList)
+        orderList.Select(item =>
         {
-            orders.Add(deepCopy(xOrder));
-        }
+            orders.Add(deepCopy(item));
+
+            return item;
+        }).ToList();
 
         return (func == null ? orders : orders.Where(func).ToList());
         throw new NotImplementedException();

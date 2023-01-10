@@ -8,19 +8,19 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
-
             List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
-            foreach (var item in existingOrdersList)
+            existingOrdersList.Select(item =>
             {
                 BO.OrderForList o = new BO.OrderForList();
                 o.ID = item.OrderID;
                 o.CustomerName = item.CustomerName;
                 var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
-                foreach (var orderItem in orderItems)
+                orderItems.Select(orderItem =>
                 {
                     o.AmountOfItems++;
                     o.TotalPrice += orderItem.Price * orderItem.Amount;
-                }
+                    return orderItem;
+                }).ToList();
                 if (item.DeliveryDate > DateTime.MinValue)
                     o.Status = (BO.OrderStatus)3;
                 else if (item.ShipDate > DateTime.MinValue)
@@ -28,7 +28,8 @@ internal class BlOrder : BLApi.IOrder
                 else
                     o.Status = (BO.OrderStatus)1;
                 ordersList.Add(o);
-            }
+                return item;
+            }).ToList();
             if (ordersList.Count() == 0)
                 throw new BO.BlNoEntitiesFound("");
             return ordersList;
@@ -70,7 +71,7 @@ internal class BlOrder : BLApi.IOrder
                 oi.Status = (BO.OrderStatus)1;
             IEnumerable<Dal.DO.OrderItem> orderItems = Dal.OrderItem.getByOrderId(id);
             List<BO.OrderItem> items = new();
-            foreach (Dal.DO.OrderItem item in orderItems)
+            /*foreach (Dal.DO.OrderItem item in orderItems)
             {
                 BO.OrderItem orderItem = new();
                 orderItem.ID = item.ID;
@@ -81,7 +82,21 @@ internal class BlOrder : BLApi.IOrder
                 orderItem.TotalPrice = orderItem.Amount * orderItem.Price;
                 oi.TotalPrice += orderItem.TotalPrice;
                 items.Add(orderItem);
-            }
+            }*/
+            orderItems.Select(item =>
+            {
+                BO.OrderItem orderItem = new();
+                orderItem.ID = item.ID;
+                orderItem.ProductName = Dal.Product.Get(p => p.ID == item.ProductID).Name;
+                orderItem.ProductID = item.ProductID;
+                orderItem.Price = item.Price;
+                orderItem.Amount = item.Amount;
+                orderItem.TotalPrice = orderItem.Amount * orderItem.Price;
+                oi.TotalPrice += orderItem.TotalPrice;
+                items.Add(orderItem);
+                return item;
+            }).ToList();
+
             oi.Items = items;
             if (oi.CustomerName != null)
                 return oi;
@@ -167,8 +182,8 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-           /* if (o.ShipDate != DateTime.MinValue)
-                throw new BO.BlInvalidIdToken("");*/
+            /* if (o.ShipDate != DateTime.MinValue)
+                 throw new BO.BlInvalidIdToken("");*/
             o.ShipDate = DateTime.Now;
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();

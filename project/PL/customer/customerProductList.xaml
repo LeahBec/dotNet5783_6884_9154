@@ -53,6 +53,7 @@ VerticalAlignment="Stretch" Width="auto">
         </ListView>
        
         <Button x:Name="addProductBtn" Content="Add new product" HorizontalAlignment="Center" Margin="0,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="addProductBtn_Click" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
-       
+        <Button x:Name="showCartBtn" Content="🛒" HorizontalAlignment="Left" Margin="603,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="showCart" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
+
     </Grid>
 </Window>

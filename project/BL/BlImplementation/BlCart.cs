@@ -1,4 +1,6 @@
 ﻿using BLApi;
+using System.Linq;
+
 namespace BlImplementation;
 internal class BlCart : ICart
 {
@@ -40,7 +42,8 @@ internal class BlCart : ICart
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
-        }catch (BO.BlOutOfStockException)
+        }
+        catch (BO.BlOutOfStockException)
         {
             throw new BO.BlOutOfStockException();
         }
@@ -76,35 +79,92 @@ internal class BlCart : ICart
         {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
                 throw new Exception();
-            foreach (var item in c.items)
-            {
-                if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
-                    throw new Exception();
-                int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
+            /* foreach (var item in c.items)
+             {
+                 if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
+                     throw new Exception();
+                 int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
 
-                Dal.DO.Order o = new Dal.DO.Order();
-                o.OrderID = 0;
-                o.OrderDate = DateTime.Now;
-                o.DeliveryDate = DateTime.MinValue;
-                o.ShipDate = DateTime.MinValue;
-                o.CustomerAdress = customerAddress;
-                o.CustomerName = customerName;
-                o.CustomerEmail = customerEmail;
-                int id = Dal.Order.Add(o);
-                List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
-                foreach (BO.OrderItem item1 in c.items)
+                 Dal.DO.Order o = new Dal.DO.Order();
+                 o.OrderID = 0;
+                 o.OrderDate = DateTime.Now;
+                 o.DeliveryDate = DateTime.MinValue;
+                 o.ShipDate = DateTime.MinValue;
+                 o.CustomerAdress = customerAddress;
+                 o.CustomerName = customerName;
+                 o.CustomerEmail = customerEmail;
+                 int id = Dal.Order.Add(o);
+                 List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
+
+                 var cartItems = from BO.OrderItem item1 in c.items
+                                 select new BO.OrderItem
+                                 {
+                                     ID = item1.ID,
+                                     Amount = item1.Amount,
+                                     Price = item1.Price,
+                                     ProductID = item1.ProductID,
+                                     ProductName = item1.ProductName,
+                                     TotalPrice = item1.TotalPrice
+                                 };
+             }
+             Dal.DO.OrderItem cartItem = new();
+             c.items.Select(item =>
+             {
+                 cartItem.ID = 0;
+                 cartItem.Amount = item.Amount;
+                 cartItem.Price = item.Price;
+                 cartItem.OrderID = item.ID;
+                 cartItem.ProductID = item.ProductID;
+                 Dal.OrderItem.Add(cartItem);
+                 Dal.Product.updateAmount(item.ProductID, item.Amount);
+                 return item;
+             }).ToList();
+         }
+ */
+
+            c.items.Select(item =>
                 {
-                    Dal.DO.OrderItem cartItem = new();
-                    cartItem.ID = 0;
-                    cartItem.Amount = item1.Amount;
-                    cartItem.Price = item1.Price;
-                    cartItem.OrderID = o.OrderID;
-                    cartItem.ProductID = item1.ProductID;
-                    Dal.OrderItem.Add(cartItem);
-                    Dal.Product.updateAmount(item1.ProductID, item1.Amount);
-                }
+                    if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
+                        throw new Exception();
+                    int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
 
-            }
+                    Dal.DO.Order o = new Dal.DO.Order();
+                    o.OrderID = 0;
+                    o.OrderDate = DateTime.Now;
+                    o.DeliveryDate = DateTime.MinValue;
+                    o.ShipDate = DateTime.MinValue;
+                    o.CustomerAdress = customerAddress;
+                    o.CustomerName = customerName;
+                    o.CustomerEmail = customerEmail;
+                    int id = Dal.Order.Add(o);
+                    List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
+
+                    var cartItems = from BO.OrderItem item1 in c.items
+                                    select new BO.OrderItem
+                                    {
+                                        ID = item1.ID,
+                                        Amount = item1.Amount,
+                                        Price = item1.Price,
+                                        ProductID = item1.ProductID,
+                                        ProductName = item1.ProductName,
+                                        TotalPrice = item1.TotalPrice
+                                    };
+
+                    Dal.DO.OrderItem cartItem = new();
+                    c.items.Select(item =>
+                    {
+                        cartItem.ID = 0;
+                        cartItem.Amount = item.Amount;
+                        cartItem.Price = item.Price;
+                        cartItem.OrderID = item.ID;
+                        cartItem.ProductID = item.ProductID;
+                        Dal.OrderItem.Add(cartItem);
+                        Dal.Product.updateAmount(item.ProductID, item.Amount);
+                        return item;
+                    }).ToList();
+                    return item;
+                }).ToList();
+
         }
         catch (DalApi.ExceptionObjectNotFound)
         {

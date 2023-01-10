@@ -8,13 +8,16 @@ namespace PL
     public partial class MainWindow : Window
     {
         //Bl bl = new BlImplementation.Bl();
-        BLApi.IBL? bl = BLApi.Factory.get();
+        BLApi.IBL bl = BLApi.Factory.get();
         
-        int ID;
-        public MainWindow()
+/*        private int ID;
+*/        public MainWindow()
         {
             InitializeComponent();
-            this.DataContext = this;
+        /*    Main.DataContext = new
+            {
+                ID  =0
+            };*/
         }
 
         private void showProductBtn_Click(object sender, RoutedEventArgs e)
@@ -38,8 +41,8 @@ namespace PL
 
         private void OrderTracking_clicked(object sender, RoutedEventArgs e)
         {
-            this.ID =int.Parse( id.Text);
-            Window w = new customer.OrderTracking(this?.bl ,this.ID);
+            //this.ID =int.Parse( id.Text);
+            Window w = new customer.OrderTracking(bl ,0);
             w.Show();
             this.Hide();
         }

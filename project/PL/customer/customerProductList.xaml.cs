@@ -102,6 +102,11 @@ public partial class CustomerProductList : Window
 
     }
 
-   
+    private void showCart(object sender, RoutedEventArgs e)
+    {
+       /* Window w = new CartWindow(bl);
+        w.Show();
+        this.Close();*/
+    }
 }
 

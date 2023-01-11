@@ -71,7 +71,7 @@ namespace PL
         {
             try
             {
-                o.CustomerAdress = this.or.CustomerAdress;
+                o.CustomerAddress = this.or.CustomerAddress;
                 o.CustomerEmail = this.or.CustomerEmail;
                 o.CustomerName = this.or.CustomerName;
                 o.OrderDate = this.or.OrderDate;

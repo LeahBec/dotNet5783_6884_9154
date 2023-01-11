@@ -15,32 +15,11 @@
     <InStock>15</InStock>
   </Product>
   <Product>
-    <ID>100003</ID>
-    <Name>rte</Name>
-    <Category>Drones</Category>
-    <Price>22</Price>
-    <InStock>789</InStock>
-  </Product>
-  <Product>
     <ID>100000</ID>
     <Name>nothing</Name>
     <Category>Headphones</Category>
     <Price>45</Price>
     <InStock>0</InStock>
-  </Product>
-  <Product>
-    <ID>100007</ID>
-    <Name>updatii</Name>
-    <Category>Cameras</Category>
-    <Price>480</Price>
-    <InStock>54</InStock>
-  </Product>
-  <Product>
-    <ID>100010</ID>
-    <Name>tigidam</Name>
-    <Category>SmartWatches</Category>
-    <Price>88</Price>
-    <InStock>15</InStock>
   </Product>
   <Product>
     <ID>100006</ID>
@@ -64,10 +43,38 @@
     <InStock>42</InStock>
   </Product>
   <Product>
+    <ID>100003</ID>
+    <Name>instockPrioduct</Name>
+    <Category>Drones</Category>
+    <Price>22</Price>
+    <InStock>789</InStock>
+  </Product>
+  <Product>
     <ID>100005</ID>
-    <Name>\zcx</Name>
+    <Name>cdcecdcd</Name>
     <Category>Cameras</Category>
     <Price>123</Price>
     <InStock>1</InStock>
+  </Product>
+  <Product>
+    <ID>100008</ID>
+    <Name>sdfg</Name>
+    <Category>Computers</Category>
+    <Price>2</Price>
+    <InStock>3</InStock>
+  </Product>
+  <Product>
+    <ID>100007</ID>
+    <Name>upooooo</Name>
+    <Category>Cameras</Category>
+    <Price>480</Price>
+    <InStock>54</InStock>
+  </Product>
+  <Product>
+    <ID>100010</ID>
+    <Name>ttttt</Name>
+    <Category>SmartWatches</Category>
+    <Price>88</Price>
+    <InStock>15</InStock>
   </Product>
 </Products>

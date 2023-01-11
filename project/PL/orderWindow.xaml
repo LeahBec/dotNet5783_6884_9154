@@ -14,7 +14,7 @@
         <TextBox Name="input_order_ID" HorizontalAlignment="Left" Margin="325,85,0,0" TextWrapping="Wrap" Text="{Binding Path=ID}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_customerName" HorizontalAlignment="Left" Margin="127,80,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerName}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_customerEmail" HorizontalAlignment="Left" Margin="125,160,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerEmail}" VerticalAlignment="Top" Width="120" Height="18" />
-        <TextBox Name="input_order_customerAddress" HorizontalAlignment="Left" Margin="124,215,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerAdress}" VerticalAlignment="Top" Width="120" Height="18" />
+        <TextBox Name="input_order_customerAddress" HorizontalAlignment="Left" Margin="124,215,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerAddress}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_orderDate" HorizontalAlignment="Left" Margin="338,162,0,0" TextWrapping="Wrap" Text="{Binding Path=OrderDate}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_shipDate" HorizontalAlignment="Center" Margin="0,212,0,0" TextWrapping="Wrap" Text="{Binding Path=ShipDate}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_deliveryDate" HorizontalAlignment="Center" Margin="0,280,0,0" TextWrapping="Wrap" Text="{Binding Path=DeiveryDate}" VerticalAlignment="Top" Width="120" Height="18" />

@@ -54,5 +54,6 @@
         </ListView>
 
         <Button x:Name="back" Content="Back➡" HorizontalAlignment="Left" Margin="68,65,0,0" Grid.Row="1" VerticalAlignment="Top" Click="BackToList" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Grid.Column="1"/>
+        <Button x:Name="back_Copy" Content="confirm cart" HorizontalAlignment="Left" Margin="377,65,0,0" Grid.Row="1" VerticalAlignment="Top" Click="cartConfirmation" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
     </Grid>
 </Window>

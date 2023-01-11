@@ -90,7 +90,7 @@ internal class BlCart : ICart
                  o.OrderDate = DateTime.Now;
                  o.DeliveryDate = DateTime.MinValue;
                  o.ShipDate = DateTime.MinValue;
-                 o.CustomerAdress = customerAddress;
+                 o.CustomerAddress = customerAddress;
                  o.CustomerName = customerName;
                  o.CustomerEmail = customerEmail;
                  int id = Dal.Order.Add(o);
@@ -133,7 +133,7 @@ internal class BlCart : ICart
                     o.OrderDate = DateTime.Now;
                     o.DeliveryDate = DateTime.MinValue;
                     o.ShipDate = DateTime.MinValue;
-                    o.CustomerAdress = customerAddress;
+                    o.CustomerAddress = customerAddress;
                     o.CustomerName = customerName;
                     o.CustomerEmail = customerEmail;
                     int id = Dal.Order.Add(o);

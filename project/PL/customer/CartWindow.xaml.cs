@@ -47,11 +47,18 @@ public partial class CartWindow : Window
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
-
+        bl.cart.Update(this.c, ((BO.OrderItem)(sender as Button).DataContext).ProductID, ((BO.OrderItem)(sender as Button).DataContext).Amount+1);
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
 
+    }
+
+    private void cartConfirmation(object sender, RoutedEventArgs e)
+    {
+
+        new customer.ConfirmCart(bl, c).Show();
+        this.Close();
     }
 }

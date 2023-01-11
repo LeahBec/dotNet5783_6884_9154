@@ -15,7 +15,7 @@ public partial class ProductWindow : Window
     bool isCustomer;
     BO.Cart cart = new BO.Cart();
     int id;
-
+    PO.Product p_;
     public ProductWindow(BLApi.IBL bl, BO.Product pro, bool _isCustomer, BO.Cart c)
     {
         try
@@ -31,6 +31,7 @@ public partial class ProductWindow : Window
             input_product_name.IsReadOnly = isCustomer;
             if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
             if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
+            if(!isCustomer) addBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
             if (pro.ID != 0)
@@ -121,6 +122,7 @@ public partial class ProductWindow : Window
             pro.Name = this.pro.Name;
             pro.Category = this.pro.Category;
             bl.product.Update(pro);/////
+            p_.GetNew(pro);
             AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
             this.Close();

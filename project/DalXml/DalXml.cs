@@ -86,7 +86,7 @@ sealed public class DalXml : IDal
     public static void CreateOrderList()
     {
         string[] CustomerName = { "aaa", "bbb", "ccc" };
-        string[] CustomerAdress = { "ddd", "eee", "fff" };
+        string[] CustomerAddress = { "ddd", "eee", "fff" };
         string[] CustomerEmail = { "ggg", "hhh", "iii" };
         for (int i = 0; i < 20; i++)
         {
@@ -94,10 +94,10 @@ sealed public class DalXml : IDal
             //orders[i] = new Order();
             DO.Order o = new();
             int indexName = (int)rand.NextInt64(CustomerName.Length);
-            int indexAdress = (int)rand.NextInt64(CustomerAdress.Length);
+            int indexAdress = (int)rand.NextInt64(CustomerAddress.Length);
             int indexEmail = (int)rand.NextInt64(CustomerEmail.Length);
             o.CustomerName = CustomerName[indexName];
-            o.CustomerAdress = CustomerAdress[indexAdress];
+            o.CustomerAddress = CustomerAddress[indexAdress];
             o.CustomerEmail = CustomerEmail[indexEmail];
             o.OrderDate = DateTime.Today;
             TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));

@@ -4,6 +4,10 @@ using System.Windows.Controls;
 
 namespace PL;
 using BLApi;
+using DalFacade.DO;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
 //using PL.Order;
 
 /// <summary>
@@ -15,6 +19,14 @@ public partial class AdminWindow : Window
     private BO.Product p = new BO.Product();
     private BO.Order o = new BO.Order();
     BO.Cart cart= new BO.Cart();
+    ObservableCollection<PO.ProductForList> List_p = new();
+    IEnumerable<BO.ProductForList> list1;
+    PO.ProductForList pro = new PO.ProductForList();
+   /*var data =new
+    {
+       orders =  IEnumerable<BO.OrderForList>,
+        products = IEnumerable<PO.ProductForList>
+    };*/
     public AdminWindow(BLApi.IBL bl, BO.Cart c)
     {
         try
@@ -22,8 +34,11 @@ public partial class AdminWindow : Window
             InitializeComponent();
             this.bl = bl;
             this.cart = c;
-            ProductsListview.ItemsSource = bl.product.GetProductList();
             OrdersListview.ItemsSource = bl.order.GetOrderList();
+            list1 = bl.product.GetProductList();
+            //ProductsListview.ItemsSource = bl.product.GetProductList();
+            convertList();
+            this.DataContext = this.List_p;
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -34,21 +49,60 @@ public partial class AdminWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-   
 
-   
+
+
+
+    private ObservableCollection<PO.ProductForList> convertList()
+    {
+        PO.ProductForList i = new PO.ProductForList();
+        foreach (BO.ProductForList tmp in list1)
+        {
+            i = ConvertToPo(tmp);
+            List_p.Add(i);
+        }
+        return List_p;
+    }
+
+
+
+    private PO.ProductForList ConvertToPo(BO.ProductForList Bp)
+    {
+        PO.ProductForList item = new()
+        {
+            ID = Bp.ID,
+            Name = Bp.Name,
+            Price = Bp.Price,
+            Category = (eCategory)Bp.Category
+        };
+        return item;
+    }
+     private BO.ProductForList ConvertToBo(PO.ProductForList Pp)
+    {
+       BO.ProductForList item = new()
+        {
+            ID = Pp.ID,
+            Name = Pp.Name,
+            Price = Pp.Price,
+            Category = (BO.Category)(eCategory)Pp.Category
+        };
+        return item;
+    }
+
     private void itemClicked(object sender, System.Windows.Input.MouseButtonEventArgs e)
     {
         try
         {
             // p.ID = sender.AnchorItem.
-            int pId = (ProductsListview.SelectedItem as BO.ProductForList).ID;
+            //BO.ProductForList  poo= ProductsListview.SelectedItem;
+            int pId = (ProductsListview.SelectedItem as PO.ProductForList).ID;
             p = bl.product.GetProductCustomer(pId);
             Window window = new ProductWindow(bl, p, false, this.cart);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
-            InitializeComponent();
-            ProductsListview.ItemsSource = bl.product.GetProductList();
+            //InitializeComponent();
+            list1 = bl.product.GetProductList();
+            convertList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {

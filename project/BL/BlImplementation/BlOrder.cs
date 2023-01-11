@@ -59,7 +59,7 @@ internal class BlOrder : BLApi.IOrder
             oi.ID = o.OrderID;
             oi.OrderDate = o.OrderDate;
             oi.ShipDate = o.ShipDate;
-            oi.CustomerAdress = o.CustomerAdress;
+            oi.CustomerAddress = o.CustomerAddress;
             oi.CustomerEmail = o.CustomerEmail;
             oi.CustomerName = o.CustomerName;
             oi.DeiveryDate = o.DeliveryDate;
@@ -140,7 +140,7 @@ internal class BlOrder : BLApi.IOrder
             order.OrderDate = o.OrderDate;
             order.DeiveryDate = o.DeliveryDate;
             order.ShipDate = o.ShipDate;
-            order.CustomerAdress = o.CustomerAdress;
+            order.CustomerAddress = o.CustomerAddress;
             order.CustomerEmail = o.CustomerEmail;
             order.CustomerName = o.CustomerName;
 
@@ -191,7 +191,7 @@ internal class BlOrder : BLApi.IOrder
             order.OrderDate = o.OrderDate;
             order.DeiveryDate = o.DeliveryDate;
             order.ShipDate = o.ShipDate;
-            order.CustomerAdress = o.CustomerAdress;
+            order.CustomerAddress = o.CustomerAddress;
             order.CustomerEmail = o.CustomerEmail;
             order.CustomerName = o.CustomerName;
 
@@ -236,7 +236,7 @@ internal class BlOrder : BLApi.IOrder
             o.ShipDate = or.ShipDate;
             o.DeliveryDate = or.DeiveryDate;
             o.CustomerEmail = or.CustomerEmail;
-            o.CustomerAdress = or.CustomerAdress;
+            o.CustomerAddress = or.CustomerAddress;
             o.OrderID = or.ID;
             Dal.Order.Update(o);
         }

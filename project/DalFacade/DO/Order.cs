@@ -7,7 +7,7 @@ public struct Order {
     public int OrderID { get; set; }
     public string? CustomerName { get; set; }
     public string? CustomerEmail { get; set; }
-    public string? CustomerAdress { get; set; }
+    public string? CustomerAddress { get; set; }
     public DateTime? OrderDate { get; set; }
     public DateTime? ShipDate { get; set; }
     public DateTime? DeliveryDate { get; set; }
@@ -17,7 +17,7 @@ public struct Order {
         string order = $@"
         Order #{OrderID}:
         Customer Name: {CustomerName}, 
-        Customer Adress : {CustomerAdress}
+        Customer Adress : {CustomerAddress}
         Customer E-mail : {CustomerEmail}
     	Order Date: {OrderDate}
         Ship Date: {ShipDate}

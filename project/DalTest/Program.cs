@@ -40,7 +40,7 @@ void addOrder()
     newOrder.OrderID = _id;
     newOrder.CustomerName = _name;
     newOrder.CustomerEmail = _email;
-    newOrder.CustomerAdress = _address;
+    newOrder.CustomerAddress = _address;
     newOrder.OrderDate = _oDate;
     newOrder.ShipDate = _sDate;
     newOrder.DeliveryDate = _dDate;
@@ -57,7 +57,7 @@ void viewOrder()
     int id = int.Parse(Console.ReadLine());
     Order order = new Order();
     order = i.Order.Get(o => o.OrderID == id);
-    Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAdress + order.OrderDate + order.ShipDate + order.DeliveryDate);
+    Console.WriteLine(order.OrderID + order.CustomerName + order.CustomerEmail + order.CustomerAddress + order.OrderDate + order.ShipDate + order.DeliveryDate);
 }
 
 
@@ -72,7 +72,7 @@ void viewOrderList()
     if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
     foreach (Order item in orders)
     {
-        Console.WriteLine(item.OrderID + " " + item.CustomerName + " " + item.CustomerEmail + " " + item.CustomerAdress + " " + item.OrderDate + " " + item.ShipDate + " " + item.DeliveryDate);
+        Console.WriteLine(item.OrderID + " " + item.CustomerName + " " + item.CustomerEmail + " " + item.CustomerAddress + " " + item.OrderDate + " " + item.ShipDate + " " + item.DeliveryDate);
     }
 }
 
@@ -106,7 +106,7 @@ void updateOrder()
     newOrder.OrderID = _id;
     newOrder.CustomerName = _name;
     newOrder.CustomerEmail = _email;
-    newOrder.CustomerAdress = _address;
+    newOrder.CustomerAddress = _address;
     newOrder.OrderDate = _oDate;
     newOrder.ShipDate = _sDate;
     newOrder.DeliveryDate = _dDate;

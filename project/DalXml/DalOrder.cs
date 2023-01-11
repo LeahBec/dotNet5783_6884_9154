@@ -23,7 +23,7 @@ internal class DalOrder : IOrder
         XElement? order1 = new XElement("order",
         new XElement("OrderID", order.OrderID),
         new XElement("CustomerName", order.CustomerName),
-        new XElement("CustomerAdress", order.CustomerAdress),
+        new XElement("CustomerAddress", order.CustomerAddress),
         new XElement("CustomerEmail", order.CustomerEmail),
         new XElement("ShipDate", order.ShipDate?.ToShortDateString()),
         new XElement("DeliveryDate", order.DeliveryDate?.ToShortDateString()),
@@ -45,7 +45,7 @@ internal class DalOrder : IOrder
         order.OrderID = Convert.ToInt32(o?.Element("OrderID")?.Value);
         order.CustomerName = o?.Element("CustomerName")?.Value;
         order.CustomerEmail = o?.Element("CustomerEmail")?.Value;
-        order.CustomerAdress = o?.Element("CustomerAdress")?.Value;
+        order.CustomerAddress = o?.Element("CustomerAddress")?.Value;
         order.OrderDate = Convert.ToDateTime(o?.Element("OrderDate")?.Value);
         order.ShipDate = Convert.ToDateTime(o?.Element("ShipDate")?.Value);
         order.DeliveryDate = Convert.ToDateTime(o?.Element("DeliveryDate")?.Value);
@@ -83,7 +83,7 @@ internal class DalOrder : IOrder
                         new XElement("OrderID", ord.OrderID),
                         new XElement("CustomerName", ord.CustomerName),
                         new XElement("CustomerEmail", ord.CustomerEmail),
-                        new XElement("CustomerAddress", ord.CustomerAdress),
+                        new XElement("CustomerAddress", ord.CustomerAddress),
                         new XElement("OrderDate", ord.OrderDate),
                         new XElement("ShipDate", ord.ShipDate),
                         new XElement("DeliveryDate", ord.DeliveryDate));

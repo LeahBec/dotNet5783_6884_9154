@@ -11,7 +11,7 @@ namespace BO
         public int ID { get; set; }
         public string CustomerName { get; set; }
         public string CustomerEmail { get; set; }
-        public string CustomerAdress { get; set; }
+        public string CustomerAddress { get; set; }
         public DateTime? OrderDate { get; set; }
         public OrderStatus? Status { get; set; }
         public DateTime? ShipDate { get; set; }
@@ -24,7 +24,7 @@ namespace BO
             string order = $@"
         Order id: {ID}
         Customer Name: {CustomerName}
-        Customer Adress : {CustomerAdress}
+        Customer Adress : {CustomerAddress}
         Customer E-mail : {CustomerEmail}
         Order Date : {OrderDate}
     	Status : {Status}

@@ -1,4 +1,5 @@
 ﻿using BO;
+using DalFacade.DO;
 using System;
 using System.Windows;
 
@@ -16,8 +17,21 @@ public partial class ProductWindow : Window
     BO.Cart cart = new BO.Cart();
     int id;
     PO.Product p_;
-    public ProductWindow(BLApi.IBL bl, BO.Product pro, bool _isCustomer, BO.Cart c)
+    private BO.Product ConvertToBo(PO.Product Pp)
     {
+        BO.Product item = new()
+        {
+            ID = Pp.ID,
+            Name = Pp.Name,
+            Price = Pp.Price,
+            Category = (BO.Category)(eCategory)Pp.Category,
+            inStock = Pp.inStock
+        };
+        return item;
+    }
+    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, BO.Cart c)
+    {
+        
         try
         {
             this.isCustomer = _isCustomer;
@@ -38,7 +52,7 @@ public partial class ProductWindow : Window
             {
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
                 this.pro = prod;
-                this.DataContext = this.pro;
+                this.DataContext = this.p_;
                 addProductBtn.Visibility = Visibility.Hidden;
                 if (pro.Category == null)
                     throw new PLEmptyCategoryField();
@@ -54,12 +68,11 @@ public partial class ProductWindow : Window
                     throw new PlInvalidValueExeption("name");
                 if (pro.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
                     throw new PlInvalidValueExeption("amount");
-
             }
             //else if() // if product is ordered do not show the delete btn
             else
             {
-                this.DataContext = this.pro;
+                this.DataContext = this.p_;
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
@@ -83,11 +96,12 @@ public partial class ProductWindow : Window
         {
             updateProductBtn.Visibility = Visibility.Hidden;
             p.ID = 10;
-            p.Price = this.pro.Price;
-            p.inStock = this.pro.inStock;
-            p.Name = this.pro.Name;
-            p.Category = this.pro.Category;
-            bl.product.AddProduct(p);
+            p.Price = this.p_.Price;
+            p.inStock = this.p_.inStock;
+            p.Name = this.p_.Name;
+            p.Category = this.p_.Category;
+            this.pro = ConvertToBo(p_);///////////////////
+            bl.product.AddProduct(this.pro);
             AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
         }
@@ -117,12 +131,12 @@ public partial class ProductWindow : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            pro.Price = this.pro.Price;
-            pro.inStock = this.pro.inStock;
-            pro.Name = this.pro.Name;
-            pro.Category = this.pro.Category;
-            bl.product.Update(pro);/////
-            p_.GetNew(pro);
+            pro.Price = this.p_.Price;
+            pro.inStock = this.p_.inStock;
+            pro.Name = this.p_.Name;
+            pro.Category = this.p_.Category;
+            bl.product.Update(ConvertToBo(p_));/////
+/*            p_.GetNew(pro);*/
             AdminWindow w = new AdminWindow(bl, this.cart);
             w.Show();
             this.Close();

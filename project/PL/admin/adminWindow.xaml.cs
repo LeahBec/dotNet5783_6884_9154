@@ -22,11 +22,24 @@ public partial class AdminWindow : Window
     ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
     PO.ProductForList pro = new PO.ProductForList();
-   /*var data =new
+    /*var data =new
+     {
+        orders =  IEnumerable<BO.OrderForList>,
+         products = IEnumerable<PO.ProductForList>
+     };*/
+    private PO.Product ConvertToPoPro(BO.Product Pp)
     {
-       orders =  IEnumerable<BO.OrderForList>,
-        products = IEnumerable<PO.ProductForList>
-    };*/
+        PO.Product item = new()
+        {
+            ID = Pp.ID,
+            Name = Pp.Name,
+            Price = Pp.Price,
+            Category = (BO.Category)(eCategory)Pp.Category,
+            inStock = Pp.inStock
+        };
+        return item;
+    }
+
     public AdminWindow(BLApi.IBL bl, BO.Cart c)
     {
         try
@@ -97,7 +110,7 @@ public partial class AdminWindow : Window
             //BO.ProductForList  poo= ProductsListview.SelectedItem;
             int pId = (ProductsListview.SelectedItem as PO.ProductForList).ID;
             p = bl.product.GetProductCustomer(pId);
-            Window window = new ProductWindow(bl, p, false, this.cart);
+            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             //InitializeComponent();
@@ -123,7 +136,7 @@ public partial class AdminWindow : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl, p, false, this.cart);
+            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();

@@ -9,7 +9,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class Product : DependencyObject
+    public class Product : DependencyObject
     {
         public int ID {
             get { return (int)GetValue(IdProperty); }

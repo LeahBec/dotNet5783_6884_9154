@@ -68,6 +68,18 @@ public partial class CustomerProductList : Window
         return item;
     }
 
+    private PO.Product ConvertToPoPro(BO.Product Pp)
+    {
+        PO.Product item = new()
+        {
+            ID = Pp.ID,
+            Name = Pp.Name,
+            Price = Pp.Price,
+            Category = (BO.Category)(eCategory)Pp.Category,
+            inStock = Pp.inStock
+        };
+        return item;
+    }
 
 
 
@@ -97,7 +109,7 @@ public partial class CustomerProductList : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl, p, true, this.cart);
+            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.cart);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -123,7 +135,7 @@ public partial class CustomerProductList : Window
         {
             // p.ID = sender.AnchorItem.
             p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
-            Window window = new ProductWindow(bl, p, true, this.cart);
+            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.cart);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();

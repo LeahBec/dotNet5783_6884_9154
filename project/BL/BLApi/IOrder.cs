@@ -4,6 +4,7 @@
 /// </summary>
     public interface IOrder
     {
+        public int AddNewOrder(BO.Order order);
         public IEnumerable<BO.OrderForList> GetOrderList();
         public BO.Order GetOrderDetails(int id);
         public BO.Order UpdateOrderShipping(int id);

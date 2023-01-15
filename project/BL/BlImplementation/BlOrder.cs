@@ -5,6 +5,51 @@ internal class BlOrder : BLApi.IOrder
 {
     DalApi.IDal? Dal = DalApi.Factory.Get();
 
+    public int AddNewOrder(BO.Order order)
+    {
+        try
+        {
+            Dal.DO.Order o = new()
+            {
+                OrderID = order.ID,
+                OrderDate = order.OrderDate,
+                ShipDate = order.ShipDate,
+                DeliveryDate = order.DeiveryDate,
+                CustomerAddress = order.CustomerAddress,
+                CustomerEmail = order.CustomerEmail,
+                CustomerName = order.CustomerName,
+            };
+            int orderId = Dal.Order.Add(o);
+            order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
+                /*someValues.ToList().ForEach(x => list.Add(x + 1));*/
+            return order.ID;
+
+        }
+
+        catch (DalApi.ExceptionFailedToRead)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
+        catch (DalApi.ExceptionObjectNotFound)
+        {
+            throw new BO.BlEntityNotFoundException("");
+        }
+        catch (Exception)
+        {
+
+            throw new BO.BlDefaultException("unexpected error");
+        }
+    }
+
+    public Dal.DO.OrderItem convertToDal(BO.OrderItem bo)
+    {
+        Dal.DO.OrderItem o = new();
+        o.OrderID = bo.ID;
+        o.ProductID = bo.ProductID;
+        o.Amount = bo.Amount;
+        o.Price = bo.Price;
+        return o;
+    }
     public IEnumerable<BO.OrderForList?> GetOrderList()
     {
         try
@@ -270,20 +315,21 @@ internal class BlOrder : BLApi.IOrder
             Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = currOrder.OrderID;
-/*            DateTime s;
-            var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
-            orderTracking.dateAndTrack.Add(t);*/
-/*            orderTracking.dateAndTrack.Add(new Tuple<DateTime, BO.OrderStatus>((DateTime)currOrder.OrderDate, (BO.OrderStatus)0));
-*/            orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
+            /*            DateTime s;
+                        var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
+                        orderTracking.dateAndTrack.Add(t);*/
+            /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime, BO.OrderStatus>((DateTime)currOrder.OrderDate, (BO.OrderStatus)0));
+            */
+            orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
             orderTracking.Status = BO.OrderStatus.Payed;
             if (currOrder.ShipDate <= DateTime.Now)
             {
-              orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.ShipDate, BO.OrderStatus.Shiped));
+                orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.ShipDate, BO.OrderStatus.Shiped));
                 orderTracking.Status = BO.OrderStatus.Shiped;
             }
             if (currOrder.DeliveryDate <= DateTime.Now)
             {
-               orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.DeliveryDate, BO.OrderStatus.Delivered));
+                orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.DeliveryDate, BO.OrderStatus.Delivered));
                 orderTracking.Status = BO.OrderStatus.Delivered;
             }
             return orderTracking;

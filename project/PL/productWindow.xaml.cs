@@ -80,8 +80,8 @@ public partial class ProductWindow : Window
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
             
-          /*  categorySelectorBox.IsReadOnly = isCustomer;
-            input_product_instock.IsReadOnly = isCustomer;
+            categorySelectorBox.IsReadOnly = isCustomer;
+           /* input_product_instock.IsReadOnly = isCustomer;
             input_product_price.IsReadOnly = isCustomer;
             input_product_name.IsReadOnly = isCustomer;*/
 

@@ -53,7 +53,7 @@ namespace PL
                     throw new PLEmptyNameField();
                 if (or.CustomerEmail == "")
                     throw new PLEmptyAmountField();
-                if (or.CustomerAdress == "")
+                if (or.CustomerAddress == "")
                     throw new PLEmptyPriceField();
                 if (or.OrderDate < DateTime.MinValue || or.OrderDate > DateTime.Now)
                     throw new PlInvalidValueExeption("orderDate");

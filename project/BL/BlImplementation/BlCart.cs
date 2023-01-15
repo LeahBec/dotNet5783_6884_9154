@@ -1,5 +1,7 @@
 ﻿using BLApi;
+using BO;
 using System.Linq;
+using System.Net.Mail;
 
 namespace BlImplementation;
 internal class BlCart : ICart
@@ -53,24 +55,35 @@ internal class BlCart : ICart
         }
     }
 
-    bool IsValidEmail(string email)
-    {
-        //var trimmedEmail = email.Trim();
-        return true;
+    /* bool IsValidEmail(string email)
+     {
+         //var trimmedEmail = email.Trim();
+         return true;
 
-        //if (trimmedEmail.EndsWith("."))
-        //{
-        //    return false; // suggested by @TK-421
-        //}
-        //try
-        //{
-        //    var addr = new System.Net.Mail.MailAddress(email);
-        //    return addr.Address == trimmedEmail;
-        //}
-        //catch
-        //{
-        //    return false;
-        //}
+         //if (trimmedEmail.EndsWith("."))
+         //{
+         //    return false; // suggested by @TK-421
+         //}
+         //try
+         //{
+         //    var addr = new System.Net.Mail.MailAddress(email);
+         //    return addr.Address == trimmedEmail;
+         //}
+         //catch
+         //{
+         //    return false;
+         //}
+     }*/
+    bool IsValidEmail(string _email)
+    {
+        string email = _email;
+        var mail = new MailAddress(email);
+        bool isValidEmail = mail.Host.Contains(".");
+        if (!isValidEmail)
+        {
+            return false;
+        }
+        return true;
     }
 
     public void CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
@@ -79,55 +92,11 @@ internal class BlCart : ICart
         {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
                 throw new Exception();
-            /* foreach (var item in c.items)
-             {
-                 if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
-                     throw new Exception();
-                 int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
-
-                 Dal.DO.Order o = new Dal.DO.Order();
-                 o.OrderID = 0;
-                 o.OrderDate = DateTime.Now;
-                 o.DeliveryDate = DateTime.MinValue;
-                 o.ShipDate = DateTime.MinValue;
-                 o.CustomerAddress = customerAddress;
-                 o.CustomerName = customerName;
-                 o.CustomerEmail = customerEmail;
-                 int id = Dal.Order.Add(o);
-                 List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
-
-                 var cartItems = from BO.OrderItem item1 in c.items
-                                 select new BO.OrderItem
-                                 {
-                                     ID = item1.ID,
-                                     Amount = item1.Amount,
-                                     Price = item1.Price,
-                                     ProductID = item1.ProductID,
-                                     ProductName = item1.ProductName,
-                                     TotalPrice = item1.TotalPrice
-                                 };
-             }
-             Dal.DO.OrderItem cartItem = new();
-             c.items.Select(item =>
-             {
-                 cartItem.ID = 0;
-                 cartItem.Amount = item.Amount;
-                 cartItem.Price = item.Price;
-                 cartItem.OrderID = item.ID;
-                 cartItem.ProductID = item.ProductID;
-                 Dal.OrderItem.Add(cartItem);
-                 Dal.Product.updateAmount(item.ProductID, item.Amount);
-                 return item;
-             }).ToList();
-         }
- */
-
             c.items.Select(item =>
                 {
                     if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
                         throw new Exception();
                     int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
-
                     Dal.DO.Order o = new Dal.DO.Order();
                     o.OrderID = 0;
                     o.OrderDate = DateTime.Now;
@@ -150,19 +119,30 @@ internal class BlCart : ICart
                                         TotalPrice = item1.TotalPrice
                                     };
 
-                    Dal.DO.OrderItem cartItem = new();
-                    c.items.Select(item =>
-                    {
-                        cartItem.ID = 0;
-                        cartItem.Amount = item.Amount;
-                        cartItem.Price = item.Price;
-                        cartItem.OrderID = item.ID;
-                        cartItem.ProductID = item.ProductID;
-                        Dal.OrderItem.Add(cartItem);
-                        Dal.Product.updateAmount(item.ProductID, item.Amount);
-                        return item;
-                    }).ToList();
-                    return item;
+                   // Dal.DO.OrderItem cartItem = new();
+                    /*  c.items.Select(item =>
+                       {
+                           cartItem.ID = 0;
+                           cartItem.Amount = item.Amount;
+                           cartItem.Price = item.Price;
+                           cartItem.OrderID = item.ID;
+                           cartItem.ProductID = item.ProductID;
+                           Dal.OrderItem.Add(cartItem);
+                           Dal.Product.updateAmount(item.ProductID, item.Amount);
+                           return item;
+                       }).ToList();*/
+
+                    var items1 = from BO.OrderItem item1 in c.items
+                                    select new BO.OrderItem
+                                    {
+                                        ID = item1.ID,
+                                        Amount = item1.Amount,
+                                        Price = item1.Price,
+                                        ProductID = item1.ProductID,
+                                        ProductName = item1.ProductName,
+                                        TotalPrice = item1.TotalPrice
+                                    };
+                    return items1;
                 }).ToList();
 
         }
@@ -182,6 +162,7 @@ internal class BlCart : ICart
         {
 
             int productInStock = Dal.Product.Get(p => p.ID == id).InStock;
+            if (productInStock < newAmount) throw new BlOutOfStockException();
             BO.OrderItem oi = c.items.Find(item => item.ProductID == id);
             if (oi != null)
             {
@@ -212,6 +193,10 @@ internal class BlCart : ICart
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
+        }
+        catch (BlOutOfStockException ex)
+        {
+            throw new BO.BlDefaultException("product out of stock");
         }
         catch (Exception)
         {

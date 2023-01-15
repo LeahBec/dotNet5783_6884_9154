@@ -1,7 +1,12 @@
 ﻿using BO;
 using DalFacade.DO;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
+using Microsoft.VisualBasic;
 
 namespace PL;
 
@@ -13,10 +18,12 @@ public partial class ProductWindow : Window
     BLApi.IBL? bl = BLApi.Factory.get();
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
-    bool isCustomer;
     BO.Cart cart = new BO.Cart();
+    bool inputProReadOnly { get; set; }
+    public bool isCustomer { get; set; }
     int id;
-    PO.Product p_;
+    PO.Product p_ = new PO.Product();
+    ObservableCollection<PO.ProductForList> list_p;
     private BO.Product ConvertToBo(PO.Product Pp)
     {
         BO.Product item = new()
@@ -29,9 +36,40 @@ public partial class ProductWindow : Window
         };
         return item;
     }
-    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, BO.Cart c)
+
+    private PO.ProductForList ConvertPFLToP(PO.Product p)
     {
-        
+        PO.ProductForList item = new();
+        item.ID = p.ID;
+        item.Name = p.Name;
+        item.Price = p.Price;
+        item.Category = (DalFacade.DO.eCategory)p.Category;
+        return item;
+    }
+
+    private PO.Product ConvertPToPFL(PO.ProductForList p)
+    {
+        PO.Product item = new();
+        item.ID = p.ID;
+        item.Name = p.Name;
+        item.Price = p.Price;
+        item.Category = (Category)p.Category;
+
+        return item;
+    }
+    private BO.ProductForList ConvertPFLToB(BO.Product p)
+    {
+        BO.ProductForList item = new();
+        item.ID = p.ID;
+        item.Name = p.Name;
+        item.Price = p.Price;
+        item.Category = p.Category;
+        return item;
+    }
+
+    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, BO.Cart c, ObservableCollection<PO.ProductForList> _list_p = null)
+    {
+
         try
         {
             this.isCustomer = _isCustomer;
@@ -39,20 +77,24 @@ public partial class ProductWindow : Window
             this.bl = bl;
             this.cart = c;
             this.id = pro.ID;
-            categorySelectorBox.IsReadOnly = isCustomer;
+            if (_list_p == null) this.list_p = new();
+            else this.list_p = _list_p;
+            
+          /*  categorySelectorBox.IsReadOnly = isCustomer;
             input_product_instock.IsReadOnly = isCustomer;
             input_product_price.IsReadOnly = isCustomer;
-            input_product_name.IsReadOnly = isCustomer;
+            input_product_name.IsReadOnly = isCustomer;*/
+
             if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
             if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
-            if(!isCustomer) addBtn.Visibility = Visibility.Hidden;
+            if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
             if (pro.ID != 0)
             {
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
                 this.pro = prod;
-                this.DataContext = this.p_;
+                this.DataContext = this.pro;
                 addProductBtn.Visibility = Visibility.Hidden;
                 if (pro.Category == null)
                     throw new PLEmptyCategoryField();
@@ -72,7 +114,7 @@ public partial class ProductWindow : Window
             //else if() // if product is ordered do not show the delete btn
             else
             {
-                this.DataContext = this.p_;
+                this.DataContext = this.pro;
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
@@ -95,15 +137,18 @@ public partial class ProductWindow : Window
         try
         {
             updateProductBtn.Visibility = Visibility.Hidden;
-            p.ID = 10;
-            p.Price = this.p_.Price;
-            p.inStock = this.p_.inStock;
-            p.Name = this.p_.Name;
-            p.Category = this.p_.Category;
+            p_.ID = 10;
+            p_.Price = this.pro.Price;
+            p_.inStock = this.pro.inStock;
+            p_.Name = this.pro.Name;
+            p_.Category = this.pro.Category;
             this.pro = ConvertToBo(p_);///////////////////
-            bl.product.AddProduct(this.pro);
-            AdminWindow w = new AdminWindow(bl, this.cart);
-            w.Show();
+            int id = bl.product.AddProduct(this.pro);
+            this.p_.ID = id;
+            this.list_p.Add(ConvertPFLToP(this.p_));
+            this.Close();
+            //    AdminWindow w = new AdminWindow(bl, this.cart,this.list_p);
+            // w.Show();
         }
         catch (BO.blInvalidAmountToken ex)
         {
@@ -131,14 +176,16 @@ public partial class ProductWindow : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            pro.Price = this.p_.Price;
-            pro.inStock = this.p_.inStock;
-            pro.Name = this.p_.Name;
-            pro.Category = this.p_.Category;
+            p_.ID = this.pro.ID; 
+            p_.Price = this.pro.Price;
+            p_.inStock = this.pro.inStock;
+            p_.Name = this.pro.Name;
+            p_.Category = this.pro.Category;
+            this.pro = ConvertToBo(p_);
+            list_p.Remove(list_p.Where(i => i.ID == p_.ID).Single());
+            list_p.Add(ConvertPFLToP(this.p_));
             bl.product.Update(ConvertToBo(p_));/////
-/*            p_.GetNew(pro);*/
-            AdminWindow w = new AdminWindow(bl, this.cart);
-            w.Show();
+
             this.Close();
         }
         catch (BO.blInvalidAmountToken ex)
@@ -173,13 +220,32 @@ public partial class ProductWindow : Window
         }
     }
 
+    private PO.ProductForList ConvertToPo(BO.ProductForList Bp)
+    {
+        PO.ProductForList item = new()
+        {
+            ID = Bp.ID,
+            Name = Bp.Name,
+            Price = Bp.Price,
+            Category = (eCategory)Bp.Category
+        };
+        return item;
+    }
+  
     private void deleteProductBtn_Click(object sender, RoutedEventArgs e)
     {
         try
         {
             bl.product.DeleteProduct(pro.ID);
-            AdminWindow w = new AdminWindow(bl, this.cart);
-            w.Show();
+            /* AdminWindow w = new AdminWindow(bl, this.cart);
+             w.Show();*/
+
+
+
+            BO.ProductForList ppp = ConvertPFLToB(pro);
+            p_ = ConvertPToPFL(ConvertToPo(ppp));
+            var a = ConvertPFLToP(p_);
+            list_p.Remove(list_p.Where(i => i.ID == a.ID).Single());
             this.Close();
         }
 
@@ -205,7 +271,7 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            Window w = new CustomerProductList(bl,this.cart);
+            Window w = new CustomerProductList(bl, this.cart);
             w.Show();
             this.Close();
         }

@@ -10,8 +10,8 @@ namespace PL
         //Bl bl = new BlImplementation.Bl();
         BLApi.IBL bl = BLApi.Factory.get();
         BO.Cart cart = new BO.Cart();
-/*        private int ID;
-*/        public MainWindow()
+        private int ID;
+        public MainWindow()
         {
             InitializeComponent();
         /*    Main.DataContext = new
@@ -29,7 +29,7 @@ namespace PL
 
         private void displayAdminWindow(object sender, RoutedEventArgs e)
         {
-            AdminWindow w = new AdminWindow(bl, this.cart);
+            AdminWindow w = new AdminWindow(bl, this.cart );
             w.Show();
             this.Close();
         }
@@ -42,7 +42,8 @@ namespace PL
         private void OrderTracking_clicked(object sender, RoutedEventArgs e)
         {
             //this.ID =int.Parse( id.Text);
-            Window w = new customer.OrderTracking(bl ,0, this.cart);
+            this.ID = int.Parse(id_.Text);
+            Window w = new customer.OrderTracking(bl ,this.ID, this.cart);
             w.Show();
             this.Hide();
         }

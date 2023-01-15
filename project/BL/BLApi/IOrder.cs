@@ -8,6 +8,7 @@
         public BO.Order GetOrderDetails(int id);
         public BO.Order UpdateOrderShipping(int id);
         public BO.Order UpdateOrderDelivery(int id);
+        public BO.OrderTracking OrderTrack(int id);
         //BONUS.
         public BO.Order UpdateOrderForManager(BO.Order o);
 

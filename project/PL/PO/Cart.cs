@@ -14,32 +14,32 @@ namespace PL.PO
             get { return (string)GetValue(CustomerNameProperty); }
             set { SetValue(CustomerNameProperty, value); }
         }
-        public static readonly DependencyProperty CustomerNameProperty = DependencyProperty.Register("CustomerName", typeof(string), typeof(Product), new UIPropertyMetadata(""));
+        public static readonly DependencyProperty CustomerNameProperty = DependencyProperty.Register("CustomerName", typeof(string), typeof(Cart), new UIPropertyMetadata(""));
         public string CustomerEmail
         {
             get { return (string)GetValue(CustomerEmailProperty); }
             set { SetValue(CustomerEmailProperty, value); }
         }
-        public static readonly DependencyProperty CustomerEmailProperty = DependencyProperty.Register("CustomerEmail", typeof(string), typeof(Product), new UIPropertyMetadata(""));
+        public static readonly DependencyProperty CustomerEmailProperty = DependencyProperty.Register("CustomerEmail", typeof(string), typeof(Cart), new UIPropertyMetadata(""));
         public string CustomerAddress
         {
             get { return (string)GetValue(CustomerAddressProperty); }
             set { SetValue(CustomerAddressProperty, value); }
         }
-        public static readonly DependencyProperty CustomerAddressProperty = DependencyProperty.Register("CustomerAddress", typeof(string), typeof(Product), new UIPropertyMetadata(""));
+        public static readonly DependencyProperty CustomerAddressProperty = DependencyProperty.Register("CustomerAddress", typeof(string), typeof(Cart), new UIPropertyMetadata(""));
         public double TotalPrice
         {
             get { return (double)GetValue(TotalPriceProperty); }
             set { SetValue(TotalPriceProperty, value); }
         }
-        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Product), new UIPropertyMetadata((double)0));
+        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Cart), new UIPropertyMetadata((double)0));
 
         public List<OrderItem> Items
         {
             get { return (List<OrderItem>)GetValue(ItemsProperty); }
             set { SetValue(ItemsProperty, value); }
         }
-        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(List<OrderItem>), typeof(Product), new UIPropertyMetadata(new List<OrderItem>()));
+        public static readonly DependencyProperty ItemsProperty = DependencyProperty.Register("Items", typeof(List<OrderItem>), typeof(Cart), new UIPropertyMetadata(new List<OrderItem>()));
 
     }
 }

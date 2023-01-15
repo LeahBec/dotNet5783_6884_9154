@@ -19,7 +19,8 @@ public partial class AdminWindow : Window
     private BO.Product p = new BO.Product();
     private BO.Order o = new BO.Order();
     BO.Cart cart= new BO.Cart();
-    ObservableCollection<PO.ProductForList> List_p = new();
+    public ObservableCollection<PO.ProductForList> List_p { get; set; } = new();
+    //ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
     PO.ProductForList pro = new PO.ProductForList();
     /*var data =new
@@ -44,13 +45,15 @@ public partial class AdminWindow : Window
     {
         try
         {
+            /*if (_list_p == null) this.List_p = new();
+            else this.List_p = _list_p;*/
             InitializeComponent();
             this.bl = bl;
             this.cart = c;
-            OrdersListview.ItemsSource = bl.order.GetOrderList();
+           // OrdersListview.ItemsSource = bl.order.GetOrderList();
             list1 = bl.product.GetProductList();
             //ProductsListview.ItemsSource = bl.product.GetProductList();
-            convertList();
+            List_p=convertList();
             this.DataContext = this.List_p;
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -110,12 +113,12 @@ public partial class AdminWindow : Window
             //BO.ProductForList  poo= ProductsListview.SelectedItem;
             int pId = (ProductsListview.SelectedItem as PO.ProductForList).ID;
             p = bl.product.GetProductCustomer(pId);
-            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart);
+            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart, this.List_p);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             //InitializeComponent();
-            list1 = bl.product.GetProductList();
-            convertList();
+            //list1 = bl.product.GetProductList();
+           // convertList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -136,10 +139,10 @@ public partial class AdminWindow : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart);
+            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart, this.List_p);
             window.Show();
-            InitializeComponent();
-            ProductsListview.ItemsSource = bl.product.GetProductList();
+           // InitializeComponent();
+           // ProductsListview.ItemsSource = bl.product.GetProductList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {

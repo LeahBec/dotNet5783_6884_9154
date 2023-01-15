@@ -1,6 +1,7 @@
 ﻿using BlImplementation;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,22 +23,37 @@ namespace PL.customer
     {
         int orderID;
         BO.Order o;
+        BO.OrderTracking ot;
         BLApi.IBL bl;
         BO.Cart cart = new BO.Cart();
         public OrderTracking(BLApi.IBL _bl ,int _orderID, BO.Cart c)
         {
             this.bl = _bl;
             this.orderID = _orderID;
-            this.o = bl.order.GetOrderDetails(this.orderID);
+            this.ot = bl.order.OrderTrack(this.orderID);
             InitializeComponent();
-            DataContext= this.o;
+            DataContext= this.ot;
+            orderDates.DataContext = new { mylist = new ObservableCollection<Tuple<DateTime?, BO.OrderStatus?>>(ot?.dateAndTrack) 
+            };
         }
+    
 
         private void show_order_details(object sender, RoutedEventArgs e)
         {
+            this.o = bl.order.GetOrderDetails(this.orderID);
             Window w = new PL.OrderWindow(this.bl, this.o, true, this.cart);
             w.Show();
-            this.Close();
+            //this.Close();
+        }
+
+        private void itemClicked(object sender, MouseButtonEventArgs e)
+        {
+
+        }
+
+        private void orderDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

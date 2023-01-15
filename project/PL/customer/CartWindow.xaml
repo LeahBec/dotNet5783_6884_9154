@@ -17,7 +17,7 @@
         </Grid.RowDefinitions>
         <TextBox Name="input_order_totalPrice" HorizontalAlignment="Left" Margin="15,192,0,0" TextWrapping="Wrap" Text="{Binding Path=TotalPrice}" VerticalAlignment="Top" Width="120" Height="18" />
         <Label Content="total price" HorizontalAlignment="Left" Margin="45,152,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="73" RenderTransformOrigin="2.612,-0.881"/>
-        <ListView ItemsSource="{Binding Path=items}" Margin="167,24,67,24" Grid.ColumnSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListView_SelectionChanged">
+        <ListView ItemsSource="{Binding Path=Items}" Margin="167,24,67,24" Grid.ColumnSpan="2" d:ItemsSource="{d:SampleData ItemCount=5}" SelectionChanged="ListView_SelectionChanged" Name="itemsList">
             <ListView.View>
                 <GridView>
                     <GridViewColumn DisplayMemberBinding="{Binding ID}" Header="ID" Width="100"/>
@@ -27,6 +27,7 @@
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="100"/>
                     
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="amount" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="total price" Width="100"/>
                     <GridViewColumn Header="" Width="100">
                         <GridViewColumn.CellTemplate>
                             <DataTemplate>

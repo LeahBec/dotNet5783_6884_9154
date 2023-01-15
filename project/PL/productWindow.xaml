@@ -6,16 +6,17 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ProductWindow" Height="450" Width="800">
+    
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="2*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <TextBox Name="input_product_name" HorizontalAlignment="Left" Margin="318,87,0,0" TextWrapping="Wrap" Text="{Binding Path=Name}" VerticalAlignment="Top" Width="120" />
-        <TextBox Name="input_product_price" HorizontalAlignment="Left" Margin="318,140,0,0" TextWrapping="Wrap" Text="{Binding Path=Price}" VerticalAlignment="Top" Width="120" />
-        <TextBox Name="input_product_instock" HorizontalAlignment="Left" Margin="318,199,0,0" TextWrapping="Wrap" Text="{Binding Path=inStock}" VerticalAlignment="Top" Width="120" />
-        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="318,243,347,10" Text="{Binding Path=Category}"/>
-        <Button x:Name="addProductBtn" Content="add" HorizontalAlignment="Left" Margin="368,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="addProductBtn_Click" Background="#FFB19578" FontFamily="Amatic SC" FontSize="16"/>
+        <TextBox Name="input_product_name" HorizontalAlignment="Left" Margin="318,87,0,0" TextWrapping="Wrap" Text="{Binding Path=Name}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=isCustomer}"/>
+        <TextBox  Name="input_product_price" HorizontalAlignment="Left" Margin="318,140,0,0" TextWrapping="Wrap" Text="{Binding Path=Price}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=isCustomer}"/>
+        <TextBox Name="input_product_instock" HorizontalAlignment="Left" Margin="318,199,0,0" TextWrapping="Wrap" Text="{Binding Path=inStock}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=isCustomer}"/>
+        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="318,243,347,10" Text="{Binding Path=Category}" IsEnabled = "{Binding RelativeSource={RelativeSource Mode=FindAncestor, AncestorType=Window}, Path=isCustomer}"/>
+        <Button  x:Name="addProductBtn" Content="add" HorizontalAlignment="Left" Margin="368,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="addProductBtn_Click" Background="#FFB19578" FontFamily="Amatic SC" FontSize="16"/>
         <Label Content="product name" HorizontalAlignment="Left" Margin="318,57,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18"/>
         <Label Content="price" HorizontalAlignment="Left" Margin="318,110,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18"/>
         <Label Content="amount in stock" HorizontalAlignment="Left" Margin="318,163,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18"/>

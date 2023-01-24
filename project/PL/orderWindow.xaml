@@ -11,30 +11,35 @@
             <RowDefinition Height="317*"/>
             <RowDefinition Height="117*"/>
         </Grid.RowDefinitions>
-        <TextBox Name="input_order_ID" HorizontalAlignment="Left" Margin="325,85,0,0" TextWrapping="Wrap" Text="{Binding Path=ID}" VerticalAlignment="Top" Width="120" Height="18" />
+        <TextBox Name="input_order_ID" HorizontalAlignment="Left" Margin="273,81,0,0" TextWrapping="Wrap" Text="{Binding Path=ID}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_customerName" HorizontalAlignment="Left" Margin="127,80,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerName}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_customerEmail" HorizontalAlignment="Left" Margin="125,160,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerEmail}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_customerAddress" HorizontalAlignment="Left" Margin="124,215,0,0" TextWrapping="Wrap" Text="{Binding Path=CustomerAddress}" VerticalAlignment="Top" Width="120" Height="18" />
-        <TextBox Name="input_order_orderDate" HorizontalAlignment="Left" Margin="338,162,0,0" TextWrapping="Wrap" Text="{Binding Path=OrderDate}" VerticalAlignment="Top" Width="120" Height="18" />
-        <TextBox Name="input_order_shipDate" HorizontalAlignment="Center" Margin="0,212,0,0" TextWrapping="Wrap" Text="{Binding Path=ShipDate}" VerticalAlignment="Top" Width="120" Height="18" />
-        <TextBox Name="input_order_deliveryDate" HorizontalAlignment="Center" Margin="0,280,0,0" TextWrapping="Wrap" Text="{Binding Path=DeiveryDate}" VerticalAlignment="Top" Width="120" Height="18" />
+        <TextBox Name="input_order_orderDate" HorizontalAlignment="Left" Margin="280,165,0,0" TextWrapping="Wrap" Text="{Binding Path=OrderDate}" VerticalAlignment="Top" Width="120" Height="18" />
+        <TextBox Name="input_order_shipDate" HorizontalAlignment="Left" Margin="273,208,0,0" TextWrapping="Wrap" Text="{Binding Path=ShipDate}" VerticalAlignment="Top" Width="120" Height="18" />
+        <TextBox Name="input_order_deliveryDate" HorizontalAlignment="Left" Margin="280,279,0,0" TextWrapping="Wrap" Text="{Binding Path=DeiveryDate}" VerticalAlignment="Top" Width="120" Height="18" />
         <TextBox Name="input_order_totalPrice" HorizontalAlignment="Left" Margin="127,279,0,0" TextWrapping="Wrap" Text="{Binding Path=TotalPrice}" VerticalAlignment="Top" Width="120" Height="18" />
 
-        <Label Content="order ID" HorizontalAlignment="Center" Margin="0,48,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="84"/>
+        <Label Content="order ID" HorizontalAlignment="Left" Margin="298,48,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="84"/>
         <Label Content="customer name" HorizontalAlignment="Left" Margin="140,42,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="84"/>
         <Label Content="customer Email" HorizontalAlignment="Left" Margin="145,112,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="85"/>
         <Label Content="customer address" HorizontalAlignment="Left" Margin="143,179,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="92"/>
-        <Label Content="order date" HorizontalAlignment="Left" Margin="365,118,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="59"/>
-        <Label Content="ship date" HorizontalAlignment="Left" Margin="367,180,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="52"/>
-        <Label Content="delivery date" HorizontalAlignment="Left" Margin="362,243,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="73" RenderTransformOrigin="2.612,-0.881"/>
+        <Label Content="order date" HorizontalAlignment="Left" Margin="317,122,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="59"/>
+        <Label Content="ship date" HorizontalAlignment="Left" Margin="320,179,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="52"/>
+        <Label Content="delivery date" HorizontalAlignment="Left" Margin="309,241,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="73" RenderTransformOrigin="2.612,-0.881"/>
         <Label Content="total price" HorizontalAlignment="Left" Margin="157,239,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18" Height="33" Width="73" RenderTransformOrigin="2.612,-0.881"/>
         <Button x:Name="updateOrderBtn" Content="update" HorizontalAlignment="Left" Margin="335,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="82"/>
         <Button x:Name="updateOrderShippingBtn" Content="update order shipping" HorizontalAlignment="Left" Margin="487,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderShippingBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="119"/>
         <Button x:Name="updateOrderDeliveryBtn" Content="update order delivery" HorizontalAlignment="Left" Margin="154,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderDeliveryBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="110"/>
-        <ListView d:ItemsSource="{Binding Path=Items}" Margin="492,48,0,0">
+        <ListView d:ItemsSource="{Binding}" Margin="405,48,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=OrderID}" Header="ID" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="product name" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="product ID" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="amount" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="price" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=TotalPrice}" Header="total price" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

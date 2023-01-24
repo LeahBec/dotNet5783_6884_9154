@@ -55,9 +55,9 @@ namespace PL.customer
                 o.ShipDate=DateTime.MinValue;
                 o.DeiveryDate= DateTime.MinValue;
                 o.TotalPrice= this.cart.TotalPrice;
-                bl.order.AddNewOrder(o);
+                int id = bl.order.AddNewOrder(o);
                 MessageBox.Show("The order was successfully created");
-                Window w = new OrderTracking(bl, o.ID, this.cart);
+                Window w = new OrderTracking(bl, id, this.cart);
                 w.Show();
                 this.Close();
             }

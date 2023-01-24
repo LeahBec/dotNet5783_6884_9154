@@ -20,9 +20,10 @@ internal class BlOrder : BLApi.IOrder
                 CustomerName = order.CustomerName,
             };
             int orderId = Dal.Order.Add(o);
+
             order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
                 /*someValues.ToList().ForEach(x => list.Add(x + 1));*/
-            return order.ID;
+            return orderId;
 
         }
 

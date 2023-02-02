@@ -18,7 +18,7 @@ public partial class AdminWindow : Window
     BLApi.IBL? bl = BLApi.Factory.get();
     private BO.Product p = new BO.Product();
     private BO.Order o = new BO.Order();
-    BO.Cart cart= new BO.Cart();
+    PO.Cart cart= new PO.Cart();
     public ObservableCollection<PO.ProductForList> List_p { get; set; } = new();
     //ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
@@ -74,7 +74,7 @@ public partial class AdminWindow : Window
         return List_p;
     }
 */
-    public AdminWindow(BLApi.IBL bl, BO.Cart c)
+    public AdminWindow(BLApi.IBL bl, PO.Cart c)
     {
         try
         {

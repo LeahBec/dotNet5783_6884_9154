@@ -29,12 +29,13 @@ public partial class CartWindow : Window
     
     BLApi.IBL bl;
     BO.Cart c;
+    PO.Cart cart;
     private PO.Cart p { get; set; }
-    public CartWindow(BLApi.IBL _bl, BO.Cart cart)
+    public CartWindow(BLApi.IBL _bl, PO.Cart _cart)
     {
         InitializeComponent();
         this.bl = _bl;
-        this.c = cart;
+        this.cart = _cart;
         this.p = ConvertToPoCart(this.c);
         this.DataContext= this.p;
     }
@@ -99,7 +100,7 @@ public partial class CartWindow : Window
 
     public void BackToList(object sender, RoutedEventArgs e)
     {
-        Window w = new CustomerProductList(bl, this.c);
+        Window w = new CustomerProductList(bl, this.cart);
         w.Show();
         this.Close();
     }
@@ -130,7 +131,7 @@ public partial class CartWindow : Window
     private void cartConfirmation(object sender, RoutedEventArgs e)
     {
 
-        new customer.ConfirmCart(bl, c).Show();
+        new customer.ConfirmCart(bl, this.cart).Show();
         this.Close();
     }
 }

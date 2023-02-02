@@ -8,7 +8,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class Order : DependencyObject
+   public class Order : DependencyObject
     {
         public int ID
         {

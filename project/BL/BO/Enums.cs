@@ -12,7 +12,8 @@ namespace BO
         Cameras,
         Headphones,
         Computers,
-        SmartWatches
+        SmartWatches,
+        All
     }
 
     public enum OrderStatus

@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class OrderItem : DependencyObject
+    public class OrderItem : DependencyObject
     {
         public int ID
         {
@@ -48,7 +48,5 @@ namespace PL.PO
             set { SetValue(TotalPriceProperty, value); }
         }
         public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(OrderItem), new UIPropertyMetadata(default(double)));
-
-
     }
 }

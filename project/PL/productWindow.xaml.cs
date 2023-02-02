@@ -19,6 +19,7 @@ public partial class ProductWindow : Window
     BO.Product p = new BO.Product();
     BO.Product pro = new BO.Product();
     BO.Cart cart = new BO.Cart();
+    PO.Cart c = new PO.Cart();
     bool inputProReadOnly { get; set; }
     public bool isCustomer { get; set; }
     int id;
@@ -67,7 +68,7 @@ public partial class ProductWindow : Window
         return item;
     }
 
-    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, BO.Cart c, ObservableCollection<PO.ProductForList> _list_p = null)
+    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, ObservableCollection<PO.ProductForList> _list_p = null)
     {
 
         try
@@ -75,7 +76,7 @@ public partial class ProductWindow : Window
             this.isCustomer = _isCustomer;
             InitializeComponent();
             this.bl = bl;
-            this.cart = c;
+            this.c = _c;
             this.id = pro.ID;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
@@ -271,13 +272,13 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            Window w = new CustomerProductList(bl, this.cart);
+            Window w = new CustomerProductList(bl, this.c);
             w.Show();
             this.Close();
         }
         else
         {
-            Window w = new AdminWindow(bl, this.cart);
+            Window w = new AdminWindow(bl, this.c);
             w.Show();
             this.Close();
         }
@@ -288,7 +289,7 @@ public partial class ProductWindow : Window
         try
         {
             bl.cart.AddProductToCart(this.cart, this.id);
-            Window w = new CustomerProductList(bl, this.cart);
+            Window w = new CustomerProductList(bl, this.c);
             w.Show();
             this.Close();
         }

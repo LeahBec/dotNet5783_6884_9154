@@ -23,6 +23,9 @@ public partial class AdminWindow : Window
     //ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
     PO.ProductForList pro = new PO.ProductForList();
+
+    public ObservableCollection<PO.Order> List_o { get; set; } = new();
+    PO.Order order = new PO.Order();
     /*var data =new
      {
         orders =  IEnumerable<BO.OrderForList>,
@@ -41,6 +44,36 @@ public partial class AdminWindow : Window
         return item;
     }
 
+    private PO.Order ConvertToPoOrder(BO.Order Bo)
+    {
+        PO.Order item = new()
+        {
+            ID = Bo.ID,
+            CustomerName = Bo.CustomerName,
+            CustomerAddress = Bo.CustomerAddress,
+            CustomerEmail = Bo.CustomerEmail,
+            DeiveryDate = (DateTime)Bo.DeiveryDate,
+            ShipDate = (DateTime)Bo.ShipDate,
+            OrderDate = (DateTime)Bo.OrderDate
+        };
+        return item;
+    }
+
+   /* private ObservableCollection<PO.Order> convertList()
+    {
+      *//*  list1.ForEach(item =>
+        {
+            List_o.Add(ConvertToPoOrder(item));
+        });*//*
+        PO.Order i = new PO.Order();
+        foreach (BO.Order tmp in list1)
+        {
+            i = ConvertToPoOrder(tmp);
+            List_o.Add(i);
+        }
+        return List_p;
+    }
+*/
     public AdminWindow(BLApi.IBL bl, BO.Cart c)
     {
         try
@@ -65,10 +98,6 @@ public partial class AdminWindow : Window
             MessageBox.Show(ex.Message);
         }
     }
-
-
-
-
     private ObservableCollection<PO.ProductForList> convertList()
     {
         PO.ProductForList i = new PO.ProductForList();
@@ -79,9 +108,6 @@ public partial class AdminWindow : Window
         }
         return List_p;
     }
-
-
-
     private PO.ProductForList ConvertToPo(BO.ProductForList Bp)
     {
         PO.ProductForList item = new()
@@ -164,8 +190,9 @@ public partial class AdminWindow : Window
         {
             // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as BO.OrderForList).ID;
-            o = bl?.order.GetOrderDetails(OId);
-            Window window = new OrderWindow(bl, o, false,this.cart);
+            o = bl.order.GetOrderDetails(OId);
+            order = ConvertToPoOrder(o);
+            Window window = new OrderWindow(bl, order, false,this.cart);
             window.Show();
             InitializeComponent();
             OrdersListview.ItemsSource = bl?.order.GetOrderList();

@@ -22,7 +22,7 @@
             </ListView.View>
         </ListView>
 
-        <Button Content="order details" HorizontalAlignment="Left" Margin="120,270,0,0" VerticalAlignment="Top" Name="order_details" Click="show_order_details"  FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="82"/>
+        <Button Content="order details" Name="order_details" Click="show_order_details" Style="{StaticResource BtnStyle}"/>
 
     </Grid>
 </Window>

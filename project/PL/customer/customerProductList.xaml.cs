@@ -16,16 +16,17 @@ public partial class CustomerProductList : Window
     BLApi.IBL? bl = BLApi.Factory.get();
     private BO.Product p = new BO.Product();
     BO.Cart cart = new BO.Cart();
+    PO.Cart c = new PO.Cart();
     IEnumerable<BO.ProductForList> list1;
     ObservableCollection<PO.ProductForList> List_p = new();
     PO.ProductForList pro = new PO.ProductForList();
-    public CustomerProductList(BLApi.IBL bl, BO.Cart c)
+    public CustomerProductList(BLApi.IBL bl, PO.Cart _c)
     {
         try
         {
             InitializeComponent();
             this.bl = bl;
-            this.cart= c;
+            this.c= _c;
             list1 = bl.product.GetProductList();
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -163,7 +164,7 @@ public partial class CustomerProductList : Window
 
     private void showCart(object sender, RoutedEventArgs e)
     {
-        Window w = new CartWindow(bl, this.cart);
+        Window w = new CartWindow(bl, this.c);
         w.Show();
         this.Close();
     }

@@ -10,6 +10,7 @@ namespace PL
         //Bl bl = new BlImplementation.Bl();
         BLApi.IBL bl = BLApi.Factory.get();
         BO.Cart cart = new BO.Cart();
+        PO.Cart c = new PO.Cart();
         private int ID;
         public MainWindow()
         {
@@ -22,7 +23,7 @@ namespace PL
 
         private void showProductBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerProductList w = new CustomerProductList(bl,this.cart);
+            CustomerProductList w = new CustomerProductList(bl,this.c);
             w.Show();
             this.Close();
         }
@@ -43,7 +44,7 @@ namespace PL
         {
             //this.ID =int.Parse( id.Text);
             this.ID = int.Parse(id_.Text);
-            Window w = new customer.OrderTracking(bl ,this.ID, this.cart);
+            Window w = new customer.OrderTracking(bl ,this.ID, this.c);
             w.Show();
             this.Hide();
         }

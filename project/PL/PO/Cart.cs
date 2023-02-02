@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace PL.PO
 {
-    class Cart :DependencyObject
+    public class Cart :DependencyObject
     {
         public string CustomerName
         {

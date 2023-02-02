@@ -9,7 +9,8 @@ public enum eCategory
     Cameras,
     Headphones,
     Computers,
-    SmartWatches
+    SmartWatches,
+    All
 }
 
 /// <summary>

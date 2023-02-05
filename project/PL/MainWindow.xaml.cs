@@ -30,7 +30,7 @@ namespace PL
 
         private void displayAdminWindow(object sender, RoutedEventArgs e)
         {
-            AdminWindow w = new AdminWindow(bl, this.cart );
+            AdminWindow w = new AdminWindow(bl, this.c );
             w.Show();
             this.Close();
         }

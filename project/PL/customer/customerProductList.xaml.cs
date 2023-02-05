@@ -110,7 +110,7 @@ public partial class CustomerProductList : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.cart);
+            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.c);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -136,7 +136,7 @@ public partial class CustomerProductList : Window
         {
             // p.ID = sender.AnchorItem.
             p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
-            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.cart);
+            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.c);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();

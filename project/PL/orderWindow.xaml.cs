@@ -23,8 +23,8 @@ namespace PL
         BO.Order o = new BO.Order();
         BO.Order or = new BO.Order();
         bool isCustomer;
-        BO.Cart cart=new BO.Cart();
-        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, BO.Cart c)
+        PO.Cart cart=new PO.Cart();
+        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c)
         {
             try
             {

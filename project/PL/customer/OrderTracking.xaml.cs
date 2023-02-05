@@ -44,6 +44,29 @@ namespace PL.customer
             return item;
         }
 
+
+        private PO.OrderItem converToPoOi(BO.OrderItem oi)
+        {
+            PO.OrderItem item = new()
+            {
+                Amount = oi.Amount,
+                ID = oi.ID,
+                ProductID = oi.ProductID,
+                Price = oi.Price,
+                ProductName = oi.ProductName
+            };
+            return item;
+        }
+        private List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
+        {
+            List<PO.OrderItem> returnList = new();
+            foreach (BO.OrderItem oi in loi)
+            {
+                returnList.Add(converToPoOi(oi));
+            }
+            return returnList;
+        }
+
         public OrderTracking(BLApi.IBL _bl ,int _orderID, PO.Cart _c)
         {
             this.c = _c;  
@@ -61,8 +84,8 @@ namespace PL.customer
         {
             this.o = bl.order.GetOrderDetails(this.orderID);
             this.order = ConvertToPoOrder(this.o);
-            this.order.Items = this.cart.items;
-            Window w = new PL.OrderWindow(this.bl, this.order, true, this.cart);
+            this.order.Items = convertToPoOiList(this.cart.items);
+            Window w = new PL.OrderWindow(this.bl, this.order, true, this.c);
             w.Show();
             //this.Close();
         }

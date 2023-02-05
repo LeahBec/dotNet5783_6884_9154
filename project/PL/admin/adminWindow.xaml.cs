@@ -23,7 +23,7 @@ public partial class AdminWindow : Window
     //ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
     PO.ProductForList pro = new PO.ProductForList();
-
+    IEnumerable<BO.Order> list2;
     public ObservableCollection<PO.Order> List_o { get; set; } = new();
     PO.Order order = new PO.Order();
     /*var data =new
@@ -59,21 +59,21 @@ public partial class AdminWindow : Window
         return item;
     }
 
-   /* private ObservableCollection<PO.Order> convertList()
+    private ObservableCollection<PO.Order> convertList()
     {
-      *//*  list1.ForEach(item =>
+        list2.ForEach(item =>
         {
             List_o.Add(ConvertToPoOrder(item));
-        });*//*
+        });
         PO.Order i = new PO.Order();
-        foreach (BO.Order tmp in list1)
+        foreach (BO.Order tmp in list2)
         {
             i = ConvertToPoOrder(tmp);
             List_o.Add(i);
         }
-        return List_p;
+        return List_o;
     }
-*/
+
     public AdminWindow(BLApi.IBL bl, PO.Cart c)
     {
         try
@@ -87,6 +87,7 @@ public partial class AdminWindow : Window
             list1 = bl.product.GetProductList();
             //ProductsListview.ItemsSource = bl.product.GetProductList();
             List_p=convertList();
+            list2 = bl.order.GetOrderList();
             this.DataContext = this.List_p;
         }
         catch (BO.BlNoEntitiesFound ex)

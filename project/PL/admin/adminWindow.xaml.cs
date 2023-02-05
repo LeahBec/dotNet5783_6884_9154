@@ -102,6 +102,7 @@ public partial class AdminWindow : Window
             //ProductsListview.ItemsSource = bl.product.GetProductList();
             List_p = convertList();
             list2 = bl.order.GetOrderList();
+            List_o = convertListOrder();
             Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>> dcT =
                 new Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>>(this.List_p, this.List_o);
             this.DataContext = dcT;
@@ -207,7 +208,7 @@ public partial class AdminWindow : Window
         try
         {
             // p.ID = sender.AnchorItem.
-            int OId = (OrdersListview.SelectedItem as BO.OrderForList).ID;
+            int OId = (OrdersListview.SelectedItem as PO.OrderForList).ID;
             o = bl.order.GetOrderDetails(OId);
             order = ConvertToPoOrder(o);
             Window window = new OrderWindow(bl, order, false, this.cart);

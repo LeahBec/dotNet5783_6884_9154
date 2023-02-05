@@ -45,7 +45,8 @@ namespace PL.PO
             get { return (OrderStatus?)GetValue(StatusProperty); }
             set { SetValue(StatusProperty, value); }
         }
-        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(OrderStatus?), typeof(Order), new UIPropertyMetadata(DateTime.MinValue));
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(OrderStatus?), typeof(Order), new UIPropertyMetadata(OrderStatus
+            .Payed));
 
         public DateTime ShipDate
         {
@@ -72,7 +73,7 @@ namespace PL.PO
             get { return (double)GetValue(TotalPriceProperty); }
             set { SetValue(TotalPriceProperty, value); }
         }
-        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Order), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Order), new UIPropertyMetadata(default(double)));
 
 
     }

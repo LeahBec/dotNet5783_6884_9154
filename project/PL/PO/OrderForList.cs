@@ -28,7 +28,7 @@ namespace PL.PO
             get { return (OrderStatus?)GetValue(StatusProperty); }
             set { SetValue(StatusProperty, value); }
         }
-        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(OrderStatus?), typeof(OrderForList), new UIPropertyMetadata(DateTime.MinValue));
+        public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(OrderStatus?), typeof(OrderForList), new UIPropertyMetadata(OrderStatus.Payed));
 
     
         public int AmountOfItems
@@ -36,14 +36,14 @@ namespace PL.PO
             get { return (int)GetValue(AmountOfItemsProperty); }
             set { SetValue(AmountOfItemsProperty, value); }
         }
-        public static readonly DependencyProperty AmountOfItemsProperty = DependencyProperty.Register("AmountOfItems", typeof(int), typeof(OrderForList), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty AmountOfItemsProperty = DependencyProperty.Register("AmountOfItems", typeof(int), typeof(OrderForList), new UIPropertyMetadata(default(int)));
 
         public double TotalPrice
         {
             get { return (double)GetValue(TotalPriceProperty); }
             set { SetValue(TotalPriceProperty, value); }
         }
-        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Product), new UIPropertyMetadata(0));
+        public static readonly DependencyProperty TotalPriceProperty = DependencyProperty.Register("TotalPrice", typeof(double), typeof(Product), new UIPropertyMetadata(default(double)));
 
 
     }

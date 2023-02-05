@@ -32,6 +32,7 @@ public partial class CustomerProductList : Window
             ProductsListview.ItemsSource = bl.product.GetProductList();
             convertList();
             this.DataContext = this.List_p;
+           
         }
         catch (BO.BlNoEntitiesFound ex)
         {

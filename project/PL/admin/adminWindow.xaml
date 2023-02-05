@@ -24,9 +24,9 @@ VerticalAlignment="Stretch" Width="auto">
             </Grid.ColumnDefinitions >
         </Grid>
         <Grid>
-            
+
         </Grid>
-        <ListView Grid.Row="0" x:Name="OrdersListview" MouseDoubleClick="orderClicked" FontFamily="Amatic SC" FontSize="16" Cursor="Hand">
+        <ListView Grid.Row="0" ItemsSource="{Binding Path=Item2}" x:Name="OrdersListview"  MouseDoubleClick="orderClicked" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 
@@ -37,7 +37,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Row="1" x:Name="ProductsListview" ItemsSource="{Binding}" MouseDoubleClick="itemClicked" FontFamily="Amatic SC" FontSize="16" Cursor="Hand">
+        <ListView Grid.Row="1" x:Name="ProductsListview" MouseDoubleClick="itemClicked" ItemsSource="{Binding Path=Item1}" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" SelectionChanged="ProductsListview_SelectionChanged">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 

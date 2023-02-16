@@ -74,7 +74,7 @@ namespace PL
                 MessageBox.Show(err.Message);
             }
         }
-        private BO.Order ConvertToBo(PO.Order Op)
+        /*private BO.Order ConvertToBo(PO.Order Op)
         {
             BO.Order item = new()
             {
@@ -99,7 +99,7 @@ namespace PL
                 TotalPrice = Pp.TotalPrice,
             };
             return item;
-        }
+        }*/
 
         private void updateOrderBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -113,8 +113,8 @@ namespace PL
                 o.DeiveryDate = (DateTime)this.or.DeiveryDate;
                 o.ID = this.or.ID;
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
-                list_o.Add(ConvertPFLToP(this.o));
-                bl.order.UpdateOrderForManager(ConvertToBo(o));/////
+                list_o.Add(Common.ConvertPFLToP(this.o));
+                bl.order.UpdateOrderForManager(Common.ConvertToBo(o));/////
                 //AdminWindow w = new AdminWindow(bl, this.cart);
                 //w.Show();
                 this.Close();

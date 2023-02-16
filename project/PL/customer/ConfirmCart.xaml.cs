@@ -34,7 +34,7 @@ namespace PL.customer
             this.c = _c;
             DataContext = this.c;
         }
-        private PO.OrderItem converToPoOi(BO.OrderItem oi)
+        /*private PO.OrderItem converToPoOi(BO.OrderItem oi)
         {
             PO.OrderItem item = new()
             {
@@ -92,7 +92,7 @@ namespace PL.customer
             };
             item.Items = convertToPoOiList(ca.items);
             return item;
-        }
+        }*/
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
@@ -110,7 +110,7 @@ namespace PL.customer
                 o.CustomerAddress = this.c.CustomerAddress;
                 o.CustomerEmail= this.c.CustomerEmail;
                 o.CustomerName = this.c.CustomerName;
-                o.Items = convertToBoOiList(this.c.Items);
+                o.Items = Common.convertToBoOiList(this.c.Items);
                 o.OrderDate = DateTime.Today;
                 o.ShipDate=DateTime.MinValue;
                 o.DeiveryDate= DateTime.MinValue;

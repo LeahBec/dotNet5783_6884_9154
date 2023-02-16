@@ -30,7 +30,7 @@ public partial class CustomerProductList : Window
             list1 = bl.product.GetProductList();
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             ProductsListview.ItemsSource = bl.product.GetProductList();
-            convertList();
+            Common.convertList(List_p, list1);
             this.DataContext = this.List_p;
            
         }
@@ -45,7 +45,7 @@ public partial class CustomerProductList : Window
     }
 
 
-    private ObservableCollection<PO.ProductForList> convertList()
+    /*private ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p)
     {
         PO.ProductForList i = new PO.ProductForList();
         foreach (BO.ProductForList tmp in list1)
@@ -81,7 +81,7 @@ public partial class CustomerProductList : Window
             inStock = Pp.inStock
         };
         return item;
-    }
+    }*/
 
 
 
@@ -111,7 +111,7 @@ public partial class CustomerProductList : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.c);
+            Window window = new ProductWindow(bl,Common.ConvertToPoPro(p), true, this.c);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -137,7 +137,7 @@ public partial class CustomerProductList : Window
         {
             // p.ID = sender.AnchorItem.
             p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
-            Window window = new ProductWindow(bl,ConvertToPoPro(p), true, this.c);
+            Window window = new ProductWindow(bl,Common.ConvertToPoPro(p), true, this.c);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();

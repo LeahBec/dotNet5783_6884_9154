@@ -38,7 +38,7 @@ public partial class CartWindow : Window
        // this.p = ConvertToPoCart(this.cart);
         this.DataContext= this;
     }
-    private PO.Cart ConvertToPoCart(BO.Cart Pp)
+    /*private PO.Cart ConvertToPoCart(BO.Cart Pp)
     {
         PO.Cart item = new()
         {
@@ -115,7 +115,7 @@ public partial class CartWindow : Window
         };
         return item;
     }
-
+*/
 
    /* private List<PO.OrderItem> convertList()
     {
@@ -146,11 +146,14 @@ public partial class CartWindow : Window
     {
         try
         {
-            this.c = ConvertToBoCart(this.cart);
-            bl.cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
-            this.cart = ConvertToPoCart(this.c);
+            this.c = Common.ConvertToBoCart(this.cart);
+            /*bl.cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
+            */this.cart = Common.ConvertToPoCart(this.c);
+            PL.PO.Cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
+            
             //DataContext = p;
-        }catch(BlOutOfStockException ex)
+        }
+        catch(BlOutOfStockException ex)
         {
             MessageBox.Show(ex.Message);
         }

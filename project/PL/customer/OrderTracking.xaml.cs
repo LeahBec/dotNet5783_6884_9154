@@ -29,7 +29,7 @@ namespace PL.customer
         BO.Cart cart = new BO.Cart();
         PO.Cart c = new PO.Cart();
 
-        private PO.OrderItem converToPoOi(BO.OrderItem oi)
+        /*private PO.OrderItem converToPoOi(BO.OrderItem oi)
         {
             PO.OrderItem item = new()
             {
@@ -65,7 +65,7 @@ namespace PL.customer
                 Items = convertToPoOiList(Bo.Items),
             };
             return item;
-        }
+        }*/
 
 /*        private PO.OrderItem converToPoOi(BO.OrderItem oi)
         {
@@ -107,7 +107,7 @@ namespace PL.customer
             try
             {
                 this.o = bl.order.GetOrderDetails(this.orderID);
-                this.order = ConvertToPoOrder(this.o);
+                this.order = Common.ConvertToPoOrder(this.o);
                 //this.order.Items = convertToPoOiList(this.cart.items);
                 //this.order.Items = convertToPoOiList(this.cart.items);
                 Window w = new PL.OrderWindow(this.bl, this.order, true, this.c);

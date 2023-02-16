@@ -32,7 +32,7 @@ public partial class AdminWindow : Window
         orders =  IEnumerable<BO.OrderForList>,
          products = IEnumerable<PO.ProductForList>
      };*/
-    private PO.Product ConvertToPoPro(BO.Product Pp)
+    /*private PO.Product ConvertToPoPro(BO.Product Pp)
     {
         PO.Product item = new()
         {
@@ -62,10 +62,10 @@ public partial class AdminWindow : Window
 
     private ObservableCollection<PO.OrderForList> convertListOrder()
     {
-        /*list2.ForEach(item =>
+        *//*list2.ForEach(item =>
         {
             List_o.Add(ConvertToPoOrder(item));
-        });*/
+        });*//*
 
         
         PO.OrderForList i = new PO.OrderForList();
@@ -87,7 +87,7 @@ public partial class AdminWindow : Window
             Status = boo.Status,
         };
         return returnOrder;
-    }
+    }*/
     public AdminWindow(BLApi.IBL bl, PO.Cart c)
     {
         try
@@ -102,7 +102,7 @@ public partial class AdminWindow : Window
             //ProductsListview.ItemsSource = bl.product.GetProductList();
             List_p = convertList();
             list2 = bl.order.GetOrderList();
-            List_o = convertListOrder();
+            List_o = Common.convertListOrder(list2, List_o);
             Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>> dcT =
                 new Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>>(this.List_p, this.List_o);
             this.DataContext = dcT;
@@ -158,7 +158,7 @@ public partial class AdminWindow : Window
             //BO.ProductForList  poo= ProductsListview.SelectedItem;
             int pId = (ProductsListview.SelectedItem as PO.ProductForList).ID;
             p = bl.product.GetProductCustomer(pId);
-            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart, this.List_p);
+            Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), false, this.cart, this.List_p);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             //InitializeComponent();
@@ -184,7 +184,7 @@ public partial class AdminWindow : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl, ConvertToPoPro(p), false, this.cart, this.List_p);
+            Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), false, this.cart, this.List_p);
             window.Show();
             // InitializeComponent();
             // ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -210,7 +210,7 @@ public partial class AdminWindow : Window
             // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as PO.OrderForList).ID;
             o = bl.order.GetOrderDetails(OId);
-            Window window = new OrderWindow(bl, ConvertToPoOrder(o), false, this.cart, this.List_o);
+            Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o), false, this.cart, this.List_o);
             window.Show();
            // InitializeComponent();
             //  OrdersListview.ItemsSource = bl?.order.GetOrderList();

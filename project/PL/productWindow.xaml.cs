@@ -25,7 +25,7 @@ public partial class ProductWindow : Window
     int id;
     PO.Product p_ = new PO.Product();
     ObservableCollection<PO.ProductForList> list_p;
-    private BO.Product ConvertToBo(PO.Product Pp)
+    /*private BO.Product ConvertToBo(PO.Product Pp)
     {
         BO.Product item = new()
         {
@@ -66,7 +66,7 @@ public partial class ProductWindow : Window
         item.Price = p.Price;
         item.Category = p.Category;
         return item;
-    }
+    }*/
 
     public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, ObservableCollection<PO.ProductForList> _list_p = null)
     {
@@ -143,10 +143,10 @@ public partial class ProductWindow : Window
             p_.inStock = this.pro.inStock;
             p_.Name = this.pro.Name;
             p_.Category = this.pro.Category;
-            this.pro = ConvertToBo(p_);///////////////////
+            this.pro = Common.ConvertToBo(p_);///////////////////
             int id = bl.product.AddProduct(this.pro);
             this.p_.ID = id;
-            this.list_p.Add(ConvertPFLToP(this.p_));
+            this.list_p.Add(Common.ConvertPFLToP(this.p_));
             this.Close();
             //    AdminWindow w = new AdminWindow(bl, this.cart,this.list_p);
             // w.Show();
@@ -182,10 +182,10 @@ public partial class ProductWindow : Window
             p_.inStock = this.pro.inStock;
             p_.Name = this.pro.Name;
             p_.Category = this.pro.Category;
-            this.pro = ConvertToBo(p_);
+            this.pro = Common.ConvertToBo(p_);
             list_p.Remove(list_p.Where(i => i.ID == p_.ID).Single());
-            list_p.Add(ConvertPFLToP(this.p_));
-            bl.product.Update(ConvertToBo(p_));/////
+            list_p.Add(Common.ConvertPFLToP(this.p_));
+            bl.product.Update(Common.ConvertToBo(p_));/////
 
             this.Close();
         }
@@ -243,9 +243,9 @@ public partial class ProductWindow : Window
 
 
 
-            BO.ProductForList ppp = ConvertPFLToB(pro);
-            p_ = ConvertPToPFL(ConvertToPo(ppp));
-            var a = ConvertPFLToP(p_);
+            BO.ProductForList ppp = Common.ConvertPFLToB(pro);
+            p_ = Common.ConvertPToPFL(ConvertToPo(ppp));
+            var a = Common.ConvertPFLToP(p_);
             list_p.Remove(list_p.Where(i => i.ID == a.ID).Single());
             this.Close();
         }

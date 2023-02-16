@@ -283,12 +283,79 @@ public partial class ProductWindow : Window
             this.Close();
         }
     }
+    private BO.Cart ConvertToBoCart(PO.Cart Bp)
+    {
+        BO.Cart item = new()
+        {
+            CustomerAddress = Bp.CustomerAddress,
+            CustomerEmail = Bp.CustomerEmail,
+            CustomerName = Bp.CustomerName,
+            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
+            items = convertItemsToBOOI(Bp.Items),
+            TotalPrice = Bp.TotalPrice,
+        };
+        return item;
+    }
 
+    private List<BO.OrderItem> convertItemsToBOOI(List<PO.OrderItem> oil)
+    {
+        List<BO.OrderItem> returnlist = new();
+        oil.ForEach(item =>
+        {
+            BO.OrderItem item2 = new()
+            {
+                ID = item.ID,
+                Amount = item.Amount,
+
+                Price = item.Price,
+                ProductID = item.ProductID,
+                ProductName = item.ProductName,
+                TotalPrice = item.TotalPrice
+            };
+            returnlist.Add(item2);
+        });
+        return returnlist;
+    }
+    private PO.Cart ConvertToPoCart(BO.Cart Pp)
+    {
+        PO.Cart item = new()
+        {
+            CustomerAddress = Pp.CustomerAddress,
+            CustomerEmail = Pp.CustomerEmail,
+            CustomerName = Pp.CustomerName,
+            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
+            Items = convertItemsToPOOI(Pp.items),
+            TotalPrice = Pp.TotalPrice,
+        };
+        return item;
+    }
+
+    private List<PO.OrderItem> convertItemsToPOOI(List<BO.OrderItem> oil)
+    {
+        List<PO.OrderItem> returnlist = new();
+        oil.ForEach(item =>
+        {
+            PO.OrderItem item2 = new()
+            {
+                ID = item.ID,
+                Amount = item.Amount,
+
+                Price = item.Price,
+                ProductID = item.ProductID,
+                ProductName = item.ProductName,
+                TotalPrice = item.TotalPrice
+            };
+            returnlist.Add(item2);
+        });
+        return returnlist;
+    }
     private void addToCart(object sender, RoutedEventArgs e)
     {
         try
         {
+            this.cart = ConvertToBoCart(this.c);
             bl.cart.AddProductToCart(this.cart, this.id);
+            this.c = ConvertToPoCart(this.cart);
             Window w = new CustomerProductList(bl, this.c);
             w.Show();
             this.Close();

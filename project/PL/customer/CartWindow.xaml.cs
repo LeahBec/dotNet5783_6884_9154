@@ -22,22 +22,21 @@ namespace PL;
 /// <summary>
 /// Interaction logic for CartWindow.xaml
 /// </summary>
-
-
 public partial class CartWindow : Window
 {
     
     BLApi.IBL bl;
     BO.Cart c;
-    PO.Cart cart;
+    public PO.Cart cart { get; set; }
+
     private PO.Cart p { get; set; }
     public CartWindow(BLApi.IBL _bl, PO.Cart _cart)
     {
         InitializeComponent();
         this.bl = _bl;
         this.cart = _cart;
-        this.p = ConvertToPoCart(this.c);
-        this.DataContext= this.p;
+       // this.p = ConvertToPoCart(this.cart);
+        this.DataContext= this;
     }
     private PO.Cart ConvertToPoCart(BO.Cart Pp)
     {
@@ -67,6 +66,39 @@ public partial class CartWindow : Window
                 TotalPrice = item.TotalPrice
             };
             returnlist.Add(item2);            
+        });
+        return returnlist;
+    }
+    private BO.Cart ConvertToBoCart(PO.Cart Bp)
+    {
+        BO.Cart item = new()
+        {
+            CustomerAddress = Bp.CustomerAddress,
+            CustomerEmail = Bp.CustomerEmail,
+            CustomerName = Bp.CustomerName,
+            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
+            items = convertItemsToBOOI(Bp.Items),
+            TotalPrice = Bp.TotalPrice,
+        };
+        return item;
+    }
+
+    private List<BO.OrderItem> convertItemsToBOOI(List<PO.OrderItem> oil)
+    {
+        List<BO.OrderItem> returnlist = new();
+        oil.ForEach(item =>
+        {
+            BO.OrderItem item2 = new()
+            {
+                ID = item.ID,
+                Amount = item.Amount,
+
+                Price = item.Price,
+                ProductID = item.ProductID,
+                ProductName = item.ProductName,
+                TotalPrice = item.TotalPrice
+            };
+            returnlist.Add(item2);
         });
         return returnlist;
     }
@@ -114,24 +146,27 @@ public partial class CartWindow : Window
     {
         try
         {
+            this.c = ConvertToBoCart(this.cart);
             bl.cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
-            p = ConvertToPoCart(this.c);
-            DataContext = p;
+            this.cart = ConvertToPoCart(this.c);
+            //DataContext = p;
         }catch(BlOutOfStockException ex)
         {
             MessageBox.Show(ex.Message);
         }
     }
 
-    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
+    
 
     private void cartConfirmation(object sender, RoutedEventArgs e)
     {
 
         new customer.ConfirmCart(bl, this.cart).Show();
         this.Close();
+    }
+
+    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+    {
+
     }
 }

@@ -210,10 +210,9 @@ public partial class AdminWindow : Window
             // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as PO.OrderForList).ID;
             o = bl.order.GetOrderDetails(OId);
-            order = ConvertToPoOrder(o);
-            Window window = new OrderWindow(bl, order, false, this.cart);
+            Window window = new OrderWindow(bl, ConvertToPoOrder(o), false, this.cart, this.List_o);
             window.Show();
-            InitializeComponent();
+           // InitializeComponent();
             //  OrdersListview.ItemsSource = bl?.order.GetOrderList();
         }
         catch (BO.BlNoEntitiesFound ex)

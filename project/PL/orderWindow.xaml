@@ -31,10 +31,10 @@
         <Button x:Name="updateOrderBtn" Content="update" HorizontalAlignment="Left" Margin="335,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="82"/>
         <Button x:Name="updateOrderShippingBtn" Content="update order shipping" HorizontalAlignment="Left" Margin="487,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderShippingBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="119"/>
         <Button x:Name="updateOrderDeliveryBtn" Content="update order delivery" HorizontalAlignment="Left" Margin="154,63,0,0" Grid.Row="1" VerticalAlignment="Top" Click="updateOrderDeliveryBtn_Click" RenderTransformOrigin="1.668,0.635" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="110"/>
-        <ListView d:ItemsSource="{Binding}" Margin="405,48,10,0">
+        <ListView ItemsSource="{Binding Items}" Margin="405,48,10,0">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=OrderID}" Header="ID" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductName}" Header="product name" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ProductID}" Header="product ID" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Amount}" Header="amount" Width="100"/>

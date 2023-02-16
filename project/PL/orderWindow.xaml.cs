@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,11 +21,13 @@ namespace PL
     public partial class OrderWindow : Window
     {
         BLApi.IBL? bl = BLApi.Factory.get();
-        BO.Order o = new BO.Order();
+        PO.Order o = new PO.Order();
         BO.Order or = new BO.Order();
         bool isCustomer;
         PO.Cart cart=new PO.Cart();
-        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c)
+        ObservableCollection<PO.OrderForList> list_o;
+
+        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, ObservableCollection<PO.OrderForList> list = null)
         {
             try
             {
@@ -32,6 +35,8 @@ namespace PL
                 InitializeComponent();
                 this.bl = bl;
                 this.cart= c;
+                if (list == null) this.list_o = new();
+                else this.list_o = list;
                 input_order_ID.IsReadOnly = isCustomer;
                 input_order_totalPrice.IsReadOnly = isCustomer;
                 input_order_deliveryDate.IsReadOnly = isCustomer;
@@ -43,7 +48,9 @@ namespace PL
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
                 this.DataContext = this.or;
-                if(this.isCustomer)
+                /*Tuple<BO.Order, List<BO.OrderItem>> dcT = new Tuple<BO.Order, List<BO.OrderItem>>(this.or, this.or.Items);
+                this.DataContext = dcT;*/
+                if (this.isCustomer)
                 {
                     updateOrderBtn.IsEnabled = false;
                     updateOrderDeliveryBtn.IsEnabled = false;
@@ -67,6 +74,33 @@ namespace PL
                 MessageBox.Show(err.Message);
             }
         }
+        private BO.Order ConvertToBo(PO.Order Op)
+        {
+            BO.Order item = new()
+            {
+                ID = Op.ID,
+                CustomerName = Op.CustomerName,
+                CustomerEmail = Op.CustomerEmail,
+                CustomerAddress = Op.CustomerAddress,
+                OrderDate = (DateTime)Op.OrderDate,
+                ShipDate = (DateTime)Op.ShipDate,
+                DeiveryDate = (DateTime)Op.DeiveryDate
+        };
+            return item;
+        }
+
+        private PO.OrderForList ConvertPFLToP(PO.Order Pp)
+        {
+            PO.OrderForList item = new() {
+                ID = Pp.ID,
+                CustomerName = Pp.CustomerName,
+                Status = Pp.Status,
+                AmountOfItems  = Pp.Items.Count,
+                TotalPrice = Pp.TotalPrice,
+            };
+            return item;
+        }
+
         private void updateOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -74,13 +108,15 @@ namespace PL
                 o.CustomerAddress = this.or.CustomerAddress;
                 o.CustomerEmail = this.or.CustomerEmail;
                 o.CustomerName = this.or.CustomerName;
-                o.OrderDate = this.or.OrderDate;
-                o.ShipDate = this.or.ShipDate;
-                o.DeiveryDate = this.or.DeiveryDate;
+                o.OrderDate = (DateTime)this.or.OrderDate;
+                o.ShipDate = (DateTime)this.or.ShipDate;
+                o.DeiveryDate = (DateTime)this.or.DeiveryDate;
                 o.ID = this.or.ID;
-                bl.order.UpdateOrderForManager(o);/////
-                AdminWindow w = new AdminWindow(bl, this.cart);
-                w.Show();
+                list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
+                list_o.Add(ConvertPFLToP(this.o));
+                bl.order.UpdateOrderForManager(ConvertToBo(o));/////
+                //AdminWindow w = new AdminWindow(bl, this.cart);
+                //w.Show();
                 this.Close();
             }
             catch (BO.blInvalidAmountToken ex)

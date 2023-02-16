@@ -114,7 +114,7 @@ namespace PL.customer
                 o.OrderDate = DateTime.Today;
                 o.ShipDate=DateTime.MinValue;
                 o.DeiveryDate= DateTime.MinValue;
-                o.TotalPrice= this.cart.TotalPrice;
+                o.TotalPrice= this.c.TotalPrice;
                 int id = bl.order.AddNewOrder(o);
                 MessageBox.Show("The order was successfully created");
                 Window w = new OrderTracking(bl, id, this.c);

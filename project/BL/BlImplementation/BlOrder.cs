@@ -22,7 +22,7 @@ internal class BlOrder : BLApi.IOrder
             int orderId = Dal.Order.Add(o);
 
             order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
-                /*someValues.ToList().ForEach(x => list.Add(x + 1));*/
+            /*someValues.ToList().ForEach(x => list.Add(x + 1));*/
             return orderId;
 
         }
@@ -145,7 +145,6 @@ internal class BlOrder : BLApi.IOrder
                 items.Add(orderItem);
                 return item;
             }).ToList();
-
             /*            var items = from BO.OrderItem item1 in orderItems
                                         select new BO.OrderItem
                                         {

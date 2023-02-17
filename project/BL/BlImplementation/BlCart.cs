@@ -100,8 +100,8 @@ internal class BlCart : ICart
                     Dal.DO.Order o = new Dal.DO.Order();
                     o.OrderID = 0;
                     o.OrderDate = DateTime.Now;
-                    o.DeliveryDate = DateTime.MinValue;
-                    o.ShipDate = DateTime.MinValue;
+                    o.DeliveryDate = null;
+                    o.ShipDate = null;
                     o.CustomerAddress = customerAddress;
                     o.CustomerName = customerName;
                     o.CustomerEmail = customerEmail;
@@ -196,7 +196,7 @@ internal class BlCart : ICart
         }
         catch (BlOutOfStockException ex)
         {
-            throw new BO.BlDefaultException("product out of stock");
+            throw new BO.BlOutOfStockException();
         }
         catch (Exception)
         {

@@ -147,9 +147,9 @@ public partial class CartWindow : Window
         try
         {
             this.c = Common.ConvertToBoCart(this.cart);
-            /*bl.cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
-            */this.cart = Common.ConvertToPoCart(this.c);
-            PL.PO.Cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
+            bl.cart.Update(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
+            this.cart = Common.ConvertToPoCart(this.c, this.cart);
+            //PL.PO.Cart.(this.c, ((PO.OrderItem)(sender as Button).DataContext).ProductID, ((PO.OrderItem)(sender as Button).DataContext).Amount + 1);
             
             //DataContext = p;
         }

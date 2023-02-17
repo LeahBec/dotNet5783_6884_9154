@@ -39,7 +39,7 @@ namespace PL.PO
             get { return (DateTime)GetValue(OrderDateProperty); }
             set { SetValue(OrderDateProperty, value); }
         }
-        public static readonly DependencyProperty OrderDateProperty = DependencyProperty.Register("OrderDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(DateTime.MinValue));
+        public static readonly DependencyProperty OrderDateProperty = DependencyProperty.Register("OrderDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
         public OrderStatus? Status
         {
             get { return (OrderStatus?)GetValue(StatusProperty); }
@@ -53,13 +53,13 @@ namespace PL.PO
             get { return (DateTime)GetValue(ShipDateProperty); }
             set { SetValue(ShipDateProperty, value); }
         }
-        public static readonly DependencyProperty ShipDateProperty = DependencyProperty.Register("ShipDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(DateTime.MinValue));
+        public static readonly DependencyProperty ShipDateProperty = DependencyProperty.Register("ShipDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
         public DateTime DeiveryDate
         {
             get { return (DateTime)GetValue(DeiveryDateProperty); }
             set { SetValue(DeiveryDateProperty, value); }
         }
-        public static readonly DependencyProperty DeiveryDateProperty = DependencyProperty.Register("DeiveryDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(DateTime.MinValue));
+        public static readonly DependencyProperty DeiveryDateProperty = DependencyProperty.Register("DeiveryDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
 
         public List<OrderItem> Items
         {

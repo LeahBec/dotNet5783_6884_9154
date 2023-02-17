@@ -112,8 +112,8 @@ namespace PL.customer
                 o.CustomerName = this.c.CustomerName;
                 o.Items = Common.convertToBoOiList(this.c.Items);
                 o.OrderDate = DateTime.Today;
-                o.ShipDate=DateTime.MinValue;
-                o.DeiveryDate= DateTime.MinValue;
+                o.ShipDate=null;
+                o.DeiveryDate= null;
                 o.TotalPrice= this.c.TotalPrice;
                 int id = bl.order.AddNewOrder(o);
                 MessageBox.Show("The order was successfully created");

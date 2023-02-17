@@ -70,9 +70,9 @@ internal class BlOrder : BLApi.IOrder
                     return orderItem;
                 }).ToList();
 
-                if (item.DeliveryDate > DateTime.MinValue)
+                if (item.DeliveryDate!=null)
                     o.Status = (BO.OrderStatus)3;
-                else if (item.ShipDate > DateTime.MinValue)
+                else if (item.ShipDate!=null)
                     o.Status = (BO.OrderStatus)2;
                 else
                     o.Status = (BO.OrderStatus)1;
@@ -112,9 +112,9 @@ internal class BlOrder : BLApi.IOrder
             oi.CustomerEmail = o.CustomerEmail;
             oi.CustomerName = o.CustomerName;
             oi.DeiveryDate = o.DeliveryDate;
-            if (o.DeliveryDate > DateTime.MinValue)
+            if (o.DeliveryDate!=null )
                 oi.Status = (BO.OrderStatus)3;
-            else if (o.ShipDate > DateTime.MinValue)
+            else if (o.ShipDate!=null)
                 oi.Status = (BO.OrderStatus)2;
             else
                 oi.Status = (BO.OrderStatus)1;
@@ -183,16 +183,10 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-            DateTime d_ = (DateTime)o.DeliveryDate;
-            DateTime d2_ = DateTime.MinValue;
-            if (!d_.Equals(d2_))
-            {
+           
+            if ((DateTime)o.DeliveryDate==null)
                 throw new BO.BlInvalidIdToken("");
-            }
-            double i_ = DateTime.Compare(d_, d2_);
-            if (i_ != 0)
-                throw new BO.BlInvalidIdToken("");
-            o.DeliveryDate = DateTime.UtcNow;
+            o.DeliveryDate = DateTime.Now;
 
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();

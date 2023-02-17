@@ -11,18 +11,17 @@ namespace PL
 {
     public static class Common
     {
-        public static PO.Cart ConvertToPoCart(BO.Cart Pp)
+        public static PO.Cart ConvertToPoCart(BO.Cart Bc, PO.Cart Pc)
         {
-            PO.Cart item = new()
-            {
-                CustomerAddress = Pp.CustomerAddress,
-                CustomerEmail = Pp.CustomerEmail,
-                CustomerName = Pp.CustomerName,
-                //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
-                Items = convertItemsToPOOI(Pp.items),
-                TotalPrice = Pp.TotalPrice,
-            };
-            return item;
+
+            Pc.CustomerAddress = Bc.CustomerAddress;
+            Pc.CustomerEmail = Bc.CustomerEmail;
+            Pc.CustomerName = Bc.CustomerName;
+            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
+            Pc.Items = convertItemsToPOOI(Bc.items);
+            Pc.TotalPrice = Bc.TotalPrice;
+
+            return Pc;
         }
         public static List<PO.OrderItem> convertItemsToPOOI(List<BO.OrderItem> oil)
         {

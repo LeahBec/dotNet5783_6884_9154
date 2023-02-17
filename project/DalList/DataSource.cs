@@ -90,15 +90,15 @@ public class DataSource
             if (i % 10 < 8)  // 80% have ship date
                 o.ShipDate = o.OrderDate + shipSpan;
             else
-                o.ShipDate = DateTime.MinValue;
+                o.ShipDate = null;
             if (i % 10 < 6)
             { // 60% from them have delivery date
-                if (o.ShipDate == DateTime.MinValue)
+                if (o.ShipDate == null)
                     o.ShipDate = o.OrderDate + shipSpan;
                 o.DeliveryDate = o.ShipDate + deliverySpan;
             }
             else
-                o.DeliveryDate = DateTime.MinValue;
+                o.DeliveryDate = null;
             orders.Add(o);
         }
     }

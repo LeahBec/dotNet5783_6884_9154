@@ -163,6 +163,7 @@ public partial class AdminWindow : Window
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), false, this.cart, this, this.List_p);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
+            this.Hide();
             //InitializeComponent();
             //list1 = bl.product.GetProductList();
             // convertList();
@@ -214,6 +215,7 @@ public partial class AdminWindow : Window
             o = bl.order.GetOrderDetails(OId);
             Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o), false, this.cart, this, this.List_o);
             window.Show();
+            this.Hide();
             // InitializeComponent();
             //  OrdersListview.ItemsSource = bl?.order.GetOrderList();
         }

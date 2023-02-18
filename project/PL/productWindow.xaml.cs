@@ -147,7 +147,7 @@ public partial class ProductWindow : Window
             int id = bl.product.AddProduct(this.pro);
             this.p_.ID = id;
             this.list_p.Add(Common.ConvertPFLToP(this.p_));
-            this.Close();
+            backToList();
             //    AdminWindow w = new AdminWindow(bl, this.cart,this.list_p);
             // w.Show();
         }
@@ -187,7 +187,7 @@ public partial class ProductWindow : Window
             list_p.Add(Common.ConvertPFLToP(this.p_));
             bl.product.Update(Common.ConvertToBo(p_));/////
 
-            this.Close();
+            backToList();
         }
         catch (BO.blInvalidAmountToken ex)
         {
@@ -247,7 +247,7 @@ public partial class ProductWindow : Window
             p_ = Common.ConvertPToPFL(ConvertToPo(ppp));
             var a = Common.ConvertPFLToP(p_);
             list_p.Remove(list_p.Where(i => i.ID == a.ID).Single());
-            this.Close();
+            backToList();
         }
 
         catch (BO.BlProductExistsInAnOrder ex)
@@ -268,7 +268,7 @@ public partial class ProductWindow : Window
         }
     }
 
-    private void backToList(object sender, RoutedEventArgs e)
+    private void backToList()
     {
         if (this.isCustomer)
         {
@@ -356,9 +356,7 @@ public partial class ProductWindow : Window
             this.cart = ConvertToBoCart(this.c);
             bl.cart.AddProductToCart(this.cart, this.id);
             this.c = ConvertToPoCart(this.cart);
-            Window w = new CustomerProductList(bl, this.c, this);
-            w.Show();
-            this.Close();
+            backToList();
         }
         catch (BlOutOfStockException ex)
         {
@@ -372,6 +370,11 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
+    }
+
+    private void backToList1(object sender, RoutedEventArgs e)
+    {
+        backToList();
     }
 }
 

@@ -75,7 +75,7 @@ public partial class CustomerProductList : Window
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
-            this.Close();
+            this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -102,7 +102,7 @@ public partial class CustomerProductList : Window
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
-            this.Close();
+            this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -127,7 +127,7 @@ public partial class CustomerProductList : Window
     {
         Window w = new CartWindow(bl, this.c);
         w.Show();
-        this.Close();
+        this.Hide();
     }
 
     private void goBack(object sender, RoutedEventArgs e)

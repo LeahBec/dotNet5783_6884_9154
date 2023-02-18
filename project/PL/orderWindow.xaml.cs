@@ -75,32 +75,7 @@ namespace PL
                 MessageBox.Show(err.Message);
             }
         }
-        /*private BO.Order ConvertToBo(PO.Order Op)
-        {
-            BO.Order item = new()
-            {
-                ID = Op.ID,
-                CustomerName = Op.CustomerName,
-                CustomerEmail = Op.CustomerEmail,
-                CustomerAddress = Op.CustomerAddress,
-                OrderDate = (DateTime?)Op.OrderDate,
-                ShipDate = (DateTime?)Op.ShipDate,
-                DeiveryDate = (DateTime?)Op.DeiveryDate
-        };
-            return item;
-        }
-
-        private PO.OrderForList ConvertPFLToP(PO.Order Pp)
-        {
-            PO.OrderForList item = new() {
-                ID = Pp.ID,
-                CustomerName = Pp.CustomerName,
-                Status = Pp.Status,
-                AmountOfItems  = Pp.Items.Count,
-                TotalPrice = Pp.TotalPrice,
-            };
-            return item;
-        }*/
+      
 
         private void updateOrderBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -115,9 +90,7 @@ namespace PL
                 o.ID = this.or.ID;
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 list_o.Add(Common.ConvertPFLToP(this.o));
-                bl.order.UpdateOrderForManager(Common.ConvertToBo(o));/////
-                //AdminWindow w = new AdminWindow(bl, this.cart);
-                //w.Show();
+                bl.order.UpdateOrderForManager(Common.ConvertToBo(o));
                 this.Close();
             }
             catch (BO.blInvalidAmountToken ex)

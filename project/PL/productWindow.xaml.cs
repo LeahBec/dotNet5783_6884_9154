@@ -26,48 +26,7 @@ public partial class ProductWindow : Window
     int id;
     PO.Product p_ = new PO.Product();
     ObservableCollection<PO.ProductForList> list_p;
-    /*private BO.Product ConvertToBo(PO.Product Pp)
-    {
-        BO.Product item = new()
-        {
-            ID = Pp.ID,
-            Name = Pp.Name,
-            Price = Pp.Price,
-            Category = (BO.Category)(eCategory)Pp.Category,
-            inStock = Pp.inStock
-        };
-        return item;
-    }
-
-    private PO.ProductForList ConvertPFLToP(PO.Product p)
-    {
-        PO.ProductForList item = new();
-        item.ID = p.ID;
-        item.Name = p.Name;
-        item.Price = p.Price;
-        item.Category = (DalFacade.DO.eCategory)p.Category;
-        return item;
-    }
-
-    private PO.Product ConvertPToPFL(PO.ProductForList p)
-    {
-        PO.Product item = new();
-        item.ID = p.ID;
-        item.Name = p.Name;
-        item.Price = p.Price;
-        item.Category = (Category)p.Category;
-
-        return item;
-    }
-    private BO.ProductForList ConvertPFLToB(BO.Product p)
-    {
-        BO.ProductForList item = new();
-        item.ID = p.ID;
-        item.Name = p.Name;
-        item.Price = p.Price;
-        item.Category = p.Category;
-        return item;
-    }*/
+   
 
     public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
     {
@@ -222,31 +181,13 @@ public partial class ProductWindow : Window
 
         }
     }
-
-    private PO.ProductForList ConvertToPo(BO.ProductForList Bp)
-    {
-        PO.ProductForList item = new()
-        {
-            ID = Bp.ID,
-            Name = Bp.Name,
-            Price = Bp.Price,
-            Category = (eCategory)Bp.Category
-        };
-        return item;
-    }
-  
     private void deleteProductBtn_Click(object sender, RoutedEventArgs e)
     {
         try
         {
-            bl.product.DeleteProduct(pro.ID);
-            /* AdminWindow w = new AdminWindow(bl, this.cart);
-             w.Show();*/
-
-
-
+            bl?.product.DeleteProduct(pro.ID);
             BO.ProductForList ppp = Common.ConvertPFLToB(pro);
-            p_ = Common.ConvertPToPFL(ConvertToPo(ppp));
+            p_ = Common.ConvertPToPFL(Common.ConvertToPo(ppp));
             var a = Common.ConvertPFLToP(p_);
             list_p.Remove(list_p.Where(i => i.ID == a.ID).Single());
             backToList();
@@ -284,79 +225,15 @@ public partial class ProductWindow : Window
             this.Close();
         }
     }
-    private BO.Cart ConvertToBoCart(PO.Cart Bp)
-    {
-        BO.Cart item = new()
-        {
-            CustomerAddress = Bp.CustomerAddress,
-            CustomerEmail = Bp.CustomerEmail,
-            CustomerName = Bp.CustomerName,
-            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
-            items = convertItemsToBOOI(Bp.Items),
-            TotalPrice = Bp.TotalPrice,
-        };
-        return item;
-    }
-
-    private List<BO.OrderItem> convertItemsToBOOI(List<PO.OrderItem> oil)
-    {
-        List<BO.OrderItem> returnlist = new();
-        oil.ForEach(item =>
-        {
-            BO.OrderItem item2 = new()
-            {
-                ID = item.ID,
-                Amount = item.Amount,
-
-                Price = item.Price,
-                ProductID = item.ProductID,
-                ProductName = item.ProductName,
-                TotalPrice = item.TotalPrice
-            };
-            returnlist.Add(item2);
-        });
-        return returnlist;
-    }
-    private PO.Cart ConvertToPoCart(BO.Cart Pp)
-    {
-        PO.Cart item = new()
-        {
-            CustomerAddress = Pp.CustomerAddress,
-            CustomerEmail = Pp.CustomerEmail,
-            CustomerName = Pp.CustomerName,
-            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
-            Items = convertItemsToPOOI(Pp.items),
-            TotalPrice = Pp.TotalPrice,
-        };
-        return item;
-    }
-
-    private List<PO.OrderItem> convertItemsToPOOI(List<BO.OrderItem> oil)
-    {
-        List<PO.OrderItem> returnlist = new();
-        oil.ForEach(item =>
-        {
-            PO.OrderItem item2 = new()
-            {
-                ID = item.ID,
-                Amount = item.Amount,
-
-                Price = item.Price,
-                ProductID = item.ProductID,
-                ProductName = item.ProductName,
-                TotalPrice = item.TotalPrice
-            };
-            returnlist.Add(item2);
-        });
-        return returnlist;
-    }
+   
+   
     private void addToCart(object sender, RoutedEventArgs e)
     {
         try
         {
-            this.cart = ConvertToBoCart(this.c);
+            this.cart = Common.ConvertToBoCart(this.c);
             bl.cart.AddProductToCart(this.cart, this.id);
-            this.c = ConvertToPoCart(this.cart);
+            this.c = Common.ConvertToPoCart(this.cart, this.c);
             backToList();
         }
         catch (BlOutOfStockException ex)

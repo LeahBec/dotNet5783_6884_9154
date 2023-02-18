@@ -36,65 +36,6 @@ namespace PL.customer
             this.prevWindow = _prevWindow;
             DataContext = this.c;
         }
-        /*private PO.OrderItem converToPoOi(BO.OrderItem oi)
-        {
-            PO.OrderItem item = new()
-            {
-                Amount = oi.Amount,
-                ID = oi.ID,
-                ProductID = oi.ProductID,
-                Price = oi.Price,
-                ProductName = oi.ProductName
-            };
-            return item;
-        }
-        private List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
-        {
-            List<PO.OrderItem> returnList = new();
-            foreach (BO.OrderItem oi in loi)
-            {
-                returnList.Add(converToPoOi(oi));
-            }
-            return returnList;
-        }
-
-        private BO.OrderItem converToBoOi(PO.OrderItem oi)
-        {
-            BO.OrderItem item = new()
-            {
-                Amount = oi.Amount,
-                ID = oi.ID,
-                ProductID = oi.ProductID,
-                Price = oi.Price,
-                ProductName = oi.ProductName,
-                TotalPrice = oi.TotalPrice,
-            };
-            return item;
-        }
-        private List<BO.OrderItem> convertToBoOiList(List<PO.OrderItem> loi)
-        {
-            List<BO.OrderItem> returnList = new();
-            foreach (PO.OrderItem oi in loi)
-            {
-                returnList.Add(converToBoOi(oi));
-            }
-            return returnList;
-        }
-
-
-        private PO.Cart ConvertToPoCart(BO.Cart ca)
-        {
-            PO.Cart item = new()
-            {
-                
-            CustomerAddress = ca.CustomerAddress,
-            CustomerEmail = ca.CustomerEmail,
-            CustomerName = ca.CustomerName,
-            TotalPrice = ca.TotalPrice,
-            };
-            item.Items = convertToPoOiList(ca.items);
-            return item;
-        }*/
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 

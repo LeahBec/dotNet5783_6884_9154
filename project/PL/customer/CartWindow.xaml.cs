@@ -42,9 +42,8 @@ public partial class CartWindow : Window
     public void BackToList(object sender, RoutedEventArgs e)
     {
         this.prevWindow.Show();
-        this.Close();
+        this.Hide();
     }
-
     private void decreaseProductBtn_Click(object sender, RoutedEventArgs e)
     {
 

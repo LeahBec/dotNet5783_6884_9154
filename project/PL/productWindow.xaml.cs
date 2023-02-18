@@ -27,7 +27,7 @@ public partial class ProductWindow : Window
     PO.Product p_ = new PO.Product();
     ObservableCollection<PO.ProductForList> list_p;
    
-
+    Tuple
     public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
     {
 
@@ -37,46 +37,46 @@ public partial class ProductWindow : Window
             InitializeComponent();
             this.bl = bl;
             this.c = _c;
+            this.p_ = pro;
             this.id = pro.ID;
             this.prevWindow = prevWindow;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
             
             categorySelectorBox.IsReadOnly = isCustomer;
-           /* input_product_instock.IsReadOnly = isCustomer;
-            input_product_price.IsReadOnly = isCustomer;
-            input_product_name.IsReadOnly = isCustomer;*/
-
-            if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
+           
+            //if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
             if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
             if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
 
             if (pro.ID != 0)
             {
+                this.DataContext = this.p_;
+
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
-                this.pro = prod;
-                this.DataContext = this.pro;
+                this.p_ = Common.ConvertToPoPro(prod);
                 addProductBtn.Visibility = Visibility.Hidden;
-                if (pro.Category == null)
+                if (this.p_.Category == null)
                     throw new PLEmptyCategoryField();
-                if (pro.Name == "")
+                if (this.p_.Name == "")
                     throw new PLEmptyNameField();
-                if (pro.inStock.ToString() == "")
+                if (this.p_.inStock.ToString() == "")
                     throw new PLEmptyAmountField();
-                if (pro.Price.ToString() == "")
+                if (this.p_.Price.ToString() == "")
                     throw new PLEmptyPriceField();
-                if (pro.Price < 0 || pro.Price > 100000)
+                if (this.p_.Price < 0 || pro.Price > 100000)
                     throw new PlInvalidValueExeption("price");
-                if (pro.Name.GetType().Name != "String" || pro.Name.Length > 50)
+                if (this.p_.Name.GetType().Name != "String" || pro.Name.Length > 50)
                     throw new PlInvalidValueExeption("name");
-                if (pro.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
+                if (this.p_.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
                     throw new PlInvalidValueExeption("amount");
             }
             //else if() // if product is ordered do not show the delete btn
             else
             {
-                this.DataContext = this.pro;
+                this.DataContext = this.p_;
+
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
@@ -91,7 +91,7 @@ public partial class ProductWindow : Window
     private void categorySelectorBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
     {
 
-        p.Category = (BO.Category)categorySelectorBox.SelectedItem;
+        p_.Category = (BO.Category)categorySelectorBox.SelectedItem;
     }
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
@@ -109,8 +109,6 @@ public partial class ProductWindow : Window
             this.p_.ID = id;
             this.list_p.Add(Common.ConvertPFLToP(this.p_));
             backToList();
-            //    AdminWindow w = new AdminWindow(bl, this.cart,this.list_p);
-            // w.Show();
         }
         catch (BO.blInvalidAmountToken ex)
         {

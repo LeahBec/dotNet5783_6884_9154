@@ -100,8 +100,8 @@ public partial class CustomerProductList : Window
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
-            InitializeComponent();
-            ProductsListview.ItemsSource = bl.product.GetProductList();
+           /* InitializeComponent();
+            ProductsListview.ItemsSource = bl.product.GetProductList();*/
             this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)

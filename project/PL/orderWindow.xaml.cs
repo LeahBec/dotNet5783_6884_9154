@@ -26,7 +26,7 @@ namespace PL
         bool isCustomer;
         PO.Cart cart=new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
-
+        Window prevWindow;
         public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, Window prevWindow, ObservableCollection<PO.OrderForList> list = null)
         {
             try
@@ -35,6 +35,7 @@ namespace PL
                 InitializeComponent();
                 this.bl = bl;
                 this.cart= c;
+                this.prevWindow = prevWindow;
                 if (list == null) this.list_o = new();
                 else this.list_o = list;
                 input_order_ID.IsReadOnly = isCustomer;
@@ -165,14 +166,14 @@ namespace PL
         {
             if (!this.isCustomer)
             {
-                Window w = new AdminWindow(bl, this.cart, this);
-                w.Show();
+                this.prevWindow.Show();
                 this.Close();
             }
             else
             {
-               /* Window w = new customer.OrderTracking(bl);
-                w.Show();*/
+                /* Window w = new customer.OrderTracking(bl);
+                 w.Show();*/
+                this.prevWindow.Show();
                 this.Close();
             }
         }

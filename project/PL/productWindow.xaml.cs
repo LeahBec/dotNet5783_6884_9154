@@ -20,6 +20,7 @@ public partial class ProductWindow : Window
     BO.Product pro = new BO.Product();
     BO.Cart cart = new BO.Cart();
     PO.Cart c = new PO.Cart();
+    Window prevWindow;
     bool inputProReadOnly { get; set; }
     public bool isCustomer { get; set; }
     int id;
@@ -78,6 +79,7 @@ public partial class ProductWindow : Window
             this.bl = bl;
             this.c = _c;
             this.id = pro.ID;
+            this.prevWindow = prevWindow;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
             
@@ -272,14 +274,13 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            Window w = new CustomerProductList(bl, this.c, this);
-            w.Show();
+            
+            this.prevWindow.Show();
             this.Close();
         }
         else
         {
-            Window w = new AdminWindow(bl, this.c, this);
-            w.Show();
+            this.prevWindow.Show();
             this.Close();
         }
     }

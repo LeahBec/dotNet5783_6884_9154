@@ -114,6 +114,7 @@ namespace PL.customer
                 //this.order.Items = convertToPoOiList(this.cart.items);
                 Window w = new PL.OrderWindow(this.bl, this.order, true, this.c,this);
                 w.Show();
+                this.Hide();
             }
             catch (Exception ex)
             {

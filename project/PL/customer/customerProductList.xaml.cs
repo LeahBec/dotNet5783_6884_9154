@@ -56,15 +56,18 @@ public partial class CustomerProductList : Window
             var allProducts = bl?.product.GetProductList();
             BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
             var list = bl?.product.GetListByCategory(cat);
-            
-            var tmp = from product in allProducts
-                      group product by product.Category into newGroup
-                      where newGroup.Key == cat
-                      select newGroup;
+
+
             if (cat != BO.Category.All)
-                this.List_p = Common.ConvertToPoProList((IEnumerable<BO.ProductForList>) tmp);
-            else
-                List_p = Common.ConvertToPoProList((IEnumerable<BO.ProductForList>)allProducts);
+            {
+                var tmp = from product in allProducts
+                          group product by product.Category into newGroup
+                          where newGroup.Key == cat
+                          select newGroup.ToList();
+                this.List_p = Common.ConvertToPoProList(tmp);
+            }
+            //else
+                //List_p = Common.ConvertToPoProList(allProducts);
         }
         catch (BO.BlNoEntitiesFound ex)
         {

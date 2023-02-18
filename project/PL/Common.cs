@@ -111,17 +111,18 @@ namespace PL
                 
             };
             return item;
-        } 
+        }
 
 
-        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist)
+        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<List<BO.ProductForList>> Blist)
         {
             ObservableCollection<PO.ProductForList> Plist = new();
-            foreach(var item in Blist)
+            foreach (var group in Blist) { 
+            foreach (var item in group)
             {
                 Plist.Add(ConvertToPoProFL(item));
 
-            }
+            } }
             return Plist;
         }
 

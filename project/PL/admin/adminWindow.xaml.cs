@@ -53,9 +53,9 @@ public partial class AdminWindow : Window
             CustomerName = Bo.CustomerName,
             CustomerAddress = Bo.CustomerAddress,
             CustomerEmail = Bo.CustomerEmail,
-            DeiveryDate = (DateTime)Bo.DeiveryDate,
-            ShipDate = (DateTime)Bo.ShipDate,
-            OrderDate = (DateTime)Bo.OrderDate
+            DeiveryDate = (DateTime?)Bo.DeiveryDate,
+            ShipDate = (DateTime?)Bo.ShipDate,
+            OrderDate = (DateTime?)Bo.OrderDate
         };
         return item;
     }

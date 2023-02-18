@@ -62,11 +62,11 @@ namespace PL
                     throw new PLEmptyAmountField();
                 if (or.CustomerAddress == "")
                     throw new PLEmptyPriceField();
-                if (or.OrderDate < DateTime.MinValue || or.OrderDate > DateTime.Now)
+                if (or.OrderDate < DateTime?.MinValue || or.OrderDate > DateTime.Now)
                     throw new PlInvalidValueExeption("orderDate");
-                if (or.ShipDate < DateTime.MinValue || or.ShipDate > DateTime.Now)
+                if (or.ShipDate < DateTime?.MinValue || or.ShipDate > DateTime.Now)
                     throw new PlInvalidValueExeption("shipDate");
-                if (or.DeiveryDate < DateTime.MinValue || or.DeiveryDate > DateTime.Now)
+                if (or.DeiveryDate < DateTime?.MinValue || or.DeiveryDate > DateTime.Now)
                     throw new PlInvalidValueExeption("deliveryDate");*/
             }
             catch (Exception err)
@@ -82,9 +82,9 @@ namespace PL
                 CustomerName = Op.CustomerName,
                 CustomerEmail = Op.CustomerEmail,
                 CustomerAddress = Op.CustomerAddress,
-                OrderDate = (DateTime)Op.OrderDate,
-                ShipDate = (DateTime)Op.ShipDate,
-                DeiveryDate = (DateTime)Op.DeiveryDate
+                OrderDate = (DateTime?)Op.OrderDate,
+                ShipDate = (DateTime?)Op.ShipDate,
+                DeiveryDate = (DateTime?)Op.DeiveryDate
         };
             return item;
         }
@@ -108,9 +108,9 @@ namespace PL
                 o.CustomerAddress = this.or.CustomerAddress;
                 o.CustomerEmail = this.or.CustomerEmail;
                 o.CustomerName = this.or.CustomerName;
-                o.OrderDate = (DateTime)this.or.OrderDate;
-                o.ShipDate = (DateTime)this.or.ShipDate;
-                o.DeiveryDate = (DateTime)this.or.DeiveryDate;
+                o.OrderDate = (DateTime?)this.or.OrderDate;
+                o.ShipDate = (DateTime?)this.or.ShipDate;
+                o.DeiveryDate = (DateTime?)this.or.DeiveryDate;
                 o.ID = this.or.ID;
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 list_o.Add(Common.ConvertPFLToP(this.o));

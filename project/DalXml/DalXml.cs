@@ -99,7 +99,7 @@ sealed public class DalXml : IDal
             o.CustomerName = CustomerName[indexName];
             o.CustomerAddress = CustomerAddress[indexAdress];
             o.CustomerEmail = CustomerEmail[indexEmail];
-            o.OrderDate = DateTime.Today;
+            o.OrderDate = DateTime?.Today;
             TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
             TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
             //orders[i].ShipDate = orders[i].OrderDate + shipSpan;
@@ -108,15 +108,15 @@ sealed public class DalXml : IDal
             if (i % 10 < 8)  // 80% have ship date
                 o.ShipDate = o.OrderDate + shipSpan;
             else
-                o.ShipDate = DateTime.MinValue;
+                o.ShipDate = DateTime?.MinValue;
             if (i % 10 < 6)
             { // 60% from them have delivery date
-                if (o.ShipDate == DateTime.MinValue)
+                if (o.ShipDate == DateTime?.MinValue)
                     o.ShipDate = o.OrderDate + shipSpan;
                 o.DeliveryDate = o.ShipDate + deliverySpan;
             }
             else
-                o.DeliveryDate = DateTime.MinValue;
+                o.DeliveryDate = DateTime?.MinValue;
             XElement? rootConfig = XDocument.Load(@"..\..\..\..\xml\config.xml").Root;
             XElement? id = rootConfig?.Element("orderId");
             int oId = Convert.ToInt32(id?.Value);

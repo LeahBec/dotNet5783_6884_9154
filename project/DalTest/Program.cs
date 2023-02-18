@@ -21,9 +21,9 @@ void addOrder()
     string _name;
     string _email;
     string _address;
-    DateTime _oDate;
-    DateTime _sDate;
-    DateTime _dDate;
+    DateTime? _oDate;
+    DateTime? _sDate;
+    DateTime? _dDate;
     Console.WriteLine("enter costumer name");
     _name = Console.ReadLine();
     Console.WriteLine("enter costumer email");
@@ -88,9 +88,9 @@ void updateOrder()
     string _name;
     string _email;
     string _address;
-    DateTime _oDate;
-    DateTime _sDate;
-    DateTime _dDate;
+    DateTime? _oDate;
+    DateTime? _sDate;
+    DateTime? _dDate;
     Console.WriteLine("enter costumer name");
     _name = Console.ReadLine();
     Console.WriteLine("enter costumer email");

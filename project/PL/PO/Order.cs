@@ -34,12 +34,12 @@ namespace PL.PO
             set { SetValue(CustomerAddressProperty, value); }
         }
         public static readonly DependencyProperty CustomerAddressProperty = DependencyProperty.Register("CustomerAddress", typeof(string), typeof(Order), new UIPropertyMetadata(""));
-        public DateTime OrderDate
+        public DateTime? OrderDate
         {
-            get { return (DateTime)GetValue(OrderDateProperty); }
+            get { return (DateTime?)GetValue(OrderDateProperty); }
             set { SetValue(OrderDateProperty, value); }
         }
-        public static readonly DependencyProperty OrderDateProperty = DependencyProperty.Register("OrderDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty OrderDateProperty = DependencyProperty.Register("OrderDate", typeof(DateTime?), typeof(Order), new UIPropertyMetadata(null));
         public OrderStatus? Status
         {
             get { return (OrderStatus?)GetValue(StatusProperty); }
@@ -48,18 +48,18 @@ namespace PL.PO
         public static readonly DependencyProperty StatusProperty = DependencyProperty.Register("Status", typeof(OrderStatus?), typeof(Order), new UIPropertyMetadata(OrderStatus
             .Payed));
 
-        public DateTime ShipDate
+        public DateTime? ShipDate
         {
-            get { return (DateTime)GetValue(ShipDateProperty); }
+            get { return (DateTime?)GetValue(ShipDateProperty); }
             set { SetValue(ShipDateProperty, value); }
         }
-        public static readonly DependencyProperty ShipDateProperty = DependencyProperty.Register("ShipDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
-        public DateTime DeiveryDate
+        public static readonly DependencyProperty ShipDateProperty = DependencyProperty.Register("ShipDate", typeof(DateTime?), typeof(Order), new UIPropertyMetadata(null));
+        public DateTime? DeiveryDate
         {
-            get { return (DateTime)GetValue(DeiveryDateProperty); }
+            get { return (DateTime?)GetValue(DeiveryDateProperty); }
             set { SetValue(DeiveryDateProperty, value); }
         }
-        public static readonly DependencyProperty DeiveryDateProperty = DependencyProperty.Register("DeiveryDate", typeof(DateTime), typeof(Order), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty DeiveryDateProperty = DependencyProperty.Register("DeiveryDate", typeof(DateTime?), typeof(Order), new UIPropertyMetadata(null));
 
         public List<OrderItem> Items
         {

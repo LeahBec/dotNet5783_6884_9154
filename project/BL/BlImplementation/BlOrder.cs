@@ -184,7 +184,7 @@ internal class BlOrder : BLApi.IOrder
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
            
-            if ((DateTime)o.DeliveryDate==null)
+            if ((DateTime?)o.DeliveryDate==null)
                 throw new BO.BlInvalidIdToken("");
             o.DeliveryDate = DateTime.Now;
 
@@ -236,7 +236,7 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-            /* if (o.ShipDate != DateTime.MinValue)
+            /* if (o.ShipDate != DateTime?.MinValue)
                  throw new BO.BlInvalidIdToken("");*/
             o.ShipDate = DateTime.Now;
             Dal.Order.Update(o);
@@ -309,10 +309,10 @@ internal class BlOrder : BLApi.IOrder
             Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = currOrder.OrderID;
-            /*            DateTime s;
+            /*            DateTime? s;
                         var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
                         orderTracking.dateAndTrack.Add(t);*/
-            /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime, BO.OrderStatus>((DateTime)currOrder.OrderDate, (BO.OrderStatus)0));
+            /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, BO.OrderStatus>((DateTime?)currOrder.OrderDate, (BO.OrderStatus)0));
             */
             orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
             orderTracking.Status = BO.OrderStatus.Payed;

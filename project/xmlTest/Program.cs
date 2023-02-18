@@ -10,9 +10,9 @@ Dal.DalXml d = (DalXml)DalApi.Factory.Get();
 order.CustomerName = "ppp";
 order.CustomerAdress = "kkk";
 order.CustomerEmail = "lkj";
-order.OrderDate = DateTime.Now;
-order.ShipDate = new DateTime(2023, 01,19) ;
-order.DeliveryDate = new DateTime(2023 - 02 - 06);
+order.OrderDate = DateTime?.Now;
+order.ShipDate = new DateTime?(2023, 01,19) ;
+order.DeliveryDate = new DateTime?(2023 - 02 - 06);
 d?.Order.Add(order);*/
 //d.Order.Delete(500025);
 var a = d.Order.Get(a => a.OrderID == 500002);

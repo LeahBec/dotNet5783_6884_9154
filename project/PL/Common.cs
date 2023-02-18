@@ -109,9 +109,9 @@ namespace PL
                 CustomerName = Bo.CustomerName,
                 CustomerAddress = Bo.CustomerAddress,
                 CustomerEmail = Bo.CustomerEmail,
-                DeiveryDate = (DateTime)Bo.DeiveryDate,
-                ShipDate = (DateTime)Bo.ShipDate,
-                OrderDate = (DateTime)Bo.OrderDate
+                DeiveryDate = (DateTime?)Bo?.DeiveryDate,
+                ShipDate = (DateTime?)Bo.ShipDate,
+                OrderDate = (DateTime?)Bo?.OrderDate
             };
             return item;
         }
@@ -243,9 +243,9 @@ namespace PL
                 CustomerName = Op.CustomerName,
                 CustomerEmail = Op.CustomerEmail,
                 CustomerAddress = Op.CustomerAddress,
-                OrderDate = (DateTime)Op.OrderDate,
-                ShipDate = (DateTime)Op.ShipDate,
-                DeiveryDate = (DateTime)Op.DeiveryDate
+                OrderDate = (DateTime?)Op.OrderDate,
+                ShipDate = (DateTime?)Op.ShipDate,
+                DeiveryDate = (DateTime?)Op.DeiveryDate
             };
             return item;
         }

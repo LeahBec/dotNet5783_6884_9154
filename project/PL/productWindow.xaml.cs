@@ -26,11 +26,9 @@ public partial class ProductWindow : Window
     int id;
     PO.Product p_ = new PO.Product();
     ObservableCollection<PO.ProductForList> list_p;
-   
-    Tuple
+    Tuple<PO.Product, bool> dcT;
     public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
     {
-
         try
         {
             this.isCustomer = _isCustomer;
@@ -42,17 +40,16 @@ public partial class ProductWindow : Window
             this.prevWindow = prevWindow;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
-            
             categorySelectorBox.IsReadOnly = isCustomer;
-           
             //if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
             if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
             if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-
+            this.dcT = new Tuple<PO.Product, bool>(this.p_, this.isCustomer);
+            this.DataContext = this.dcT;
             if (pro.ID != 0)
             {
-                this.DataContext = this.p_;
+                //this.DataContext = this.dcT;
 
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
                 this.p_ = Common.ConvertToPoPro(prod);
@@ -75,7 +72,7 @@ public partial class ProductWindow : Window
             //else if() // if product is ordered do not show the delete btn
             else
             {
-                this.DataContext = this.p_;
+                //this.DataContext = this.dcT;
 
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
@@ -136,7 +133,7 @@ public partial class ProductWindow : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            p_.ID = this.pro.ID; 
+            p_.ID = this.pro.ID;
             p_.Price = this.pro.Price;
             p_.inStock = this.pro.inStock;
             p_.Name = this.pro.Name;
@@ -213,7 +210,7 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            
+
             this.prevWindow.Show();
             this.Close();
         }
@@ -223,8 +220,8 @@ public partial class ProductWindow : Window
             this.Close();
         }
     }
-   
-   
+
+
     private void addToCart(object sender, RoutedEventArgs e)
     {
         try

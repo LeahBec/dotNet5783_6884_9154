@@ -56,7 +56,6 @@ namespace PL
         {
             return (int)value == 0 ? "Visible" : "Hidden";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -68,7 +67,6 @@ namespace PL
         {
             return (string)value == "show" || (string)value == "update" ? "Hidden" : "Visible";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -80,7 +78,6 @@ namespace PL
         {
             return (string)value == "show" || (string)value == "add" ? "Hidden" : "Visible";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -92,7 +89,6 @@ namespace PL
         {
             return (int)value == 0 ? "Hidden" : "Visible";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -105,7 +101,6 @@ namespace PL
         {
             return (string)value == "show" ? "Visible" : "Hidden";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -118,7 +113,6 @@ namespace PL
         {
             return (string)value == "show" ? true : false;
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -132,7 +126,6 @@ namespace PL
         {
             return (bool)value == true ? "Visible" : "Hidden";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();
@@ -146,7 +139,6 @@ namespace PL
         {
             return (bool)value == false ? "Visible" : "Hidden";
         }
-
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             throw new NotImplementedException();

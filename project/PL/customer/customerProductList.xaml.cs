@@ -125,7 +125,7 @@ public partial class CustomerProductList : Window
 
     private void showCart(object sender, RoutedEventArgs e)
     {
-        Window w = new CartWindow(bl, this.c);
+        Window w = new CartWindow(bl, this.c, this);
         w.Show();
         this.Hide();
     }

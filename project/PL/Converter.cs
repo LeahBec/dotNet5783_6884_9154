@@ -9,48 +9,7 @@ using System.Windows.Data;
 
 namespace PL
 {
-    public class EnumOrdConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            string EnumString;
-            try
-            {
-                EnumString = BO.Category.GetName((((value as PL.PO.Order).Status).GetType()), (value as PL.PO.Order)?.Status ?? throw new Exception());
-                return EnumString;
-            }
-            catch (Exception ex)
-            {
-                return string.Empty;
-            }
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class EnumToStringConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            try
-            {
-                BO.Category category = (BO.Category)value;
-
-                return category.ToString().Replace('_', ' ');
-            }
-            catch (Exception ex)
-            {
-                return string.Empty;
-            }
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
-    public class ZeroToVisible : IValueConverter
+    public class EnumToNumConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
@@ -61,6 +20,18 @@ namespace PL
             throw new NotImplementedException();
         }
     }
+    public class EnumToStringConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return (bool)value == false ? "Visible" : "Hidden";
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    
     public class ShowOrUpdateToHidden : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)

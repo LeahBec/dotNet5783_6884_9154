@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using DalFacade.DO;
 using System.ComponentModel;
+using System.Linq;
 
 /// <summary>
 /// Interaction logic for BOListWindow.xaml
@@ -52,9 +53,18 @@ public partial class CustomerProductList : Window
     {
         try
         {
+            var allProducts = bl?.product.GetProductList();
             BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
             var list = bl?.product.GetListByCategory(cat);
-            ProductsListview.ItemsSource = list;
+            
+            var tmp = from product in allProducts
+                      group product by product.Category into newGroup
+                      where newGroup.Key == cat
+                      select newGroup;
+            if (cat != BO.Category.All)
+                this.List_p = Common.ConvertToPoProList((IEnumerable<BO.ProductForList>) tmp);
+            else
+                List_p = Common.ConvertToPoProList((IEnumerable<BO.ProductForList>)allProducts);
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -65,7 +75,6 @@ public partial class CustomerProductList : Window
             MessageBox.Show(ex.Message);
         }
     }
-
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
         // updateProductBtn.Visibility = Visibility.Hidden;
@@ -100,8 +109,8 @@ public partial class CustomerProductList : Window
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
-           /* InitializeComponent();
-            ProductsListview.ItemsSource = bl.product.GetProductList();*/
+            /* InitializeComponent();
+             ProductsListview.ItemsSource = bl.product.GetProductList();*/
             this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)

@@ -41,8 +41,6 @@ public partial class ProductWindow : Window
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
             categorySelectorBox.IsReadOnly = isCustomer;
-            //if (isCustomer) deleteProductBtn.Visibility = Visibility.Hidden;
-            if (isCustomer) updateProductBtn.Visibility = Visibility.Hidden;
             if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             this.dcT = new Tuple<PO.Product, bool>(this.p_, this.isCustomer);

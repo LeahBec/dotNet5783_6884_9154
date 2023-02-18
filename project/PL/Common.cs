@@ -100,6 +100,32 @@ namespace PL
             };
             return item;
         } 
+         public static PO.ProductForList ConvertToPoProFL(BO.ProductForList Pp)
+        {
+            PO.ProductForList item = new()
+            {
+                ID = Pp.ID,
+                Name = Pp.Name,
+                Price = Pp.Price,
+                Category = (DalFacade.DO.eCategory)Pp.Category,
+                
+            };
+            return item;
+        } 
+
+
+        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist)
+        {
+            ObservableCollection<PO.ProductForList> Plist = new();
+            foreach(var item in Blist)
+            {
+                Plist.Add(ConvertToPoProFL(item));
+
+            }
+            return Plist;
+        }
+
+
 
         public static PO.Order ConvertToPoOrder(BO.Order Bo)
         {

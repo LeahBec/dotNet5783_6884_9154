@@ -19,8 +19,6 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Foreground" Value="Black"/>
         </Style>
-
-        <local:EnumOrdConverter x:Key="EnumOrdConverter"/>
         <local:EnumToStringConverter x:Key="EnumToStringConverter"/>
     </Application.Resources>
 

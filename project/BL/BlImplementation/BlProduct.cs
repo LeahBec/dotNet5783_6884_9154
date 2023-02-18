@@ -177,7 +177,7 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.Price = (float)p.Price;
             DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
             DOProduct.InStock = p.inStock;
-           int id =  (int)Dal?.Product?.Add(DOProduct);
+            int id = (int)Dal?.Product?.Add(DOProduct);
             return id;
         }
         catch (Exception err) { throw new BO.BlDefaultException(err.Message); }
@@ -290,30 +290,19 @@ internal class BlProduct : BLApi.IProduct
             List<BO.ProductForList> returnList = new List<BO.ProductForList>();
 
             List<Dal.DO.Product> a = products.Where(item => (Category)item.Category == category).ToList();
-            /* var b = a.Select(item =>
-                 {
-                     BO.ProductForList BOProduct = new BO.ProductForList();
-                     BOProduct.ID = item.ID;
-                     BOProduct.Name = item.Name;
-                     BOProduct.Price = (float)item.Price;
-                     BOProduct.Category = (BO.Category)item.Category;
-                     returnList.Add(BOProduct);
-                     return item;
-                 }
 
-                 ).ToList();*/
 
             var b = from Dal.DO.Product item1 in a
-                            select new BO.ProductForList
-                            {
-                                ID = item1.ID,
-                                Name = item1.Name,
-                                Price = (float)item1.Price,
-                                Category = (BO.Category)item1.Category
-                            };
+                    select new BO.ProductForList
+                    {
+                        ID = item1.ID,
+                        Name = item1.Name,
+                        Price = (float)item1.Price,
+                        Category = (BO.Category)item1.Category
+                    };
 
 
-            return returnList;
+            return b;
         }
         catch (DalApi.ExceptionObjectNotFound)
         {

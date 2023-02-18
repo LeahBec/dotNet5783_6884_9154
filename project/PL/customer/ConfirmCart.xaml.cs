@@ -27,11 +27,13 @@ namespace PL.customer
         BLApi.IBL bl;
         BO.Cart cart;
         PO.Cart c;
-        public ConfirmCart(BLApi.IBL _bl, PO.Cart _c)
+        Window prevWindow;
+        public ConfirmCart(BLApi.IBL _bl, PO.Cart _c, Window _prevWindow)
         {
             InitializeComponent();
             this.bl = _bl;
             this.c = _c;
+            this.prevWindow = _prevWindow;
             DataContext = this.c;
         }
         /*private PO.OrderItem converToPoOi(BO.OrderItem oi)
@@ -117,13 +119,19 @@ namespace PL.customer
                 o.TotalPrice= this.c.TotalPrice;
                 int id = bl.order.AddNewOrder(o);
                 MessageBox.Show("The order was successfully created");
-                Window w = new OrderTracking(bl, id, this.c);
+                Window w = new OrderTracking(bl, id, this.c,this);
                 w.Show();
-                this.Close();
+                this.Hide();
             }
             catch(PlInvalidValueExeption ex){
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void goBack(object sender, RoutedEventArgs e)
+        {
+            this.prevWindow.Show();
+            this.Close();
         }
     }
 }

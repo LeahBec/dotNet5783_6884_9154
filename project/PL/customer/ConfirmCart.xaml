@@ -11,6 +11,7 @@
         <TextBox HorizontalAlignment="Left" Margin="360,137,0,0" TextWrapping="Wrap" Text="{Binding CustomerEmail}" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Name="CustomerEmail"/>
         <TextBox HorizontalAlignment="Left" Margin="360,199,0,0" TextWrapping="Wrap" Text="{Binding CustomerAddress}" VerticalAlignment="Top" Width="120" TextChanged="TextBox_TextChanged" Name="CustomerAddress"/>
         <Button Content="Confirm" HorizontalAlignment="Center" Margin="0,301,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="82" RenderTransformOrigin="-0.489,0.677" Click="Button_Click" />
+        <Button Content="⬅️" HorizontalAlignment="Left" Margin="681,301,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Height="24" Width="82" RenderTransformOrigin="-0.489,0.677" Click="goBack" />
 
     </Grid>
 </Window>

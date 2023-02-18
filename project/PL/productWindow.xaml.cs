@@ -68,7 +68,7 @@ public partial class ProductWindow : Window
         return item;
     }*/
 
-    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, ObservableCollection<PO.ProductForList> _list_p = null)
+    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
     {
 
         try
@@ -272,13 +272,13 @@ public partial class ProductWindow : Window
     {
         if (this.isCustomer)
         {
-            Window w = new CustomerProductList(bl, this.c);
+            Window w = new CustomerProductList(bl, this.c, this);
             w.Show();
             this.Close();
         }
         else
         {
-            Window w = new AdminWindow(bl, this.c);
+            Window w = new AdminWindow(bl, this.c, this);
             w.Show();
             this.Close();
         }
@@ -356,7 +356,7 @@ public partial class ProductWindow : Window
             this.cart = ConvertToBoCart(this.c);
             bl.cart.AddProductToCart(this.cart, this.id);
             this.c = ConvertToPoCart(this.cart);
-            Window w = new CustomerProductList(bl, this.c);
+            Window w = new CustomerProductList(bl, this.c, this);
             w.Show();
             this.Close();
         }

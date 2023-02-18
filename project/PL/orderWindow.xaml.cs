@@ -27,7 +27,7 @@ namespace PL
         PO.Cart cart=new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
 
-        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, ObservableCollection<PO.OrderForList> list = null)
+        public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, Window prevWindow, ObservableCollection<PO.OrderForList> list = null)
         {
             try
             {
@@ -165,7 +165,7 @@ namespace PL
         {
             if (!this.isCustomer)
             {
-                Window w = new AdminWindow(bl, this.cart);
+                Window w = new AdminWindow(bl, this.cart, this);
                 w.Show();
                 this.Close();
             }

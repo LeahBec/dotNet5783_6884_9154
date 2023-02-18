@@ -28,6 +28,7 @@ namespace PL.customer
         BLApi.IBL bl;
         BO.Cart cart = new BO.Cart();
         PO.Cart c = new PO.Cart();
+        Window prevWindow;
 
         /*private PO.OrderItem converToPoOi(BO.OrderItem oi)
         {
@@ -67,33 +68,34 @@ namespace PL.customer
             return item;
         }*/
 
-/*        private PO.OrderItem converToPoOi(BO.OrderItem oi)
-        {
-            PO.OrderItem item = new()
-            {
-                Amount = oi.Amount,
-                ID = oi.ID,
-                ProductID = oi.ProductID,
-                Price = oi.Price,
-                ProductName = oi.ProductName
-            };
-            return item;
-        }
-        private List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
-        {
-            List<PO.OrderItem> returnList = new();
-            foreach (BO.OrderItem oi in loi)
-            {
-                returnList.Add(converToPoOi(oi));
-            }
-            return returnList;
-        }*/
+        /*        private PO.OrderItem converToPoOi(BO.OrderItem oi)
+                {
+                    PO.OrderItem item = new()
+                    {
+                        Amount = oi.Amount,
+                        ID = oi.ID,
+                        ProductID = oi.ProductID,
+                        Price = oi.Price,
+                        ProductName = oi.ProductName
+                    };
+                    return item;
+                }
+                private List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
+                {
+                    List<PO.OrderItem> returnList = new();
+                    foreach (BO.OrderItem oi in loi)
+                    {
+                        returnList.Add(converToPoOi(oi));
+                    }
+                    return returnList;
+                }*/
 
-        public OrderTracking(BLApi.IBL _bl ,int _orderID, PO.Cart _c)
+        public OrderTracking(BLApi.IBL _bl ,int _orderID, PO.Cart _c, Window _prevWindow)
         {
             this.c = _c;  
             this.bl = _bl;
             this.orderID = _orderID;
+            this.prevWindow = _prevWindow;
             this.ot = bl.order.OrderTrack(this.orderID);
             InitializeComponent();
             DataContext= this.ot;
@@ -110,7 +112,7 @@ namespace PL.customer
                 this.order = Common.ConvertToPoOrder(this.o);
                 //this.order.Items = convertToPoOiList(this.cart.items);
                 //this.order.Items = convertToPoOiList(this.cart.items);
-                Window w = new PL.OrderWindow(this.bl, this.order, true, this.c);
+                Window w = new PL.OrderWindow(this.bl, this.order, true, this.c,this);
                 w.Show();
             }
             catch (Exception ex)
@@ -128,6 +130,12 @@ namespace PL.customer
         private void orderDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void go_Back(object sender, RoutedEventArgs e)
+        {
+            this.prevWindow.Show();
+            this.Close(); 
         }
     }
 }

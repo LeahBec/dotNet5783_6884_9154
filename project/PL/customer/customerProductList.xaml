@@ -51,9 +51,10 @@ VerticalAlignment="Stretch" Width="auto">
                 </GridView>
             </ListView.View>
         </ListView>
-       
-      
+
+
         <Button x:Name="showCartBtn" Content="🛒" HorizontalAlignment="Left" Margin="603,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="showCart" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578"/>
+        <Button x:Name="back" Content="⬅️" HorizontalAlignment="Left" Margin="680,104,0,0" Grid.Row="2" VerticalAlignment="Top" Click="goBack" FontFamily="Amatic SC" FontSize="16" Background="#FFB19578" Width="81"/>
 
     </Grid>
 </Window>

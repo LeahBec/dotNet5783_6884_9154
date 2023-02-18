@@ -48,6 +48,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <Button x:Name="addProBtn" Click="addProBtn_Click" Content="Add new product"  Margin="0,104,0,0" Grid.Row="2" Style="{StaticResource BtnStyle}"/>
+        <Button x:Name="addProBtn" Click="addProBtn_Click" Content="Add new product"  Margin="46,104,0,0" Grid.Row="2" Style="{StaticResource BtnStyle}" Width="180"/>
+        <Button x:Name="goBack" Click="go_Back" Content="⬅️"  Margin="595,104,0,0" Grid.Row="2" Style="{StaticResource BtnStyle}" Width="180"/>
     </Grid>
 </Window>

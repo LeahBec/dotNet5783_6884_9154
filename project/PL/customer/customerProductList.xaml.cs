@@ -7,6 +7,7 @@ using BLApi;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
 using DalFacade.DO;
+using System.ComponentModel;
 
 /// <summary>
 /// Interaction logic for BOListWindow.xaml
@@ -20,19 +21,22 @@ public partial class CustomerProductList : Window
     IEnumerable<BO.ProductForList> list1;
     ObservableCollection<PO.ProductForList> List_p = new();
     PO.ProductForList pro = new PO.ProductForList();
-    public CustomerProductList(BLApi.IBL bl, PO.Cart _c)
+    Window prevWindow;
+    public CustomerProductList(BLApi.IBL bl, PO.Cart _c, Window _prevWindow)
     {
         try
         {
             InitializeComponent();
             this.bl = bl;
-            this.c= _c;
+            this.c = _c;
+            this.prevWindow = _prevWindow;
             list1 = bl.product.GetProductList();
             categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             ProductsListview.ItemsSource = bl.product.GetProductList();
             Common.convertList(List_p, list1);
             this.DataContext = this.List_p;
-           
+
+
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -42,52 +46,8 @@ public partial class CustomerProductList : Window
         {
             MessageBox.Show(ex.Message);
         }
+
     }
-
-
-    /*private ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p)
-    {
-        PO.ProductForList i = new PO.ProductForList();
-        foreach (BO.ProductForList tmp in list1)
-        {
-            i = ConvertToPo(tmp);
-            List_p.Add(i);
-        }
-        return List_p;
-    }
-
-
-
-    private PO.ProductForList ConvertToPo(BO.ProductForList Bp)
-    {
-        PO.ProductForList item = new()
-        {
-            ID = Bp.ID,
-            Name = Bp.Name,
-            Price = Bp.Price,
-            Category = (eCategory)Bp.Category
-        };
-        return item;
-    }
-
-    private PO.Product ConvertToPoPro(BO.Product Pp)
-    {
-        PO.Product item = new()
-        {
-            ID = Pp.ID,
-            Name = Pp.Name,
-            Price = Pp.Price,
-            Category = (BO.Category)(eCategory)Pp.Category,
-            inStock = Pp.inStock
-        };
-        return item;
-    }*/
-
-
-
-
-
-
     private void categorySelectorBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
     {
         try
@@ -111,7 +71,7 @@ public partial class CustomerProductList : Window
         // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
-            Window window = new ProductWindow(bl,Common.ConvertToPoPro(p), true, this.c);
+            Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             window.Show();
             InitializeComponent();
             ProductsListview.ItemsSource = bl.product.GetProductList();
@@ -137,7 +97,7 @@ public partial class CustomerProductList : Window
         {
             // p.ID = sender.AnchorItem.
             p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
-            Window window = new ProductWindow(bl,Common.ConvertToPoPro(p), true, this.c);
+            Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             InitializeComponent();
@@ -167,6 +127,12 @@ public partial class CustomerProductList : Window
     {
         Window w = new CartWindow(bl, this.c);
         w.Show();
+        this.Close();
+    }
+
+    private void goBack(object sender, RoutedEventArgs e)
+    {
+        this.prevWindow.Show();
         this.Close();
     }
 }

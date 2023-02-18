@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System;
+using System.Windows;
 
 namespace PL
 {
@@ -12,27 +14,30 @@ namespace PL
         BO.Cart cart = new BO.Cart();
         PO.Cart c = new PO.Cart();
         private int ID;
+        private bool isDataSaved;
+
         public MainWindow()
         {
             InitializeComponent();
-        /*    Main.DataContext = new
-            {
-                ID  =0
-            };*/
+
+            /*    Main.DataContext = new
+                {
+                    ID  =0
+                };*/
         }
 
         private void showProductBtn_Click(object sender, RoutedEventArgs e)
         {
-            CustomerProductList w = new CustomerProductList(bl,this.c);
+            CustomerProductList w = new CustomerProductList(bl,this.c, this);
             w.Show();
-            this.Close();
+            this.Hide();
         }
 
         private void displayAdminWindow(object sender, RoutedEventArgs e)
         {
-            AdminWindow w = new AdminWindow(bl, this.c );
+            AdminWindow w = new AdminWindow(bl, this.c, this);
             w.Show();
-            this.Close();
+            this.Hide();
         }
 
         private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
@@ -44,7 +49,7 @@ namespace PL
         {
             //this.ID =int.Parse( id.Text);
             this.ID = int.Parse(id_.Text);
-            Window w = new customer.OrderTracking(bl ,this.ID, this.c);
+            Window w = new customer.OrderTracking(bl ,this.ID, this.c, this);
             w.Show();
             this.Hide();
         }

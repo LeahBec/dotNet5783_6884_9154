@@ -132,7 +132,7 @@ public partial class CartWindow : Window
 
     public void BackToList(object sender, RoutedEventArgs e)
     {
-        Window w = new CustomerProductList(bl, this.cart);
+        Window w = new CustomerProductList(bl, this.cart, this);
         w.Show();
         this.Close();
     }
@@ -164,8 +164,8 @@ public partial class CartWindow : Window
     private void cartConfirmation(object sender, RoutedEventArgs e)
     {
 
-        new customer.ConfirmCart(bl, this.cart).Show();
-        this.Close();
+        new customer.ConfirmCart(bl, this.cart, this).Show();
+        this.Hide();
     }
 
     private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)

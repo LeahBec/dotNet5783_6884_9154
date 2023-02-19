@@ -23,6 +23,7 @@ public partial class CustomerProductList : Window
     ObservableCollection<PO.ProductForList> List_p = new();
     PO.ProductForList pro = new PO.ProductForList();
     Window prevWindow;
+    Tuple<ObservableCollection<PO.ProductForList>, Array> dcT;
     public CustomerProductList(BLApi.IBL bl, PO.Cart _c, Window _prevWindow)
     {
         try
@@ -32,12 +33,13 @@ public partial class CustomerProductList : Window
             this.c = _c;
             this.prevWindow = _prevWindow;
             list1 = bl.product.GetProductList();
-            categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
+            Array i = Enum.GetValues(typeof(BO.Category));
+            //categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
             ProductsListview.ItemsSource = bl.product.GetProductList();
             Common.convertList(List_p, list1);
-            this.DataContext = this.List_p;
-
-
+            this.dcT = new Tuple<ObservableCollection<PO.ProductForList>, Array>(this.List_p, i);
+            //this.DataContext = this.List_p;
+            this.DataContext = this.dcT;
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -56,8 +58,6 @@ public partial class CustomerProductList : Window
             var allProducts = bl?.product.GetProductList();
             BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
             var list = bl?.product.GetListByCategory(cat);
-
-
             if (cat != BO.Category.All)
             {
                 var tmp = from product in allProducts
@@ -65,9 +65,10 @@ public partial class CustomerProductList : Window
                           where newGroup.Key == cat
                           select newGroup.ToList();
                 this.List_p = Common.ConvertToPoProList(tmp);
+                //ProductsListview.ItemsSource = Common.ConvertToPoProList(tmp);
             }
             //else
-                //List_p = Common.ConvertToPoProList(allProducts);
+            //   List_p = Common.ConvertToPoProList(allProducts);
         }
         catch (BO.BlNoEntitiesFound ex)
         {

@@ -206,8 +206,6 @@ internal class BlOrder : BLApi.IOrder
                 Dal.Order.Add(o);
                 order.ShipDate = o.ShipDate;
                 order.Status = (BO.OrderStatus)2;
-                //ליצור כאן רשימה של items לפי orderItem?
-                //כנל לגבי total price.
                 return order;
             }
             else
@@ -236,8 +234,6 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-            /* if (o.ShipDate != DateTime?.MinValue)
-                 throw new BO.BlInvalidIdToken("");*/
             o.ShipDate = DateTime.Now;
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();

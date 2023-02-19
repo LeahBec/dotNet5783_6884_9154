@@ -50,14 +50,6 @@ internal class DalOrderItem : IOrderItem
 
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool> func = null)
     {
-        /*        List<OrderItem> orderItems = new List<OrderItem>();
-                for (int i = 0; i < DataSource.orderItems.Count(); i++)
-                {
-                    orderItems.Add(DataSource.orderItems[i]);
-                }
-                return orderItems;
-
-                throw new ExceptionFailedToRead();*/
         return (func == null ? DataSource.orderItems : DataSource.orderItems.Where(func).ToList());
 
     }
@@ -90,15 +82,6 @@ internal class DalOrderItem : IOrderItem
     /// <exception cref="ExceptionObjectNotFound">if not found</exception>
     public OrderItem Get(Func<OrderItem, bool> func)
     {
-        /*        int i;
-                for (i = 0; i < DataSource.orderItems.Count(); i++)
-                {
-                    if (DataSource.orderItems[i].ID == Id)
-                    {
-                        return DataSource.orderItems[i];
-                    }
-                }
-                throw new ExceptionObjectNotFound();*/
         return DataSource.orderItems.Where(func).ToArray()[0];
 
     }

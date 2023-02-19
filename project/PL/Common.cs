@@ -249,19 +249,6 @@ namespace PL
             };
             return item;
         }
-
-        /*public static PO.Product ConvertToPoPro(BO.Product Pp)
-        {
-            PO.Product item = new()
-            {
-                ID = Pp.ID,
-                Name = Pp.Name,
-                Price = Pp.Price,
-                Category = (BO.Category)(eCategory)Pp.Category,
-                inStock = Pp.inStock
-            };
-            return item;
-        }*/
         public static BO.Order ConvertToBo(PO.Order Op)
         {
             BO.Order item = new()

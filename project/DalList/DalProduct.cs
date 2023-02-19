@@ -60,13 +60,6 @@ internal class DalProduct : IProduct
 
     public IEnumerable<Product> GetAll(Func<Product, bool> func = null)
     {
-        /*        List<Product> products = new List<Product>();
-                for (int i = 0; i < DataSource.products.Count(); i++)
-                {
-                    products.Add(DataSource.products[i]);
-                }
-                return products;
-                throw new ExceptionFailedToRead();*/
         if (DataSource.products.Count < 0)
             throw new ExceptionObjectNotFound();
         return (func == null ? DataSource.products : DataSource.products.Where(func).ToList());

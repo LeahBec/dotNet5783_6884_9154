@@ -3,8 +3,6 @@ public class OrderTracking
 {
     public int ID { get; set; }
     public OrderStatus Status { get; set; }
-    /*    public List<(DateTime?, OrderStatus)> dateAndTrack { get; set; }
-    */
     public List<Tuple<DateTime?, OrderStatus?>>? dateAndTrack { get; set; } = new();
 
     public override string ToString()

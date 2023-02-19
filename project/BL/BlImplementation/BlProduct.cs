@@ -14,30 +14,6 @@ internal class BlProduct : BLApi.IProduct
         try
         {
             IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
-
-            //List<BO.ProductForList> productList = new List<BO.ProductForList>();
-            /*  foreach (var item in existingProductsList)
-              {
-                  BO.ProductForList p = new BO.ProductForList();
-                  p.ID = item.ID;
-                  p.Name = item.Name;
-                  p.Price = item.Price;
-                  p.Price = item.Price;
-                  p.Category = (BO.Category)item.Category;
-                  productList.Add(p);
-              }*/
-            /*  existingProductsList.Select(item =>
-              {
-                  BO.ProductForList p = new BO.ProductForList();
-                  p.ID = item.ID;
-                  p.Name = item.Name;
-                  p.Price = item.Price;
-                  p.Price = item.Price;
-                  p.Category = (BO.Category)item.Category;
-                  productList.Add(p);
-                  return item;
-              }).ToList();*/
-
             IEnumerable<BO.ProductForList> productList = from Dal.DO.Product item1 in existingProductsList
                                                          select new BO.ProductForList
                                                          {
@@ -189,12 +165,6 @@ internal class BlProduct : BLApi.IProduct
             if (id <= 0)
                 throw new BO.BlInvalidIdToken("");
             var orderitems = Dal.OrderItem.GetAll();
-            /*foreach (var oi in orderitems)
-            {
-                if (oi.ID == id)
-                    throw new BO.BlProductExistsInAnOrder("product exists in an order");
-                //can't delete the product because a customer ordered it!
-            }*/
             orderitems.Where(oi => oi.ID == id).Select(oi =>
             {
                 throw new BO.BlProductExistsInAnOrder("product exists in an order");
@@ -309,33 +279,6 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlNoEntitiesFound("");
         }
     }
-
-
-    //public IEnumerable<BO.ProductForList> GetProductByCategoty(BO.eCategory category)
-    //{
-    //    IEnumerable<Dal.DO.Product> lst = Dal.Product.GetProductByCategory((Dal.DO.eCategory)category);
-
-    //    List<BO.ProductForList> productsForList = new List<BO.ProductForList>();
-
-
-    //    foreach (Dal.DO.Product DoProduct in lst)
-    //    {
-    //        BO.ProductForList ProductForList = new BO.ProductForList();
-
-    //        ProductForList.ID = BO.BoConfig.ProductForListID;
-    //        ProductForList.Name = DoProduct.Name;
-    //        ProductForList.Price = DoProduct.Price;
-    //        ProductForList.Category = (BO.eCategory)DoProduct.Category;
-    //        productsForList.Add(ProductForList);
-    //    }
-
-
-    //    if (productsForList.Count() == 0)
-    //        throw new BO.BlNoEntitiesFound("No products found");
-
-    //    return productsForList;
-    //}
-
 }
 
 

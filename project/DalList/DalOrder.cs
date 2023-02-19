@@ -47,13 +47,6 @@ internal class DalOrder : IOrder
 
     public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
-        /*      List<Order> orders = new List<Order>();
-                for (int i = 0; i < DataSource.orders.Count(); i++)
-                {
-                    orders.Add(DataSource.orders[i]);
-                }
-                return orders;
-                throw new ExceptionFailedToRead();*/
         return (func == null ? DataSource.orders : DataSource.orders.Where(func).ToList());
     }
     /// <summary>
@@ -66,14 +59,6 @@ internal class DalOrder : IOrder
 
     public Order Get(Func<Order, bool> func)
     {
-        //int i;
-        /*        for (i = 0; i < DataSource.orders.Count(); i++)
-                {
-                    if (DataSource.orders[i].OrderID == Id)
-                    {
-                        return DataSource.orders[i];
-                    }
-                }*/
         return DataSource.orders.Where(func).ToArray()[0];
         //throw new ExceptionObjectNotFound();
     }

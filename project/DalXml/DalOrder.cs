@@ -47,8 +47,6 @@ internal class DalOrder : IOrder
         order.CustomerEmail = o?.Element("CustomerEmail")?.Value;
         order.CustomerAddress = o?.Element("CustomerAddress")?.Value;
         order.OrderDate = Convert.ToDateTime(o?.Element("OrderDate")?.Value);
-       /* string d1 = o?.Element("ShipDate")?.Value;
-        if (d1 == "")*/
         order.ShipDate= o?.Element("ShipDate")?.Value!=""? Convert.ToDateTime(o?.Element("ShipDate")?.Value):null;
         order.DeliveryDate = o?.Element("DeliveryDate")?.Value!=""? Convert.ToDateTime(o?.Element("DeliveryDate")?.Value):null;
         return order;

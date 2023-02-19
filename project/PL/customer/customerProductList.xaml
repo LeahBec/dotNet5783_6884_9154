@@ -25,7 +25,7 @@ VerticalAlignment="Stretch" Width="auto">
         </Grid>
         <Grid>
             <Label Grid.Column="0" Margin="0,0,685,0" RenderTransformOrigin="0.504,0.087">
-                <ComboBox Name="categorySelectorBox" Height="25" Width="92" SelectionChanged="categorySelectorBox_SelectionChanged" RenderTransformOrigin="0.59,3.642">
+                <ComboBox Name="categorySelectorBox" ItemsSource="{Binding Item2}" Height="25" Width="92" SelectionChanged="categorySelectorBox_SelectionChanged" RenderTransformOrigin="0.59,3.642">
                     <ComboBox.RenderTransform>
                         <TransformGroup>
                             <ScaleTransform/>
@@ -37,7 +37,7 @@ VerticalAlignment="Stretch" Width="auto">
                 </ComboBox>
             </Label>
         </Grid>
-        <ListView Grid.Row="1" x:Name="ProductsListview" MouseDoubleClick="itemClicked" SelectionChanged="ProductsListview_SelectionChanged" FontFamily="Amatic SC" FontSize="16" Cursor="Hand">
+        <ListView Grid.Row="1" x:Name="ProductsListview" ItemsSource="{Binding Path= Item1}" MouseDoubleClick="itemClicked" SelectionChanged="ProductsListview_SelectionChanged" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 

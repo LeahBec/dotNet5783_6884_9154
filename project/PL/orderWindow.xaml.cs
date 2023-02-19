@@ -49,26 +49,12 @@ namespace PL
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
                 this.DataContext = this.or;
-                /*Tuple<BO.Order, List<BO.OrderItem>> dcT = new Tuple<BO.Order, List<BO.OrderItem>>(this.or, this.or.Items);
-                this.DataContext = dcT;*/
                 if (this.isCustomer)
                 {
                     updateOrderBtn.IsEnabled = false;
                     updateOrderDeliveryBtn.IsEnabled = false;
                     updateOrderShippingBtn.IsEnabled = false;
                 }
-/*                if (or.CustomerName == "")
-                    throw new PLEmptyNameField();
-                if (or.CustomerEmail == "")
-                    throw new PLEmptyAmountField();
-                if (or.CustomerAddress == "")
-                    throw new PLEmptyPriceField();
-                if (or.OrderDate < DateTime?.MinValue || or.OrderDate > DateTime.Now)
-                    throw new PlInvalidValueExeption("orderDate");
-                if (or.ShipDate < DateTime?.MinValue || or.ShipDate > DateTime.Now)
-                    throw new PlInvalidValueExeption("shipDate");
-                if (or.DeiveryDate < DateTime?.MinValue || or.DeiveryDate > DateTime.Now)
-                    throw new PlInvalidValueExeption("deliveryDate");*/
             }
             catch (Exception err)
             {
@@ -144,8 +130,6 @@ namespace PL
             }
             else
             {
-                /* Window w = new customer.OrderTracking(bl);
-                 w.Show();*/
                 this.prevWindow.Show();
                 this.Close();
             }

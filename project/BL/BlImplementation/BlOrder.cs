@@ -71,9 +71,9 @@ internal class BlOrder : BLApi.IOrder
                     return orderItem;
                 }).ToList();
 
-                if (item.DeliveryDate!=null)
+                if (item.DeliveryDate != null)
                     o.Status = (BO.OrderStatus)3;
-                else if (item.ShipDate!=null)
+                else if (item.ShipDate != null)
                     o.Status = (BO.OrderStatus)2;
                 else
                     o.Status = (BO.OrderStatus)1;
@@ -113,9 +113,9 @@ internal class BlOrder : BLApi.IOrder
             oi.CustomerEmail = o.CustomerEmail;
             oi.CustomerName = o.CustomerName;
             oi.DeiveryDate = o.DeliveryDate;
-            if (o.DeliveryDate!=null )
+            if (o.DeliveryDate != null)
                 oi.Status = (BO.OrderStatus)3;
-            else if (o.ShipDate!=null)
+            else if (o.ShipDate != null)
                 oi.Status = (BO.OrderStatus)2;
             else
                 oi.Status = (BO.OrderStatus)1;
@@ -188,14 +188,24 @@ internal class BlOrder : BLApi.IOrder
                 throw new BO.BlInvalidIdToken("");
             o.DeliveryDate = DateTime.Now;
             Dal.Order.Update(o);
-            BO.Order order = new BO.Order();
-            order.ID = o.OrderID;
-            order.OrderDate = o.OrderDate;
-            order.DeiveryDate = o.DeliveryDate;
-            order.ShipDate = o.ShipDate;
-            order.CustomerAddress = o.CustomerAddress;
-            order.CustomerEmail = o.CustomerEmail;
-            order.CustomerName = o.CustomerName;
+            //BO.Order order = new BO.Order();
+            BO.Order order = new()
+            {
+                ID = o.OrderID,
+                OrderDate = o.OrderDate,
+                DeiveryDate = o.DeliveryDate,
+                ShipDate = o.ShipDate,
+                CustomerAddress = o.CustomerAddress,
+                CustomerEmail = o.CustomerEmail,
+                CustomerName = o.CustomerName
+            };
+            /*   order.ID = o.OrderID;
+               order.OrderDate = o.OrderDate;
+               order.DeiveryDate = o.DeliveryDate;
+               order.ShipDate = o.ShipDate;
+               order.CustomerAddress = o.CustomerAddress;
+               order.CustomerEmail = o.CustomerEmail;
+               order.CustomerName = o.CustomerName;*/
             if (o.CustomerName != "")
             {
                 o.DeliveryDate = DateTime.Now;
@@ -207,7 +217,6 @@ internal class BlOrder : BLApi.IOrder
             }
             else
             {
-
                 throw new BO.BlInvalidNameToken("");
             }
         }

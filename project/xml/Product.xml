@@ -50,13 +50,6 @@
     <InStock>2222</InStock>
   </Product>
   <Product>
-    <ID>100012</ID>
-    <Name>tamarrrrrrrrrr</Name>
-    <Category>Drones</Category>
-    <Price>3</Price>
-    <InStock>3</InStock>
-  </Product>
-  <Product>
     <ID>100010</ID>
     <Name>ttttt</Name>
     <Category>SmartWatches</Category>
@@ -83,5 +76,12 @@
     <Category>Drones</Category>
     <Price>33</Price>
     <InStock>33</InStock>
+  </Product>
+  <Product>
+    <ID>100012</ID>
+    <Name>tama</Name>
+    <Category>Drones</Category>
+    <Price>3</Price>
+    <InStock>3</InStock>
   </Product>
 </Products>

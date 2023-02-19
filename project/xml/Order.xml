@@ -370,15 +370,6 @@
     <OrderDate>02/02/2023</OrderDate>
   </order>
   <order>
-    <OrderID>500065</OrderID>
-    <CustomerName>qw</CustomerName>
-    <CustomerAddress>qw</CustomerAddress>
-    <CustomerEmail>qw</CustomerEmail>
-    <ShipDate />
-    <DeliveryDate />
-    <OrderDate>02/02/2023</OrderDate>
-  </order>
-  <order>
     <OrderID>500066</OrderID>
     <CustomerName>34</CustomerName>
     <CustomerAddress>34</CustomerAddress>
@@ -528,15 +519,6 @@
     <CustomerEmail>aaaaaaaaaa</CustomerEmail>
     <CustomerAddress>aaaaaa</CustomerAddress>
     <OrderDate>2023-02-17T00:00:00</OrderDate>
-    <ShipDate />
-    <DeliveryDate />
-  </order>
-  <order>
-    <OrderID>500006</OrderID>
-    <CustomerName>aljsfd</CustomerName>
-    <CustomerEmail></CustomerEmail>
-    <CustomerAddress></CustomerAddress>
-    <OrderDate>2023-01-16T00:00:00</OrderDate>
     <ShipDate />
     <DeliveryDate />
   </order>
@@ -692,5 +674,23 @@
     <ShipDate>19/02/2023</ShipDate>
     <DeliveryDate />
     <OrderDate>16/01/2023</OrderDate>
+  </order>
+  <order>
+    <OrderID>500065</OrderID>
+    <CustomerName>qwerty</CustomerName>
+    <CustomerEmail>qw</CustomerEmail>
+    <CustomerAddress>qw</CustomerAddress>
+    <OrderDate>2023-02-02T00:00:00</OrderDate>
+    <ShipDate />
+    <DeliveryDate />
+  </order>
+  <order>
+    <OrderID>500006</OrderID>
+    <CustomerName>aljsfd</CustomerName>
+    <CustomerEmail></CustomerEmail>
+    <CustomerAddress></CustomerAddress>
+    <OrderDate>2023-01-16T00:00:00</OrderDate>
+    <ShipDate>2023-02-19T21:36:06.5978299+02:00</ShipDate>
+    <DeliveryDate />
   </order>
 </Orders>

@@ -236,51 +236,84 @@ internal class BlOrder : BLApi.IOrder
 
 
     }
-    public BO.Order UpdateOrderShipping(int id)
+
+
+
+
+    public BO.Order UpdateOrderShipping(int orderId)
     {
         try
         {
-            Dal.DO.Order o = new Dal.DO.Order();
-            o = Dal.Order.Get(o => o.OrderID == id);
-            o.ShipDate = DateTime.Now;
-            Dal.Order.Update(o);
-            BO.Order order = new BO.Order();
-            order.ID = o.OrderID;
-            order.OrderDate = o.OrderDate;
-            order.DeiveryDate = o.DeliveryDate;
-            order.ShipDate = o.ShipDate;
-            order.CustomerAddress = o.CustomerAddress;
-            order.CustomerEmail = o.CustomerEmail;
-            order.CustomerName = o.CustomerName;
-            if (o.CustomerName != "")
+           Dal. DO.Order oDO = Dal.Order.Get(o => o.OrderID == orderId);
+            if (oDO.ShipDate == null)
             {
-
-                Dal.Order.Delete(id);
-                Dal.Order.Add(o);
-                order.ShipDate = o.ShipDate;
-                order.Status = (BO.OrderStatus)2;
+                oDO.ShipDate = DateTime.Now;
+                BO.Order order = new BO.Order();
+                order.ID = oDO.OrderID;
+                order.OrderDate = oDO.OrderDate;
+                order.DeiveryDate = oDO.DeliveryDate;
+                order.ShipDate = oDO.ShipDate;
+                order.CustomerAddress = oDO.CustomerAddress;
+                order.CustomerEmail = oDO.CustomerEmail;
+                order.CustomerName = oDO.CustomerName;
+                order.Status = (BO.OrderStatus)1;
+                Dal.Order.Update(oDO);
                 return order;
             }
-            else
-            {
-                throw new BO.BlInvalidNameToken("");
-            }
-
+            throw new BlEntityNotFoundException("");
         }
-        catch (DalApi.ExceptionFailedToRead)
+        catch (DllNotFoundException e)
         {
-            throw new BO.BlExceptionFailedToRead();
-        }
-        catch (DalApi.ExceptionObjectNotFound)
-        {
-            throw new BO.BlEntityNotFoundException("");
-        }
-        catch (Exception)
-        {
-
-            throw new BO.BlDefaultException("");
+            throw new BlEntityNotFoundException("");
         }
     }
+
+
+    /*  public BO.Order UpdateOrderShipping(int id)
+      {
+          try
+          {
+              Dal.DO.Order o = new Dal.DO.Order();
+              o = Dal.Order.Get(o => o.OrderID == id);
+              o.ShipDate = DateTime.Now;
+              Dal.Order.Update(o);
+              BO.Order order = new BO.Order();
+              order.ID = o.OrderID;
+              order.OrderDate = o.OrderDate;
+              order.DeiveryDate = o.DeliveryDate;
+              order.ShipDate = o.ShipDate;
+              order.CustomerAddress = o.CustomerAddress;
+              order.CustomerEmail = o.CustomerEmail;
+              order.CustomerName = o.CustomerName;
+              if (o.CustomerName != "")
+              {
+
+                  Dal.Order.Delete(id);
+                  Dal.Order.Add(o);
+                  order.ShipDate = o.ShipDate;
+                  order.Status = (BO.OrderStatus)2;
+                  return order;
+              }
+              else
+              {
+                  throw new BO.BlInvalidNameToken("");
+              }
+
+          }
+          catch (DalApi.ExceptionFailedToRead)
+          {
+              throw new BO.BlExceptionFailedToRead();
+          }
+          catch (DalApi.ExceptionObjectNotFound)
+          {
+              throw new BO.BlEntityNotFoundException("");
+          }
+          catch (Exception)
+          {
+
+              throw new BO.BlDefaultException("");
+          }
+      }*/
     //bonus
     public BO.Order UpdateOrderForManager(BO.Order or)
     {

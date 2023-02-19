@@ -34,11 +34,8 @@ public partial class CustomerProductList : Window
             this.prevWindow = _prevWindow;
             list1 = bl.product.GetProductList();
             Array i = Enum.GetValues(typeof(BO.Category));
-            //categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            //ProductsListview.ItemsSource = bl.product.GetProductList();
             Common.convertList(List_p, list1);
             this.dcT = new Tuple<ObservableCollection<PO.ProductForList>, Array>(this.List_p, i);
-            //this.DataContext = this.List_p;
             this.DataContext = this.dcT;
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -64,11 +61,10 @@ public partial class CustomerProductList : Window
                           group product by product.Category into newGroup
                           where newGroup.Key == cat
                           select newGroup.ToList();
-                this.List_p = Common.ConvertToPoProList(tmp);
-                //ProductsListview.ItemsSource = Common.ConvertToPoProList(tmp);
+                this.List_p = Common.ConvertToPoProList(tmp, this.List_p);
             }
             else
-                List_p = Common.ConvertToPoProList(allProducts);
+                List_p = Common.ConvertToPoProList(allProducts, this.List_p);
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -81,13 +77,11 @@ public partial class CustomerProductList : Window
     }
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {
-        // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             window.Show();
             InitializeComponent();
-            //ProductsListview.ItemsSource = bl.product.GetProductList();
             this.List_p = (ObservableCollection<PO.ProductForList>)bl.product.GetProductList();
             this.Hide();
         }
@@ -109,10 +103,8 @@ public partial class CustomerProductList : Window
     {
         try
         {
-            // p.ID = sender.AnchorItem.
             p = bl.product.GetProductManager((ProductsListview.SelectedItem as PO.ProductForList).ID);
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
-            // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
             this.Hide();
         }

@@ -27,6 +27,7 @@ namespace PL
         PO.Cart cart=new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
         Window prevWindow;
+        Tuple<BO.Order, bool> dcT;
         public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, Window prevWindow, ObservableCollection<PO.OrderForList> list = null)
         {
             try
@@ -38,17 +39,10 @@ namespace PL
                 this.prevWindow = prevWindow;
                 if (list == null) this.list_o = new();
                 else this.list_o = list;
-                input_order_ID.IsReadOnly = isCustomer;
-                input_order_totalPrice.IsReadOnly = isCustomer;
-                input_order_deliveryDate.IsReadOnly = isCustomer;
-                input_order_shipDate.IsReadOnly = isCustomer;
-                input_order_orderDate.IsReadOnly = isCustomer;
-                input_order_customerAddress.IsReadOnly = isCustomer;
-                input_order_customerEmail.IsReadOnly = isCustomer;
-                input_order_customerName.IsReadOnly = isCustomer;
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
-                this.DataContext = this.or;
+                this.dcT = new Tuple<BO.Order, bool>(this.or, isCustomer);
+                this.DataContext = this.dcT;
                 if (this.isCustomer)
                 {
                     updateOrderBtn.IsEnabled = false;
@@ -61,8 +55,6 @@ namespace PL
                 MessageBox.Show(err.Message);
             }
         }
-      
-
         private void updateOrderBtn_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -77,6 +69,7 @@ namespace PL
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 list_o.Add(Common.ConvertPFLToP(this.o));
                 bl.order.UpdateOrderForManager(Common.ConvertToBo(o));
+                prevWindow.Show();
                 this.Close();
             }
             catch (BO.blInvalidAmountToken ex)
@@ -86,28 +79,22 @@ namespace PL
             catch (BO.BlInvalidPriceToken ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
             catch (BO.BlInvalidNameToken ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
             catch (BO.BlInvalidIdToken ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
             catch (BO.BlEntityNotFoundException ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
-
             catch (BO.BlDefaultException ex)
             {
                 MessageBox.Show(ex.Message);
-
             }
         }
         private void updateOrderShippingBtn_Click(object sender, RoutedEventArgs e)
@@ -118,7 +105,14 @@ namespace PL
         private void updateOrderDeliveryBtn_Click(object sender, RoutedEventArgs e)
         {
             int id = this.or.ID;
-            bl?.order.UpdateOrderDelivery(id);
+            try
+            {
+                bl?.order.UpdateOrderDelivery(id);
+            }
+            catch(BO.BlDefaultException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         private void backToList(object sender, RoutedEventArgs e)

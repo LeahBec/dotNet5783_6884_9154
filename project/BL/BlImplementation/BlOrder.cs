@@ -1,4 +1,5 @@
 ﻿using BO;
+using Dal.DO;
 
 namespace BlImplementation;
 internal class BlOrder : BLApi.IOrder
@@ -183,11 +184,9 @@ internal class BlOrder : BLApi.IOrder
         {
             Dal.DO.Order o = new Dal.DO.Order();
             o = Dal.Order.Get(o => o.OrderID == id);
-           
-            if ((DateTime?)o.DeliveryDate==null)
+            if ((DateTime?)o.DeliveryDate == null)
                 throw new BO.BlInvalidIdToken("");
             o.DeliveryDate = DateTime.Now;
-
             Dal.Order.Update(o);
             BO.Order order = new BO.Order();
             order.ID = o.OrderID;
@@ -197,11 +196,9 @@ internal class BlOrder : BLApi.IOrder
             order.CustomerAddress = o.CustomerAddress;
             order.CustomerEmail = o.CustomerEmail;
             order.CustomerName = o.CustomerName;
-
             if (o.CustomerName != "")
             {
                 o.DeliveryDate = DateTime.Now;
-
                 Dal.Order.Delete(id);
                 Dal.Order.Add(o);
                 order.ShipDate = o.ShipDate;
@@ -227,6 +224,8 @@ internal class BlOrder : BLApi.IOrder
 
             throw new BO.BlDefaultException("unexpected error");
         }
+
+
     }
     public BO.Order UpdateOrderShipping(int id)
     {

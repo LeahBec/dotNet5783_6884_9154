@@ -22,25 +22,11 @@
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>100017</ID>
-    <Name>45</Name>
-    <Category>Drones</Category>
-    <Price>45</Price>
-    <InStock>45</InStock>
-  </Product>
-  <Product>
     <ID>100018</ID>
     <Name>zzzz</Name>
     <Category>Drones</Category>
     <Price>34</Price>
     <InStock>34</InStock>
-  </Product>
-  <Product>
-    <ID>100019</ID>
-    <Name>333</Name>
-    <Category>Drones</Category>
-    <Price>33</Price>
-    <InStock>33</InStock>
   </Product>
   <Product>
     <ID>100021</ID>
@@ -83,5 +69,19 @@
     <Category>Cameras</Category>
     <Price>560</Price>
     <InStock>56</InStock>
+  </Product>
+  <Product>
+    <ID>100017</ID>
+    <Name>45</Name>
+    <Category>Drones</Category>
+    <Price>45</Price>
+    <InStock>45</InStock>
+  </Product>
+  <Product>
+    <ID>100019</ID>
+    <Name>333asdf</Name>
+    <Category>Drones</Category>
+    <Price>33</Price>
+    <InStock>33</InStock>
   </Product>
 </Products>

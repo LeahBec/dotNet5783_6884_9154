@@ -26,7 +26,7 @@ public partial class ProductWindow : Window
     int id;
     PO.Product p_ = new PO.Product();
     ObservableCollection<PO.ProductForList> list_p;
-    Tuple<PO.Product, bool> dcT;
+    Tuple<PO.Product, bool, bool, Array> dcT;
     public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
     {
         try
@@ -40,15 +40,12 @@ public partial class ProductWindow : Window
             this.prevWindow = prevWindow;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
-            categorySelectorBox.IsReadOnly = isCustomer;
             if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
-            categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            this.dcT = new Tuple<PO.Product, bool>(this.p_, this.isCustomer);
+            Array a = Enum.GetValues(typeof(BO.Category));
+            this.dcT = new Tuple<PO.Product, bool , bool, Array>(this.p_, this.isCustomer, !this.isCustomer, a);
             this.DataContext = this.dcT;
             if (pro.ID != 0)
             {
-                //this.DataContext = this.dcT;
-
                 BO.Product prod = bl.product.GetProductCustomer(pro.ID);
                 this.p_ = Common.ConvertToPoPro(prod);
                 addProductBtn.Visibility = Visibility.Hidden;
@@ -67,14 +64,32 @@ public partial class ProductWindow : Window
                 if (this.p_.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
                     throw new PlInvalidValueExeption("amount");
             }
-            //else if() // if product is ordered do not show the delete btn
-            else
+            else  // if product is ordered do not show the delete btn
             {
                 //this.DataContext = this.dcT;
-
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
+        }
+        catch(PLEmptyCategoryField ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+         catch(PLEmptyNameField ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+         catch(PLEmptyAmountField ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+         catch(PLEmptyPriceField ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+          catch(PlInvalidValueExeption ex)
+        {
+            MessageBox.Show(ex.Message);
         }
         catch (Exception err)
         {
@@ -94,15 +109,15 @@ public partial class ProductWindow : Window
         try
         {
             updateProductBtn.Visibility = Visibility.Hidden;
-            p_.ID = 10;
+            /*p_.ID = 10;
             p_.Price = this.pro.Price;
             p_.inStock = this.pro.inStock;
             p_.Name = this.pro.Name;
-            p_.Category = this.pro.Category;
-            this.pro = Common.ConvertToBo(p_);///////////////////
+            p_.Category = this.pro.Category;*/
+            this.pro = Common.ConvertToBo(this.dcT.Item1);///////////////////
             int id = bl.product.AddProduct(this.pro);
-            this.p_.ID = id;
-            this.list_p.Add(Common.ConvertPFLToP(this.p_));
+            this.dcT.Item1.ID = id;
+            this.list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
             backToList();
         }
         catch (BO.blInvalidAmountToken ex)
@@ -131,15 +146,15 @@ public partial class ProductWindow : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            p_.ID = this.pro.ID;
+            /*p_.ID = this.pro.ID;
             p_.Price = this.pro.Price;
             p_.inStock = this.pro.inStock;
             p_.Name = this.pro.Name;
-            p_.Category = this.pro.Category;
+            p_.Category = this.pro.Category;*/
             this.pro = Common.ConvertToBo(p_);
-            list_p.Remove(list_p.Where(i => i.ID == p_.ID).Single());
-            list_p.Add(Common.ConvertPFLToP(this.p_));
-            bl.product.Update(Common.ConvertToBo(p_));/////
+            list_p.Remove(list_p.Where(i => i.ID == this.dcT.Item1.ID).Single());
+            list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
+            bl.product.Update(Common.ConvertToBo(this.dcT.Item1));/////
 
             backToList();
         }

@@ -82,13 +82,10 @@ public partial class AdminWindow : Window
 
     private void addProBtn_Click(object sender, RoutedEventArgs e)
     {
-        // updateProductBtn.Visibility = Visibility.Hidden;
         try
         {
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), false, this.cart, this, this.List_p);
             window.Show();
-            // InitializeComponent();
-            // ProductsListview.ItemsSource = bl.product.GetProductList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -113,8 +110,6 @@ public partial class AdminWindow : Window
             Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o), false, this.cart, this, this.List_o);
             window.Show();
             this.Hide();
-            // InitializeComponent();
-            //  OrdersListview.ItemsSource = bl?.order.GetOrderList();
         }
         catch (BO.BlNoEntitiesFound ex)
         {

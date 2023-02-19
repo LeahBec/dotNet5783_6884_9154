@@ -99,8 +99,8 @@ namespace PL
                 inStock = Pp.inStock
             };
             return item;
-        } 
-         public static PO.ProductForList ConvertToPoProFL(BO.ProductForList Pp)
+        }
+        public static PO.ProductForList ConvertToPoProFL(BO.ProductForList Pp)
         {
             PO.ProductForList item = new()
             {
@@ -108,27 +108,29 @@ namespace PL
                 Name = Pp.Name,
                 Price = Pp.Price,
                 Category = (DalFacade.DO.eCategory)Pp.Category,
-                
+
             };
             return item;
         }
 
 
-        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<List<BO.ProductForList>> Blist)
+        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<List<BO.ProductForList>> Blist, ObservableCollection<PO.ProductForList> Plist)
         {
-            ObservableCollection<PO.ProductForList> Plist = new();
-            foreach (var group in Blist) { 
-            foreach (var item in group)
+            Plist.Clear();
+            foreach (var group in Blist)
             {
-                Plist.Add(ConvertToPoProFL(item));
+                foreach (var item in group)
+                {
+                    Plist.Add(ConvertToPoProFL(item));
 
-            } }
+                }
+            }
             return Plist;
         }
 
-        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist)
+        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist, ObservableCollection<PO.ProductForList> Plist)
         {
-            ObservableCollection<PO.ProductForList> Plist = new();
+            Plist.Clear();
             foreach (var item in Blist)
             {
                 Plist.Add(ConvertToPoProFL(item));
@@ -153,10 +155,6 @@ namespace PL
 
         public static ObservableCollection<PO.OrderForList> convertListOrder(IEnumerable<BO.OrderForList> list2, ObservableCollection<PO.OrderForList> List_o)
         {
-            /*list2.ForEach(item =>
-            {
-                List_o.Add(ConvertToPoOrder(item));
-            });*/
             PO.OrderForList i = new PO.OrderForList();
             foreach (BO.OrderForList tmp in list2)
             {

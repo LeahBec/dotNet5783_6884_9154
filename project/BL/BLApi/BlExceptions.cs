@@ -3,12 +3,6 @@
 /// The exception will be scheduled when the required object is not found
 /// </summary>
 
-/*public class BlEntityNotFoundException : Exception
-{
-    public BlEntityNotFoundException(DalApi.ExceptionObjectNotFound? inner = null) : base("entity not found", inner) { }
-    public override string Message =>
-                    "entity not found";
-}*/
 public class BlEntityNotFoundException : Exception
 {
     public readonly string msg;

@@ -252,7 +252,6 @@ internal class BlOrder : BLApi.IOrder
             order.CustomerAddress = o.CustomerAddress;
             order.CustomerEmail = o.CustomerEmail;
             order.CustomerName = o.CustomerName;
-
             if (o.CustomerName != "")
             {
 

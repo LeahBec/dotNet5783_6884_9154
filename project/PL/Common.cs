@@ -148,7 +148,7 @@ namespace PL
             Po.ShipDate = (DateTime?)Bo.ShipDate;
             Po.OrderDate = (DateTime?)Bo?.OrderDate;
             Po.TotalPrice = Bo.TotalPrice;
-
+            Po.Status= Bo.Status;
             Po.Items = convertToPoOiList(Bo.Items);
 
             return Po;
@@ -267,8 +267,11 @@ namespace PL
                 CustomerAddress = Op.CustomerAddress,
                 OrderDate = (DateTime?)Op.OrderDate,
                 ShipDate = (DateTime?)Op.ShipDate,
-                DeiveryDate = (DateTime?)Op.DeiveryDate
+                DeiveryDate = (DateTime?)Op.DeiveryDate,
+                Status = Op.Status,
+                TotalPrice= Op.TotalPrice,
             };
+            item.Items = convertItemsToBOOI(Op.Items);
             return item;
         }
 

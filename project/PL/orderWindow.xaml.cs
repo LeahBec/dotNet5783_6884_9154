@@ -27,7 +27,7 @@ namespace PL
         PO.Cart cart=new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
         Window prevWindow;
-        Tuple<BO.Order, bool> dcT;
+        Tuple<PO.Order, bool> dcT;
         public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, Window prevWindow, ObservableCollection<PO.OrderForList> list = null)
         {
             try
@@ -41,7 +41,8 @@ namespace PL
                 else this.list_o = list;
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
-                this.dcT = new Tuple<BO.Order, bool>(this.or, isCustomer);
+                this.o = Common.ConvertToPoOrder(or, o);
+                this.dcT = new Tuple<PO.Order, bool>(this.o, isCustomer);
                 this.DataContext = this.dcT;
                 if (this.isCustomer)
                 {
@@ -59,13 +60,13 @@ namespace PL
         {
             try
             {
-                o.CustomerAddress = this.or.CustomerAddress;
+              /*  o.CustomerAddress = this.or.CustomerAddress;
                 o.CustomerEmail = this.or.CustomerEmail;
                 o.CustomerName = this.or.CustomerName;
                 o.OrderDate = (DateTime?)this.or.OrderDate;
                 o.ShipDate = (DateTime?)this.or.ShipDate;
                 o.DeiveryDate = (DateTime?)this.or.DeiveryDate;
-                o.ID = this.or.ID;
+                o.ID = this.or.ID;*/
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 list_o.Add(Common.ConvertPFLToP(this.o));
                 bl.order.UpdateOrderForManager(Common.ConvertToBo(o));
@@ -100,8 +101,13 @@ namespace PL
         private void updateOrderShippingBtn_Click(object sender, RoutedEventArgs e)
         {
             int id = this.or.ID;
+            List<PO.OrderItem> list;
+            or = Common.ConvertToBo(o);
+            list = Common.convertItemsToPOOI(or.Items);
            or =  bl?.order.UpdateOrderShipping(id);
-            o = Common.ConvertToPoOrder(or, o);
+            Common.ConvertToPoOrder(or, o);
+            o.Items = list;
+            foreach(var item in list) { o.TotalPrice += item.Price; }
         }
         private void updateOrderDeliveryBtn_Click(object sender, RoutedEventArgs e)
         {

@@ -107,7 +107,7 @@ public partial class AdminWindow : Window
             // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as PO.OrderForList).ID;
             o = bl.order.GetOrderDetails(OId);
-            Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o), false, this.cart, this, this.List_o);
+            Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o, order), false, this.cart, this, this.List_o);
             window.Show();
             this.Hide();
         }

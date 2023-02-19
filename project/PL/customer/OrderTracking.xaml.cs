@@ -48,7 +48,7 @@ namespace PL.customer
             try
             {
                 this.o = bl.order.GetOrderDetails(this.orderID);
-                this.order = Common.ConvertToPoOrder(this.o);
+                this.order = Common.ConvertToPoOrder(this.o,this.order);
                 Window w = new PL.OrderWindow(this.bl, this.order, true, this.c,this);
                 w.Show();
                 this.Hide();

@@ -138,19 +138,20 @@ namespace PL
             return Plist;
         }
 
-        public static PO.Order ConvertToPoOrder(BO.Order Bo)
+        public static PO.Order ConvertToPoOrder(BO.Order Bo, PO.Order Po)
         {
-            PO.Order item = new()
-            {
-                ID = Bo.ID,
-                CustomerName = Bo.CustomerName,
-                CustomerAddress = Bo.CustomerAddress,
-                CustomerEmail = Bo.CustomerEmail,
-                DeiveryDate = (DateTime?)Bo?.DeiveryDate,
-                ShipDate = (DateTime?)Bo.ShipDate,
-                OrderDate = (DateTime?)Bo?.OrderDate
-            };
-            return item;
+            Po.ID = Bo.ID;
+            Po.CustomerName = Bo.CustomerName;
+            Po.CustomerAddress = Bo.CustomerAddress;
+            Po.CustomerEmail = Bo.CustomerEmail;
+            Po.DeiveryDate = (DateTime?)Bo?.DeiveryDate;
+            Po.ShipDate = (DateTime?)Bo.ShipDate;
+            Po.OrderDate = (DateTime?)Bo?.OrderDate;
+            Po.TotalPrice = Bo.TotalPrice;
+
+            Po.Items = convertToPoOiList(Bo.Items);
+
+            return Po;
         }
 
         public static ObservableCollection<PO.OrderForList> convertListOrder(IEnumerable<BO.OrderForList> list2, ObservableCollection<PO.OrderForList> List_o)
@@ -190,6 +191,7 @@ namespace PL
         public static List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
         {
             List<PO.OrderItem> returnList = new();
+            if(loi != null)
             foreach (BO.OrderItem oi in loi)
             {
                 returnList.Add(converToPoOi(oi));

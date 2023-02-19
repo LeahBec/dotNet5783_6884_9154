@@ -100,7 +100,8 @@ namespace PL
         private void updateOrderShippingBtn_Click(object sender, RoutedEventArgs e)
         {
             int id = this.or.ID;
-            bl?.order.UpdateOrderShipping(id);
+           or =  bl?.order.UpdateOrderShipping(id);
+            o = Common.ConvertToPoOrder(or, o);
         }
         private void updateOrderDeliveryBtn_Click(object sender, RoutedEventArgs e)
         {

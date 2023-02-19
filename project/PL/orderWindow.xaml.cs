@@ -100,21 +100,34 @@ namespace PL
         }
         private void updateOrderShippingBtn_Click(object sender, RoutedEventArgs e)
         {
-            int id = this.or.ID;
-            List<PO.OrderItem> list;
-            or = Common.ConvertToBo(o);
-            list = Common.convertItemsToPOOI(or.Items);
-           or =  bl?.order.UpdateOrderShipping(id);
-            Common.ConvertToPoOrder(or, o);
-            o.Items = list;
-            foreach(var item in list) { o.TotalPrice += item.Price; }
+            try
+            {
+                int id = this.or.ID;
+                List<PO.OrderItem> list;
+                or = Common.ConvertToBo(o);
+                list = Common.convertItemsToPOOI(or.Items);
+                or = bl?.order.UpdateOrderShipping(id);
+                Common.ConvertToPoOrder(or, o);
+                o.Items = list;
+                foreach (var item in list) { o.TotalPrice += item.Price; }
+            }
+            catch (BO.BlDefaultException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void updateOrderDeliveryBtn_Click(object sender, RoutedEventArgs e)
         {
-            int id = this.or.ID;
             try
             {
-                bl?.order.UpdateOrderDelivery(id);
+                int id = this.or.ID;
+                List<PO.OrderItem> list;
+                or = Common.ConvertToBo(o);
+                list = Common.convertItemsToPOOI(or.Items);
+                or = bl?.order.UpdateOrderDelivery(id);
+                Common.ConvertToPoOrder(or, o);
+                o.Items = list;
+                foreach (var item in list) { o.TotalPrice += item.Price; }
             }
             catch(BO.BlDefaultException ex)
             {

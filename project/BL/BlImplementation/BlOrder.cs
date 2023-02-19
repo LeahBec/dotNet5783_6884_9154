@@ -180,74 +180,68 @@ internal class BlOrder : BLApi.IOrder
     }
     public BO.Order UpdateOrderDelivery(int id)
     {
-        try
-        {
-            Dal.DO.Order o = new Dal.DO.Order();
-            o = Dal.Order.Get(o => o.OrderID == id);
-            if ((DateTime?)o.DeliveryDate == null)
-                throw new BO.BlInvalidIdToken("");
-            o.DeliveryDate = DateTime.Now;
-            Dal.Order.Update(o);
-            //BO.Order order = new BO.Order();
-            BO.Order order = new()
-            {
-                ID = o.OrderID,
-                OrderDate = o.OrderDate,
-                DeiveryDate = o.DeliveryDate,
-                ShipDate = o.ShipDate,
-                CustomerAddress = o.CustomerAddress,
-                CustomerEmail = o.CustomerEmail,
-                CustomerName = o.CustomerName
-            };
-            /*   order.ID = o.OrderID;
-               order.OrderDate = o.OrderDate;
-               order.DeiveryDate = o.DeliveryDate;
-               order.ShipDate = o.ShipDate;
-               order.CustomerAddress = o.CustomerAddress;
-               order.CustomerEmail = o.CustomerEmail;
-               order.CustomerName = o.CustomerName;*/
-            if (o.CustomerName != "")
-            {
-                o.DeliveryDate = DateTime.Now;
-                Dal.Order.Delete(id);
-                Dal.Order.Add(o);
+        /* try
+         {
+             Dal.DO.Order o = new Dal.DO.Order();
+             o = Dal.Order.Get(o => o.OrderID == id);
+             if ((DateTime?)o.DeliveryDate != null)
+                 throw new BO.BlInvalidIdToken("");
+             o.DeliveryDate = DateTime.Now;
+             Dal.Order.Update(o);
+             //BO.Order order = new BO.Order();
+             BO.Order order = new()
+             {
+                 ID = o.OrderID,
+                 OrderDate = o.OrderDate,
+                 DeiveryDate = o.DeliveryDate,
+                 ShipDate = o.ShipDate,
+                 CustomerAddress = o.CustomerAddress,
+                 CustomerEmail = o.CustomerEmail,
+                 CustomerName = o.CustomerName
+             };
+             *//*   order.ID = o.OrderID;
+                order.OrderDate = o.OrderDate;
+                order.DeiveryDate = o.DeliveryDate;
                 order.ShipDate = o.ShipDate;
-                order.Status = (BO.OrderStatus)2;
-                return order;
-            }
-            else
-            {
-                throw new BO.BlInvalidNameToken("");
-            }
-        }
-        catch (DalApi.ExceptionFailedToRead)
-        {
-            throw new BO.BlExceptionFailedToRead();
-        }
-        catch (DalApi.ExceptionObjectNotFound)
-        {
-            throw new BO.BlEntityNotFoundException("");
-        }
-        catch (Exception)
-        {
+                order.CustomerAddress = o.CustomerAddress;
+                order.CustomerEmail = o.CustomerEmail;
+                order.CustomerName = o.CustomerName;*//*
+             if (o.CustomerName != "")
+             {
+                 o.DeliveryDate = DateTime.Now;
+                 Dal.Order.Delete(id);
+                 Dal.Order.Add(o);
+                 order.ShipDate = o.ShipDate;
+                 order.Status = (BO.OrderStatus)2;
+                 return order;
+             }
+             else
+             {
+                 throw new BO.BlInvalidNameToken("");
+             }
+         }
+         catch (DalApi.ExceptionFailedToRead)
+         {
+             throw new BO.BlExceptionFailedToRead();
+         }
+         catch (DalApi.ExceptionObjectNotFound)
+         {
+             throw new BO.BlEntityNotFoundException("");
+         }
+         catch (Exception)
+         {
 
-            throw new BO.BlDefaultException("unexpected error");
-        }
+             throw new BO.BlDefaultException("unexpected error");
+         }
+ */
 
 
-    }
-
-
-
-
-    public BO.Order UpdateOrderShipping(int orderId)
-    {
         try
         {
-           Dal. DO.Order oDO = Dal.Order.Get(o => o.OrderID == orderId);
-            if (oDO.ShipDate == null)
+            Dal.DO.Order oDO = Dal.Order.Get(o => o.OrderID == id);
+            if (oDO.DeliveryDate == null)
             {
-                oDO.ShipDate = DateTime.Now;
+                oDO.DeliveryDate = DateTime.Now;
                 BO.Order order = new BO.Order();
                 order.ID = oDO.OrderID;
                 order.OrderDate = oDO.OrderDate;
@@ -267,6 +261,40 @@ internal class BlOrder : BLApi.IOrder
             throw new BlEntityNotFoundException("");
         }
     }
+
+
+
+
+
+
+
+public BO.Order UpdateOrderShipping(int orderId)
+{
+    try
+    {
+        Dal.DO.Order oDO = Dal.Order.Get(o => o.OrderID == orderId);
+        if (oDO.ShipDate == null)
+        {
+            oDO.ShipDate = DateTime.Now;
+            BO.Order order = new BO.Order();
+            order.ID = oDO.OrderID;
+            order.OrderDate = oDO.OrderDate;
+            order.DeiveryDate = oDO.DeliveryDate;
+            order.ShipDate = oDO.ShipDate;
+            order.CustomerAddress = oDO.CustomerAddress;
+            order.CustomerEmail = oDO.CustomerEmail;
+            order.CustomerName = oDO.CustomerName;
+            order.Status = (BO.OrderStatus)1;
+            Dal.Order.Update(oDO);
+            return order;
+        }
+        throw new BlEntityNotFoundException("");
+    }
+    catch (DllNotFoundException e)
+    {
+        throw new BlEntityNotFoundException("");
+    }
+}
 
 
     /*  public BO.Order UpdateOrderShipping(int id)
@@ -316,57 +344,57 @@ internal class BlOrder : BLApi.IOrder
       }*/
     //bonus
     public BO.Order UpdateOrderForManager(BO.Order or)
+{
+    try
     {
-        try
-        {
-            Dal.DO.Order o = new Dal.DO.Order();
-            o.OrderID = or.ID;
-            o.CustomerName = or.CustomerName;
-            o.OrderDate = or.OrderDate;
-            o.ShipDate = or.ShipDate;
-            o.DeliveryDate = or.DeiveryDate;
-            o.CustomerEmail = or.CustomerEmail;
-            o.CustomerAddress = or.CustomerAddress;
-            o.OrderID = or.ID;
-            Dal.Order.Update(o);
-        }
-        catch (DalApi.ExceptionFailedToRead)      ///////////////////////////
-        {
-            throw new BO.BlExceptionFailedToRead();//////////////////////////
-        }
-        return or; /////////////////////////////////////////////////////////
+        Dal.DO.Order o = new Dal.DO.Order();
+        o.OrderID = or.ID;
+        o.CustomerName = or.CustomerName;
+        o.OrderDate = or.OrderDate;
+        o.ShipDate = or.ShipDate;
+        o.DeliveryDate = or.DeiveryDate;
+        o.CustomerEmail = or.CustomerEmail;
+        o.CustomerAddress = or.CustomerAddress;
+        o.OrderID = or.ID;
+        Dal.Order.Update(o);
     }
+    catch (DalApi.ExceptionFailedToRead)      ///////////////////////////
+    {
+        throw new BO.BlExceptionFailedToRead();//////////////////////////
+    }
+    return or; /////////////////////////////////////////////////////////
+}
 
 
-    public BO.OrderTracking OrderTrack(int id)
+public BO.OrderTracking OrderTrack(int id)
+{
+    try
     {
-        try
+        Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
+        BO.OrderTracking orderTracking = new BO.OrderTracking();
+        orderTracking.ID = currOrder.OrderID;
+        /*            DateTime? s;
+                    var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
+                    orderTracking.dateAndTrack.Add(t);*/
+        /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, BO.OrderStatus>((DateTime?)currOrder.OrderDate, (BO.OrderStatus)0));
+        */
+        orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
+        orderTracking.Status = BO.OrderStatus.Payed;
+        if (currOrder.ShipDate <= DateTime.Now)
         {
-            Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
-            BO.OrderTracking orderTracking = new BO.OrderTracking();
-            orderTracking.ID = currOrder.OrderID;
-            /*            DateTime? s;
-                        var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
-                        orderTracking.dateAndTrack.Add(t);*/
-            /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, BO.OrderStatus>((DateTime?)currOrder.OrderDate, (BO.OrderStatus)0));
-            */
-            orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
-            orderTracking.Status = BO.OrderStatus.Payed;
-            if (currOrder.ShipDate <= DateTime.Now)
-            {
-                orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.ShipDate, BO.OrderStatus.Shiped));
-                orderTracking.Status = BO.OrderStatus.Shiped;
-            }
-            if (currOrder.DeliveryDate <= DateTime.Now)
-            {
-                orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.DeliveryDate, BO.OrderStatus.Delivered));
-                orderTracking.Status = BO.OrderStatus.Delivered;
-            }
-            return orderTracking;
+            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.ShipDate, BO.OrderStatus.Shiped));
+            orderTracking.Status = BO.OrderStatus.Shiped;
         }
-        catch (DalApi.ExceptionObjectNotFound)
+        if (currOrder.DeliveryDate <= DateTime.Now)
         {
-            throw new Exception();
+            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.DeliveryDate, BO.OrderStatus.Delivered));
+            orderTracking.Status = BO.OrderStatus.Delivered;
         }
+        return orderTracking;
     }
+    catch (DalApi.ExceptionObjectNotFound)
+    {
+        throw new Exception();
+    }
+}
 }

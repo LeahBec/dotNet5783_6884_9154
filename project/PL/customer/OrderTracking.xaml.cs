@@ -23,7 +23,7 @@ namespace PL.customer
     {
         int orderID;
         BO.Order o;
-        PO.Order order;
+        PO.Order order = new();
         BO.OrderTracking ot;
         BLApi.IBL bl;
         BO.Cart cart = new BO.Cart();
@@ -47,6 +47,7 @@ namespace PL.customer
         {
             try
             {
+
                 this.o = bl.order.GetOrderDetails(this.orderID);
                 this.order = Common.ConvertToPoOrder(this.o,this.order);
                 Window w = new PL.OrderWindow(this.bl, this.order, true, this.c,this);

@@ -141,8 +141,8 @@ internal class BlProduct : BLApi.IProduct
     {
         try
         {
-            if (p.ID <= 0)
-                throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
+            /*if (p.ID <= 0)
+                throw new BO.BlInvalidIdToken("");// Pr*oductIdIsImpossible*/
             if (p.Name == "")
                 throw new BO.BlInvalidNameToken("");// ProductNameIsImpossible
             if (p.Price <= 0)

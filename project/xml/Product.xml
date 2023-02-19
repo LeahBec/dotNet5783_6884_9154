@@ -22,13 +22,6 @@
     <InStock>12</InStock>
   </Product>
   <Product>
-    <ID>100018</ID>
-    <Name>zzzz</Name>
-    <Category>Drones</Category>
-    <Price>34</Price>
-    <InStock>34</InStock>
-  </Product>
-  <Product>
     <ID>100021</ID>
     <Name>789</Name>
     <Category>Drones</Category>
@@ -83,5 +76,19 @@
     <Category>Drones</Category>
     <Price>3</Price>
     <InStock>3</InStock>
+  </Product>
+  <Product>
+    <ID>100018</ID>
+    <Name>zzzz</Name>
+    <Category>Headphones</Category>
+    <Price>34</Price>
+    <InStock>34</InStock>
+  </Product>
+  <Product>
+    <ID>100025</ID>
+    <Name>hii</Name>
+    <Category>Computers</Category>
+    <Price>30</Price>
+    <InStock>2</InStock>
   </Product>
 </Products>

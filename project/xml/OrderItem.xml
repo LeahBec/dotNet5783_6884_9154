@@ -378,4 +378,18 @@
     <Price>7</Price>
     <Amount>1</Amount>
   </OrderItem>
+  <OrderItem>
+    <ID>100056</ID>
+    <OrderID>500095</OrderID>
+    <ProductID>100021</ProductID>
+    <Price>7</Price>
+    <Amount>1</Amount>
+  </OrderItem>
+  <OrderItem>
+    <ID>100057</ID>
+    <OrderID>500095</OrderID>
+    <ProductID>100024</ProductID>
+    <Price>222</Price>
+    <Amount>2</Amount>
+  </OrderItem>
 </orderItems>

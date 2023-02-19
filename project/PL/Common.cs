@@ -126,7 +126,15 @@ namespace PL
             return Plist;
         }
 
-
+        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist)
+        {
+            ObservableCollection<PO.ProductForList> Plist = new();
+            foreach (var item in Blist)
+            {
+                Plist.Add(ConvertToPoProFL(item));
+            }
+            return Plist;
+        }
 
         public static PO.Order ConvertToPoOrder(BO.Order Bo)
         {

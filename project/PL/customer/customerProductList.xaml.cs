@@ -35,7 +35,7 @@ public partial class CustomerProductList : Window
             list1 = bl.product.GetProductList();
             Array i = Enum.GetValues(typeof(BO.Category));
             //categorySelectorBox.ItemsSource = Enum.GetValues(typeof(BO.Category));
-            ProductsListview.ItemsSource = bl.product.GetProductList();
+            //ProductsListview.ItemsSource = bl.product.GetProductList();
             Common.convertList(List_p, list1);
             this.dcT = new Tuple<ObservableCollection<PO.ProductForList>, Array>(this.List_p, i);
             //this.DataContext = this.List_p;
@@ -67,8 +67,8 @@ public partial class CustomerProductList : Window
                 this.List_p = Common.ConvertToPoProList(tmp);
                 //ProductsListview.ItemsSource = Common.ConvertToPoProList(tmp);
             }
-            //else
-            //   List_p = Common.ConvertToPoProList(allProducts);
+            else
+                List_p = Common.ConvertToPoProList(allProducts);
         }
         catch (BO.BlNoEntitiesFound ex)
         {
@@ -87,7 +87,8 @@ public partial class CustomerProductList : Window
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             window.Show();
             InitializeComponent();
-            ProductsListview.ItemsSource = bl.product.GetProductList();
+            //ProductsListview.ItemsSource = bl.product.GetProductList();
+            this.List_p = (ObservableCollection<PO.ProductForList>)bl.product.GetProductList();
             this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -109,12 +110,10 @@ public partial class CustomerProductList : Window
         try
         {
             // p.ID = sender.AnchorItem.
-            p = bl.product.GetProductManager((ProductsListview.SelectedItem as BO.ProductForList).ID);
+            p = bl.product.GetProductManager((ProductsListview.SelectedItem as PO.ProductForList).ID);
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             // addProductBtn.Visibility = Visibility.Hidden;
             window.Show();
-            /* InitializeComponent();
-             ProductsListview.ItemsSource = bl.product.GetProductList();*/
             this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)

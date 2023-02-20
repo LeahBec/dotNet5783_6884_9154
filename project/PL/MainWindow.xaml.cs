@@ -48,5 +48,11 @@ namespace PL
             w.Show();
             this.Hide();
         }
+
+        private void simulation(object sender, RoutedEventArgs e)
+        {
+            Window sim = new Simulator();
+            sim.Show();
+        }
     }
 }

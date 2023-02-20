@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.ComponentModel;
+using System.Diagnostics;
 using System.Threading;
 
 namespace Simulator
@@ -12,6 +13,8 @@ namespace Simulator
             
             thread = new Thread(run);
             thread.Start();
+            BackgroundWorker back=new();
+            back.RunWorkerAsync();
 
         }
         public static void run()

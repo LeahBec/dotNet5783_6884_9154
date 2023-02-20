@@ -102,6 +102,7 @@ namespace PL
         private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
         public Simulator()
         {
+            Simulator sim = new Simulator();
             Stopwatch = new Stopwatch();
             Stopwatch.Restart();
             InitializeComponent();
@@ -119,7 +120,7 @@ namespace PL
         }
         void timer_Tick(object sender, EventArgs e)
         {
-            lblTime.Content = "00:00:00";
+            lblTime.Content = DateTime.Now.ToLongTimeString();
         }
     }
 }

@@ -1,16 +1,20 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace DalList;
 
 /// <summary>
 /// The class implements all functions of the Product entity.
 /// </summary>
+/// 
 internal class DalProduct : IProduct
 {
     /// <summary>
     /// The function gets a Dal Product entity, add an id and add it to the main product list
     /// </summary>
     /// <param name="obj"> the product that the function inserts to the product list</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public int Add(Product obj)
     {
@@ -36,6 +40,7 @@ internal class DalProduct : IProduct
     /// <param name="Id">the id of the object has to be deleted</param>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// product, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Delete(int Id)
     {
@@ -57,6 +62,7 @@ internal class DalProduct : IProduct
     /// <returns>the whole list of the products</returns>
     /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
     /// product list</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<Product> GetAll(Func<Product, bool> func = null)
     {
@@ -72,6 +78,7 @@ internal class DalProduct : IProduct
     /// <returns>the product with the same given id</returns>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// product, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public Product Get(Func<Product, bool> func)
     {
@@ -87,6 +94,7 @@ internal class DalProduct : IProduct
     /// <param name="obj">the given updated product</param>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// product, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(Product obj)
     {
@@ -109,6 +117,8 @@ internal class DalProduct : IProduct
     /// <param name="id">id of obj</param>
     /// <param name="am">the new amount</param>
     /// <exception cref="ExceptionObjectNotFound">if no obj with this id</exception>
+[MethodImpl(MethodImplOptions.Synchronized)]
+
     public void updateAmount(int id, int am)
     {
         int i;

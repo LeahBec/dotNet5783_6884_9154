@@ -6,10 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Dal;
 internal class DalOrder : IOrder
 {
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order order)
     {
         XElement? rootConfig = XDocument.Load(@"..\xml\config.xml").Root;
@@ -32,13 +34,14 @@ internal class DalOrder : IOrder
         orderElement?.Save(@"../xml/Order.xml");
         return order.OrderID;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XElement? root = XDocument.Load("../xml/Order.xml").Root;
         root?.Descendants("order").Where(p => int.Parse(p?.Element("OrderID").Value) == id).Remove();
         root?.Save("../xml/Order.xml");
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Dal.DO.Order deepCopy(XElement? o)
     {
         Dal.DO.Order order = new Order();
@@ -51,12 +54,13 @@ internal class DalOrder : IOrder
         order.DeliveryDate = o?.Element("DeliveryDate")?.Value!=""? Convert.ToDateTime(o?.Element("DeliveryDate")?.Value):null;
         return order;
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order, bool> func)
     {
         IEnumerable<Dal.DO.Order> orders = GetAll();
         return (func == null ? orders : orders.Where(func).ToList()).FirstOrDefault();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
         XElement? root = XDocument.Load("../xml/Order.xml")?.Root;
@@ -72,7 +76,7 @@ internal class DalOrder : IOrder
         return (func == null ? orders : orders.Where(func).ToList());
         throw new NotImplementedException();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order ord)
     {
         XElement? root = XDocument.Load("../xml/Order.xml").Root;

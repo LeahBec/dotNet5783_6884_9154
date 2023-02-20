@@ -2,11 +2,13 @@
 using BO;
 using System.Linq;
 using System.Net.Mail;
+using System.Runtime.CompilerServices;
 
 namespace BlImplementation;
 internal class BlCart : ICart
 {
     DalApi.IDal? Dal = DalApi.Factory.Get();
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart AddProductToCart(BO.Cart cart, int productId)
     {
         try
@@ -64,7 +66,7 @@ internal class BlCart : ICart
         }
         return true;
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
     {
         try
@@ -121,7 +123,7 @@ internal class BlCart : ICart
             throw new Exception();
         }
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart c, int id, double newAmount)
     {
         try

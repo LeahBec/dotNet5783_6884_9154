@@ -5,12 +5,13 @@ using Dal.DO;
 using DalApi;
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Text.Json;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 internal class DalProduct :IProduct
 {
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(DO.Product pro)
     {
         XElement? rootConfig = XDocument.Load(@"..\xml\config.xml").Root;
@@ -38,7 +39,7 @@ internal class DalProduct :IProduct
         writer.Close();
         return pro.ID;
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int id)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -56,7 +57,7 @@ internal class DalProduct :IProduct
         ser.Serialize(writer, products);
         writer.Close();
     }
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Product Get(Func<Product, bool> func)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -72,7 +73,7 @@ internal class DalProduct :IProduct
         return (func == null ? products.FirstOrDefault() : pro);
     }
 
-   
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Product> GetAll(Func<Product, bool> func = null)
     {
         XmlRootAttribute xRoot = new XmlRootAttribute();
@@ -87,8 +88,8 @@ internal class DalProduct :IProduct
         return products;
     }
 
-   
 
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Product product)
     {
 
@@ -112,7 +113,7 @@ internal class DalProduct :IProduct
         writer.Close();
     }
 
-    
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void updateAmount(int id, int amount)
     {
         if (amount < 0) throw new xmlInvalidAmountToken("invalid amount");

@@ -1,5 +1,7 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace DalList;
 
 /// <summary>
@@ -11,6 +13,7 @@ internal class DalOrderItem : IOrderItem
     /// The function gets a Dal OrderItem entity, add an id and add it to the main orderItems list
     /// </summary>
     /// <param name="obj"> the oderItem that the function inserts to the orderItem list</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public int Add(OrderItem obj)
     {
@@ -26,6 +29,7 @@ internal class DalOrderItem : IOrderItem
     /// <param name="Id">the id of the object has to be deleted</param>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// orderItem, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Delete(int Id)
     {
@@ -47,6 +51,7 @@ internal class DalOrderItem : IOrderItem
     /// <returns>the whole list of the orderItems</returns>
     /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
     /// orderItems list</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<OrderItem> GetAll(Func<OrderItem, bool> func = null)
     {
@@ -61,6 +66,7 @@ internal class DalOrderItem : IOrderItem
     /// <returns>the orderItem with the same given id</returns>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// orderItem, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<OrderItem> getByOrderId(int orderId)
     {
@@ -80,6 +86,8 @@ internal class DalOrderItem : IOrderItem
     /// <param name="Id">the given id</param>
     /// <returns>the obj</returns>
     /// <exception cref="ExceptionObjectNotFound">if not found</exception>
+[MethodImpl(MethodImplOptions.Synchronized)]
+
     public OrderItem Get(Func<OrderItem, bool> func)
     {
         return DataSource.orderItems.Where(func).ToArray()[0];
@@ -92,6 +100,7 @@ internal class DalOrderItem : IOrderItem
     /// </summary>
     /// <param name="obj">the given obj</param>
     /// <exception cref="ExceptionObjectNotFound">if no obj as the given one</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(OrderItem obj)
     {

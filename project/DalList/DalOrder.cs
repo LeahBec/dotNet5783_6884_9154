@@ -1,5 +1,7 @@
 ﻿using Dal.DO;
 using DalApi;
+using System.Runtime.CompilerServices;
+
 namespace DalList;
 
 /// <summary>
@@ -11,6 +13,7 @@ internal class DalOrder : IOrder
     /// The function gets a Dal Order entity, add an id and add it to the main order list
     /// </summary>
     /// <param name="obj"> the order that the function inserts to the order list</param>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public int Add(Order obj)
     {
         obj.OrderID = DataSource.Config.OrderId;
@@ -24,6 +27,7 @@ internal class DalOrder : IOrder
     /// <param name="Id">the id of the object has to be deleted</param>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// product, it can't be deleted and the user will get an exception</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Delete(int Id)
     {
 
@@ -44,7 +48,7 @@ internal class DalOrder : IOrder
     /// <returns>the whole list of the orders</returns>
     /// <exception cref="ExceptionFailedToRead">if an error was occured while reading the 
     /// order list</exception>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
         return (func == null ? DataSource.orders : DataSource.orders.Where(func).ToList());
@@ -56,7 +60,7 @@ internal class DalOrder : IOrder
     /// <returns>the order with the same as the given id</returns>
     /// <exception cref="ExceptionObjectNotFound">if the entered id dosen't belong to any 
     /// order, it can't be deleted and the user will get an exception</exception>
-
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order, bool> func)
     {
         return DataSource.orders.Where(func).ToArray()[0];
@@ -68,6 +72,7 @@ internal class DalOrder : IOrder
     /// </summary>
     /// <param name="obj">the given obj</param>
     /// <exception cref="ExceptionObjectNotFound">if no obj as the given one</exception>
+    [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order obj)
     {
         int i;

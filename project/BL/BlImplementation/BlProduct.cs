@@ -1,6 +1,7 @@
 ﻿using BO;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Runtime.CompilerServices;
 using System.Runtime.Intrinsics.Arm;
 using System.Xml.Linq;
 
@@ -9,6 +10,8 @@ internal class BlProduct : BLApi.IProduct
 {
     static Random rand = new Random();
     DalApi.IDal? Dal = DalApi.Factory.Get();
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         try
@@ -36,6 +39,7 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<BO.ProductItem> GetCatalog()
     {
@@ -70,6 +74,8 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public BO.Product GetProductCustomer(int id)
     {
         try
@@ -96,6 +102,7 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public BO.Product GetProductManager(int id)
     {
@@ -126,6 +133,8 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public int AddProduct(BO.Product p)
     {
         try
@@ -145,6 +154,8 @@ internal class BlProduct : BLApi.IProduct
         }
         catch (Exception err) { throw new BO.BlDefaultException(err.Message); }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void DeleteProduct(int id)
     {
         try
@@ -192,6 +203,8 @@ internal class BlProduct : BLApi.IProduct
             return false;
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+
     public void Update(BO.Product p)
     {
         try
@@ -238,6 +251,7 @@ internal class BlProduct : BLApi.IProduct
             throw new BO.BlDefaultException("unexpected error occured");
         }
     }
+    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<BO.ProductForList> GetListByCategory(BO.Category category)
     {

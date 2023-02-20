@@ -15,7 +15,6 @@ namespace BlImplementation
             BO.OrderTracking returnOrder = new();
             returnOrder.Status = (BO.OrderStatus)order.Status;
             returnOrder.ID = order.ID;
-            //returnOrder.dateAndTrack = 
             return returnOrder;
         }
     }

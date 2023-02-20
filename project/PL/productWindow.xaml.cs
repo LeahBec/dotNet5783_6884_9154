@@ -109,12 +109,7 @@ public partial class ProductWindow : Window
         try
         {
             updateProductBtn.Visibility = Visibility.Hidden;
-            /*p_.ID = 10;
-            p_.Price = this.pro.Price;
-            p_.inStock = this.pro.inStock;
-            p_.Name = this.pro.Name;
-            p_.Category = this.pro.Category;*/
-            this.pro = Common.ConvertToBo(this.dcT.Item1);///////////////////
+            this.pro = Common.ConvertToBo(this.dcT.Item1);
             int id = bl.product.AddProduct(this.pro);
             this.dcT.Item1.ID = id;
             this.list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
@@ -146,11 +141,6 @@ public partial class ProductWindow : Window
         try
         {
             addProductBtn.Visibility = Visibility.Hidden;
-            /*p_.ID = this.pro.ID;
-            p_.Price = this.pro.Price;
-            p_.inStock = this.pro.inStock;
-            p_.Name = this.pro.Name;
-            p_.Category = this.pro.Category;*/
             this.pro = Common.ConvertToBo(p_);
             list_p.Remove(list_p.Where(i => i.ID == this.dcT.Item1.ID).Single());
             list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));

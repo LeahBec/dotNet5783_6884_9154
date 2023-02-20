@@ -19,11 +19,6 @@ namespace PL
         public MainWindow()
         {
             InitializeComponent();
-
-            /*    Main.DataContext = new
-                {
-                    ID  =0
-                };*/
         }
 
         private void showProductBtn_Click(object sender, RoutedEventArgs e)

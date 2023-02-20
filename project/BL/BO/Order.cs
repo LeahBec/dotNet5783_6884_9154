@@ -36,7 +36,6 @@ namespace BO
             {
                 foreach (var i in Items)  order +=$"\n \t   {i}"; ;
             }
-           // else order += "-----------";
             return order;
         }
 

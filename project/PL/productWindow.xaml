@@ -15,7 +15,7 @@
         <TextBox Name="input_product_name" HorizontalAlignment="Left" Margin="318,87,0,0" TextWrapping="Wrap" Text="{Binding Path=Item1.Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding Item2}"/>
         <TextBox  Name="input_product_price" HorizontalAlignment="Left" Margin="318,140,0,0" TextWrapping="Wrap" Text="{Binding Path=Item1.Price}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding Item2}"/>
         <TextBox Name="input_product_instock" HorizontalAlignment="Left" Margin="318,199,0,0" TextWrapping="Wrap" Text="{Binding Path=Item1.inStock}" VerticalAlignment="Top" Width="120" IsReadOnly = "{Binding Item2}"/>
-        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="318,243,347,10" Text="{Binding Path=Item1.Category}" IsEnabled = "{Binding Item3}" IsReadOnly="{Binding Item2}" ItemsSource="{Binding Item4}"/>
+        <ComboBox Name="categorySelectorBox" SelectionChanged="categorySelectorBox_SelectionChanged" Margin="318,243,347,10" Text="{Binding Path=Item1.Category}" ItemsSource="{Binding Item4}" IsEnabled="{Binding Item3}" IsReadOnly="{Binding Item2}"/>
         <Button  x:Name="addProductBtn" Content="add" HorizontalAlignment="Left" Margin="368,80,0,0" Grid.Row="1" VerticalAlignment="Top" Click="addProductBtn_Click" Background="#FFB19578" FontFamily="Amatic SC" FontSize="16" />
         <Label Content="product name" HorizontalAlignment="Left" Margin="318,57,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18"/>
         <Label Content="price" HorizontalAlignment="Left" Margin="318,110,0,0" VerticalAlignment="Top" FontFamily="Amatic SC" FontSize="18"/>

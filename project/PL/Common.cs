@@ -17,7 +17,6 @@ namespace PL
             Pc.CustomerAddress = Bc.CustomerAddress;
             Pc.CustomerEmail = Bc.CustomerEmail;
             Pc.CustomerName = Bc.CustomerName;
-            //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
             Pc.Items = convertItemsToPOOI(Bc.items);
             Pc.TotalPrice = Bc.TotalPrice;
 
@@ -49,7 +48,6 @@ namespace PL
                 CustomerAddress = Bp.CustomerAddress,
                 CustomerEmail = Bp.CustomerEmail,
                 CustomerName = Bp.CustomerName,
-                //Items = Pp.items.ForEach(i => ConvertToPoItem(i)).ToList(),
                 items = convertItemsToBOOI(Bp.Items),
                 TotalPrice = Bp.TotalPrice,
             };
@@ -221,22 +219,7 @@ namespace PL
             }
             return returnList;
         }
-
-
-        /*        public static PO.Cart ConvertToPoCart(BO.Cart ca)
-                {
-                    PO.Cart item = new()
-                    {
-
-                        CustomerAddress = ca.CustomerAddress,
-                        CustomerEmail = ca.CustomerEmail,
-                        CustomerName = ca.CustomerName,
-                        TotalPrice = ca.TotalPrice,
-                    };
-                    item.Items = convertToPoOiList(ca.items);
-                    return item;
-                }*/
-        public static ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p, IEnumerable<BO.ProductForList> list1)
+   public static ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p, IEnumerable<BO.ProductForList> list1)
         {
             PO.ProductForList i = new PO.ProductForList();
             foreach (BO.ProductForList tmp in list1)

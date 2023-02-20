@@ -168,31 +168,7 @@ void getProCustomer()
 
 void addPro()
 {
-    /*try
-    {
-        Random rand = new Random();
-        bool idExist = false;
-        int proId;
-        do
-        {
-            idExist = true;
-            proId = (int)rand.NextInt64(100009, 999999);
-            for (int j = 0; j < DalList.DataSource.products.Count(); j++)
-                if (DalList.DataSource.products[j].ID == proId)
-                    idExist = false;
-        } while (!idExist);
-        BO.Product pro = new BO.Product();
-        Console.WriteLine("enter name, price, amount in stock");
-        pro.ID = proId;
-        pro.Name = Console.ReadLine();
-        pro.Price = int.Parse(Console.ReadLine());
-        pro.inStock = int.Parse(Console.ReadLine());
-        Console.WriteLine("enter the Product's category: 1.Drones,2.Cameras, 3.Headphones, 4.Computers, 5.SmartWatches");
-        int choice = Convert.ToInt32(Console.ReadLine());
-        pro.Category = (BO.Category)choice;
-        bl.product.AddProduct(pro);
-    }
-    catch (Exception ex) { Console.WriteLine(ex.Message); }*/
+   
 }
 
 void deletePro()

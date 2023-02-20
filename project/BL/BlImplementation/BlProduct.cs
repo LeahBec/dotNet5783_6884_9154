@@ -43,17 +43,6 @@ internal class BlProduct : BLApi.IProduct
         {
             IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
             List<BO.ProductItem> productList = new List<BO.ProductItem>();
-            /*foreach (var item in existingProductsList)
-            {
-                BO.ProductItem p = new BO.ProductItem();
-                p.ID = item.ID;
-                p.Name = item.Name;
-                p.Price = item.Price;
-                p.Category = (BO.Category)item.Category;
-                p.Amount = (int)rand.NextInt64(0, 10);
-                p.inStock = item.InStock >= p.Amount;
-                productList.Add(p);
-            }*/
             existingProductsList.Select(item =>
             {
                 BO.ProductItem p = new BO.ProductItem();
@@ -69,7 +58,7 @@ internal class BlProduct : BLApi.IProduct
 
 
             if (productList.Count() == 0)
-                throw new Exception();//NoEntitiesFound("No products found");
+                throw new Exception();
             return productList;
         }
         catch (DalApi.ExceptionFailedToRead)
@@ -141,12 +130,10 @@ internal class BlProduct : BLApi.IProduct
     {
         try
         {
-            /*if (p.ID <= 0)
-                throw new BO.BlInvalidIdToken("");// Pr*oductIdIsImpossible*/
             if (p.Name == "")
-                throw new BO.BlInvalidNameToken("");// ProductNameIsImpossible
+                throw new BO.BlInvalidNameToken("");
             if (p.Price <= 0)
-                throw new BO.BlInvalidPriceToken("");//ProductPriceIsImpossible
+                throw new BO.BlInvalidPriceToken("");
             Dal.DO.Product DOProduct = new Dal.DO.Product();
             DOProduct.ID = p.ID;
             DOProduct.Name = p.Name;
@@ -210,11 +197,11 @@ internal class BlProduct : BLApi.IProduct
         try
         {
             if (p.ID <= 0)
-                throw new BO.BlInvalidIdToken("");// ProductIdIsImpossible
+                throw new BO.BlInvalidIdToken("");
             if (p.Name == "")
-                throw new BO.BlInvalidNameToken("");// ProductNameIsImpossible
+                throw new BO.BlInvalidNameToken("");
             if (p.Price <= 0)
-                throw new BO.BlInvalidPriceToken("");//ProductPriceIsImpossible
+                throw new BO.BlInvalidPriceToken("");
             if (p.inStock < 0)
                 throw new BO.blInvalidAmountToken("");
             Dal.DO.Product DOProduct = new Dal.DO.Product();

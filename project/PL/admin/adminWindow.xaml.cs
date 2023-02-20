@@ -8,9 +8,6 @@ using DalFacade.DO;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Security.Cryptography.X509Certificates;
-
-//using PL.Order;
-
 /// <summary>
 /// Interaction logic for BOListWindow.xaml
 /// </summary>
@@ -22,7 +19,6 @@ public partial class AdminWindow : Window
     PO.Cart cart = new PO.Cart();
     Window prevWindow;
     public ObservableCollection<PO.ProductForList> List_p { get; set; } = new();
-    //ObservableCollection<PO.ProductForList> List_p = new();
     IEnumerable<BO.ProductForList> list1;
     PO.ProductForList pro = new PO.ProductForList();
     IEnumerable<BO.OrderForList> list2;
@@ -44,7 +40,6 @@ public partial class AdminWindow : Window
             Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>> dcT =
                 new Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>>(this.List_p, this.List_o);
             this.DataContext = dcT;
-            //this.DataContext = this.List_p;
         }
         catch (BO.BlNoEntitiesFound ex)
         {

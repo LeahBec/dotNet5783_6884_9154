@@ -47,11 +47,7 @@ public class DataSource
         };
         for (int i = 0; i < 10; i++)
         {
-            //Config.ProductIndex++; //increasing the index in config
-            //products[i] = new Product();
-            int x = (int)rand.NextInt64(0, 5);  //index for the random product name
-            //int IdxName = (int)rand.NextInt64(Enum.GetNames(typeof(eProductNames)).Length);
-            int IdxPrice = (int)rand.NextInt64(10, 100);
+            int x = (int)rand.NextInt64(0, 5);int IdxPrice = (int)rand.NextInt64(10, 100);
             Product p = new Product();
             p.Name = productsNamesCategories[x].Item2;
             p.Price = IdxPrice;
@@ -84,10 +80,8 @@ public class DataSource
             o.OrderDate = DateTime.Today;
             TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
             TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
-            //orders[i].ShipDate = orders[i].OrderDate + shipSpan;
-            //orders[i].DeliveryDate = orders[i].ShipDate + deliverySpan;
             o.OrderDate = DateTime.Now;
-            if (i % 10 < 8)  // 80% have ship date
+            if (i % 10 < 8)
                 o.ShipDate = o.OrderDate + shipSpan;
             else
                 o.ShipDate = null;
@@ -117,17 +111,14 @@ public class DataSource
             {
                 int ProductIndex = (int)rand.NextInt64(products.Count());
                 int OrderIndex = (int)rand.NextInt64(orders.Count());
-                if (products[ProductIndex].InStock == 0) //limits the amount of products to the amount in stock
-                    continue;
+                if (products[ProductIndex].InStock == 0)  continue;
                 Product p = new Product();
                 p = products[ProductIndex];
                 oi.ID = Config.OrderItemId;
                 oi.ProductID = products[ProductIndex].ID;
                 oi.OrderID = orders[OrderIndex].OrderID;
                 oi.Amount = (int)rand.NextInt64(1, products[ProductIndex].InStock);
-                //p.InStock -= oi.Amount;
                 oi.Price = oi.Amount * products[ProductIndex].Price;
-                //products[ProductIndex] = p;
                 orderItems.Add(oi);
                 i++;
             }
@@ -140,9 +131,6 @@ public class DataSource
 
     static public class Config
     {
-        //static public int ProductIndex = 0;
-        //static public int OrderIndex = 0;
-        //static public int OrderItemIndex = 0;
         static private int orderId = 500000;
         static private int orderItemId = 100000;
         static public int OrderId

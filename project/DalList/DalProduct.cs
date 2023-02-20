@@ -75,15 +75,7 @@ internal class DalProduct : IProduct
 
     public Product Get(Func<Product, bool> func)
     {
-        /*        int i;
-                for (i = 0; i < DataSource.products.Count(); i++)
-                {
-                    if (DataSource.products[i].ID == Id)
-                    {
-                        return DataSource.products[i];
-                    }
-                }
-                throw new ExceptionObjectNotFound();*/
+       
         return DataSource.products.Where(func).ToArray()[0];
 
 

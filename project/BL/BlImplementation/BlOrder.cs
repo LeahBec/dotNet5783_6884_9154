@@ -23,7 +23,6 @@ internal class BlOrder : BLApi.IOrder
             int orderId = Dal.Order.Add(o);
 
             order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
-            /*someValues.ToList().ForEach(x => list.Add(x + 1));*/
             return orderId;
 
         }
@@ -121,18 +120,6 @@ internal class BlOrder : BLApi.IOrder
                 oi.Status = (BO.OrderStatus)1;
             IEnumerable<Dal.DO.OrderItem> orderItems = Dal.OrderItem.getByOrderId(id);
             List<BO.OrderItem> items = new();
-            /*foreach (Dal.DO.OrderItem item in orderItems)
-            {
-                BO.OrderItem orderItem = new();
-                orderItem.ID = item.ID;
-                orderItem.ProductName = Dal.Product.Get(p => p.ID == item.ProductID).Name;
-                orderItem.ProductID = item.ProductID;
-                orderItem.Price = item.Price;
-                orderItem.Amount = item.Amount;
-                orderItem.TotalPrice = orderItem.Amount * orderItem.Price;
-                oi.TotalPrice += orderItem.TotalPrice;
-                items.Add(orderItem);
-            }*/
             orderItems.Select(item =>
             {
                 BO.OrderItem orderItem = new();
@@ -146,18 +133,7 @@ internal class BlOrder : BLApi.IOrder
                 items.Add(orderItem);
                 return item;
             }).ToList();
-            /*            var items = from BO.OrderItem item1 in orderItems
-                                        select new BO.OrderItem
-                                        {
-                                            ID = item1.ID,
-                                            Amount = item1.Amount,
-                                            Price = item1.Price,
-                                            ProductID = item1.ProductID,
-                                            ProductName = Dal.Product.Get(p => p.ID == item1.ProductID).Name,
-                                            TotalPrice = item1.Amount * item1.Price,
-                                            oi.TotalPrice += orderItem.TotalPrice
-                                        };*/
-
+            
             oi.Items = items.ToList();
             if (oi.CustomerName != null)
                 return oi;
@@ -180,62 +156,6 @@ internal class BlOrder : BLApi.IOrder
     }
     public BO.Order UpdateOrderDelivery(int id)
     {
-        /* try
-         {
-             Dal.DO.Order o = new Dal.DO.Order();
-             o = Dal.Order.Get(o => o.OrderID == id);
-             if ((DateTime?)o.DeliveryDate != null)
-                 throw new BO.BlInvalidIdToken("");
-             o.DeliveryDate = DateTime.Now;
-             Dal.Order.Update(o);
-             //BO.Order order = new BO.Order();
-             BO.Order order = new()
-             {
-                 ID = o.OrderID,
-                 OrderDate = o.OrderDate,
-                 DeiveryDate = o.DeliveryDate,
-                 ShipDate = o.ShipDate,
-                 CustomerAddress = o.CustomerAddress,
-                 CustomerEmail = o.CustomerEmail,
-                 CustomerName = o.CustomerName
-             };
-             *//*   order.ID = o.OrderID;
-                order.OrderDate = o.OrderDate;
-                order.DeiveryDate = o.DeliveryDate;
-                order.ShipDate = o.ShipDate;
-                order.CustomerAddress = o.CustomerAddress;
-                order.CustomerEmail = o.CustomerEmail;
-                order.CustomerName = o.CustomerName;*//*
-             if (o.CustomerName != "")
-             {
-                 o.DeliveryDate = DateTime.Now;
-                 Dal.Order.Delete(id);
-                 Dal.Order.Add(o);
-                 order.ShipDate = o.ShipDate;
-                 order.Status = (BO.OrderStatus)2;
-                 return order;
-             }
-             else
-             {
-                 throw new BO.BlInvalidNameToken("");
-             }
-         }
-         catch (DalApi.ExceptionFailedToRead)
-         {
-             throw new BO.BlExceptionFailedToRead();
-         }
-         catch (DalApi.ExceptionObjectNotFound)
-         {
-             throw new BO.BlEntityNotFoundException("");
-         }
-         catch (Exception)
-         {
-
-             throw new BO.BlDefaultException("unexpected error");
-         }
- */
-
-
         try
         {
             Dal.DO.Order oDO = Dal.Order.Get(o => o.OrderID == id);
@@ -295,53 +215,6 @@ public BO.Order UpdateOrderShipping(int orderId)
         throw new BlEntityNotFoundException("");
     }
 }
-
-
-    /*  public BO.Order UpdateOrderShipping(int id)
-      {
-          try
-          {
-              Dal.DO.Order o = new Dal.DO.Order();
-              o = Dal.Order.Get(o => o.OrderID == id);
-              o.ShipDate = DateTime.Now;
-              Dal.Order.Update(o);
-              BO.Order order = new BO.Order();
-              order.ID = o.OrderID;
-              order.OrderDate = o.OrderDate;
-              order.DeiveryDate = o.DeliveryDate;
-              order.ShipDate = o.ShipDate;
-              order.CustomerAddress = o.CustomerAddress;
-              order.CustomerEmail = o.CustomerEmail;
-              order.CustomerName = o.CustomerName;
-              if (o.CustomerName != "")
-              {
-
-                  Dal.Order.Delete(id);
-                  Dal.Order.Add(o);
-                  order.ShipDate = o.ShipDate;
-                  order.Status = (BO.OrderStatus)2;
-                  return order;
-              }
-              else
-              {
-                  throw new BO.BlInvalidNameToken("");
-              }
-
-          }
-          catch (DalApi.ExceptionFailedToRead)
-          {
-              throw new BO.BlExceptionFailedToRead();
-          }
-          catch (DalApi.ExceptionObjectNotFound)
-          {
-              throw new BO.BlEntityNotFoundException("");
-          }
-          catch (Exception)
-          {
-
-              throw new BO.BlDefaultException("");
-          }
-      }*/
     //bonus
     public BO.Order UpdateOrderForManager(BO.Order or)
 {
@@ -358,11 +231,11 @@ public BO.Order UpdateOrderShipping(int orderId)
         o.OrderID = or.ID;
         Dal.Order.Update(o);
     }
-    catch (DalApi.ExceptionFailedToRead)      ///////////////////////////
+    catch (DalApi.ExceptionFailedToRead) 
     {
-        throw new BO.BlExceptionFailedToRead();//////////////////////////
+        throw new BO.BlExceptionFailedToRead();
     }
-    return or; /////////////////////////////////////////////////////////
+    return or;
 }
 
 
@@ -373,11 +246,6 @@ public BO.OrderTracking OrderTrack(int id)
         Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
         BO.OrderTracking orderTracking = new BO.OrderTracking();
         orderTracking.ID = currOrder.OrderID;
-        /*            DateTime? s;
-                    var t = Tuple.Create(currOrder.ShipDate, BO.OrderStatus.Payed) ;
-                    orderTracking.dateAndTrack.Add(t);*/
-        /*            orderTracking.dateAndTrack.Add(new Tuple<DateTime?, BO.OrderStatus>((DateTime?)currOrder.OrderDate, (BO.OrderStatus)0));
-        */
         orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
         orderTracking.Status = BO.OrderStatus.Payed;
         if (currOrder.ShipDate <= DateTime.Now)

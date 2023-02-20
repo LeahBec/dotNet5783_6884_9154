@@ -14,7 +14,6 @@ internal class BlCart : ICart
             int productInStock = Dal.Product.Get(p => p.ID == productId).InStock;
             double productPrice = Dal.Product.Get(p => p.ID == productId).Price;
             string productName = Dal.Product.Get(p => p.ID == productId).Name;
-            //int orderId = Dal.OrderItem.Get()
             BO.OrderItem oi = cart.items.Find(item => item.ProductID == productId);
             if (productInStock > 0)
             {
@@ -39,7 +38,7 @@ internal class BlCart : ICart
                 return cart;
             }
             else
-                throw new BO.BlOutOfStockException();//OutOfStockException();
+                throw new BO.BlOutOfStockException();
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
@@ -54,26 +53,6 @@ internal class BlCart : ICart
             throw new BO.BlDefaultException("unexpected error occured");
         }
     }
-
-    /* bool IsValidEmail(string email)
-     {
-         //var trimmedEmail = email.Trim();
-         return true;
-
-         //if (trimmedEmail.EndsWith("."))
-         //{
-         //    return false; // suggested by @TK-421
-         //}
-         //try
-         //{
-         //    var addr = new System.Net.Mail.MailAddress(email);
-         //    return addr.Address == trimmedEmail;
-         //}
-         //catch
-         //{
-         //    return false;
-         //}
-     }*/
     bool IsValidEmail(string _email)
     {
         string email = _email;
@@ -119,20 +98,7 @@ internal class BlCart : ICart
                                         TotalPrice = item1.TotalPrice
                                     };
 
-                   // Dal.DO.OrderItem cartItem = new();
-                    /*  c.items.Select(item =>
-                       {
-                           cartItem.ID = 0;
-                           cartItem.Amount = item.Amount;
-                           cartItem.Price = item.Price;
-                           cartItem.OrderID = item.ID;
-                           cartItem.ProductID = item.ProductID;
-                           Dal.OrderItem.Add(cartItem);
-                           Dal.Product.updateAmount(item.ProductID, item.Amount);
-                           return item;
-                       }).ToList();*/
-
-                    var items1 = from BO.OrderItem item1 in c.items
+                   var items1 = from BO.OrderItem item1 in c.items
                                     select new BO.OrderItem
                                     {
                                         ID = item1.ID,

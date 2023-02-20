@@ -60,13 +60,6 @@ namespace PL
         {
             try
             {
-              /*  o.CustomerAddress = this.or.CustomerAddress;
-                o.CustomerEmail = this.or.CustomerEmail;
-                o.CustomerName = this.or.CustomerName;
-                o.OrderDate = (DateTime?)this.or.OrderDate;
-                o.ShipDate = (DateTime?)this.or.ShipDate;
-                o.DeiveryDate = (DateTime?)this.or.DeiveryDate;
-                o.ID = this.or.ID;*/
                 list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 list_o.Add(Common.ConvertPFLToP(this.o));
                 bl.order.UpdateOrderForManager(Common.ConvertToBo(o));

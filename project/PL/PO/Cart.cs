@@ -10,16 +10,6 @@ namespace PL.PO
     public class Cart :DependencyObject
     {
         BLApi.IBL bl;
-
-        /*public void Update(BO.Cart c, int id, int amount)
-        {
-            bl.cart.Update(c, id, amount);
-            this.TotalPrice = c.TotalPrice;
-            this.Items = Common.convertToPoOiList(c.items);
-            this.CustomerAddress = c.CustomerAddress;
-            this.CustomerEmail = c.CustomerEmail;
-            this.CustomerName = c.CustomerName;
-        }*/
         public string CustomerName
         {
             get { return (string)GetValue(CustomerNameProperty); }

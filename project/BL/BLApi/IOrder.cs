@@ -10,6 +10,7 @@
         public BO.Order UpdateOrderShipping(int id);
         public BO.Order UpdateOrderDelivery(int id);
         public BO.OrderTracking OrderTrack(int id);
+        public int? ChooseOrder();
         //BONUS.
         public BO.Order UpdateOrderForManager(BO.Order o);
 

@@ -278,6 +278,7 @@ internal class BlOrder : BLApi.IOrder
         int? orderId = null;
         List<OrderForList>? orderList = GetOrderList().ToList();
         orderList?.ForEach(o =>
+
         {
             switch (o.Status)
             {

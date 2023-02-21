@@ -51,7 +51,7 @@ namespace PL
 
         private void simulation(object sender, RoutedEventArgs e)
         {
-            Window sim = new Simulator();
+            Window sim = new SimulatorWindow(bl);
             sim.Show();
         }
     }

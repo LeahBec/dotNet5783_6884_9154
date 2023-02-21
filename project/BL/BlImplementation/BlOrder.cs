@@ -276,23 +276,23 @@ internal class BlOrder : BLApi.IOrder
     {
         DateTime minDate = DateTime.Now;
         int? orderId = null;
-        List<OrderForList>? orderList = ReadOrderList().ToList();
+        List<OrderForList>? orderList = GetOrderList().ToList();
         orderList?.ForEach(o =>
         {
             switch (o.Status)
             {
-                case eOrderStatus.Ordered:
-                    if (ReadOrderProperties(o.ID).OrderDate < minDate)
+                case BO.OrderStatus.Payed:
+                    if (GetOrderDetails(o.ID).OrderDate < minDate)
                     {
                         orderId = o.ID;
-                        minDate = (DateTime)ReadOrderProperties(o.ID).OrderDate;
+                        minDate = (DateTime)GetOrderDetails(o.ID).OrderDate;
                     }
                     break;
-                case eOrderStatus.Shipped:
-                    if (ReadOrderProperties(o.ID).ShipDate < minDate)
+                case BO.OrderStatus.Shiped:
+                    if (GetOrderDetails(o.ID).ShipDate < minDate)
                     {
                         orderId = o.ID;
-                        minDate = (DateTime)ReadOrderProperties(o.ID).ShipDate;
+                        minDate = (DateTime)GetOrderDetails(o.ID).ShipDate;
                     }
                     break;
                 default:

@@ -45,7 +45,7 @@ namespace PL.customer
         {
             try
             {
-                if (this.c.CustomerEmail == "" || this.c.CustomerAddress == "" || this.c.CustomerName == "")
+                /*if (this.c.CustomerEmail == "" || this.c.CustomerAddress == "" || this.c.CustomerName == "")
                 {
                     throw new PlInvalidValueExeption("one or more of the customer details is missing");
                 }
@@ -58,11 +58,16 @@ namespace PL.customer
                 o.ShipDate=null;
                 o.DeiveryDate= null;
                 o.TotalPrice= this.c.TotalPrice;
-                int id = bl.order.AddNewOrder(o);
+                int id = bl.order.AddNewOrder(o);*/
+                int id = bl.cart.CartConfirmation(Common.ConvertToBoCart(this.c), this.c.CustomerName, this.c.CustomerEmail, this.c.CustomerAddress);
                 MessageBox.Show("The order was successfully created");
                 Window w = new OrderTracking(bl, id, this.c,this);
                 w.Show();
                 this.Hide();
+            }
+            catch(CustomerDetailsAreInValid ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch(PlInvalidValueExeption ex){
                 MessageBox.Show(ex.Message);

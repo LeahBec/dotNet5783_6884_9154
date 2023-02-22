@@ -97,7 +97,7 @@ namespace PL
             if (!(e is Details))
                 return;
             Details details = e as Details;
-            dcT = new Tuple<BO.Order, int>(details.order, details.seconds/1000);
+            dcT = new Tuple<BO.Order, int>(details.order, details.seconds / 1000);
             if (!CheckAccess())
             {
                 Dispatcher.BeginInvoke(changeOrder, sender, e);
@@ -159,12 +159,12 @@ namespace PL
         {
             Simulator.Simulator.ProgressChange -= changeOrder;
             Simulator.Simulator.StopSimulator -= Stop;
-           while(!CheckAccess())
+            while (!CheckAccess())
             {
                 Dispatcher.BeginInvoke(changeOrder, sender, e);
             }
-                Close();
-            
+            Close();
+
         }
     }
 }

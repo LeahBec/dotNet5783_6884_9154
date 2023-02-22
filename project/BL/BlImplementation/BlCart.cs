@@ -3,6 +3,7 @@ using BO;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
+using System.Text.RegularExpressions;
 
 namespace BlImplementation;
 internal class BlCart : ICart
@@ -55,24 +56,27 @@ internal class BlCart : ICart
             throw new BO.BlDefaultException("unexpected error occured");
         }
     }
-    bool IsValidEmail(string _email)
-    {
-        string email = _email;
-        var mail = new MailAddress(email);
-        bool isValidEmail = mail.Host.Contains(".");
-        if (!isValidEmail)
-        {
-            return false;
-        }
-        return true;
-    }
-    [MethodImpl(MethodImplOptions.Synchronized)]
-    public void CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
+
+    public static bool IsValidEmail(string email)
     {
         try
         {
+            MailAddress mailAddress = new MailAddress(email);
+            return true;
+        }
+        catch (FormatException)
+        {
+            return false;
+        }
+    }
+    [MethodImpl(MethodImplOptions.Synchronized)]
+    public int CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
+    {
+            int id=0;
+        try
+        {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
-                throw new Exception();
+                throw new CustomerDetailsAreInValid();
             c.items.Select(item =>
                 {
                     if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
@@ -86,7 +90,7 @@ internal class BlCart : ICart
                     o.CustomerAddress = customerAddress;
                     o.CustomerName = customerName;
                     o.CustomerEmail = customerEmail;
-                    int id = Dal.Order.Add(o);
+                    id = Dal.Order.Add(o);
                     List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
 
                     var cartItems = from BO.OrderItem item1 in c.items
@@ -112,11 +116,15 @@ internal class BlCart : ICart
                                     };
                     return items1;
                 }).ToList();
-
+            return id;
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
+        }
+        catch (CustomerDetailsAreInValid)
+        {
+            throw new CustomerDetailsAreInValid();
         }
         catch (Exception)
         {

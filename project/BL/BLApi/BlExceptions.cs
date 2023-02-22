@@ -48,7 +48,7 @@ public class BlInvalidIntegerException : Exception
 /// </summary>
 public class CustomerDetailsAreInValid : Exception
 {
-    public CustomerDetailsAreInValid(Exception inner) : base("the details are invalid", inner) { }
+    public CustomerDetailsAreInValid() : base("the details are invalid") { }
     public override string Message => ("the details are invalid");
 }
 /// <summary>

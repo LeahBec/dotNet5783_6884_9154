@@ -78,7 +78,11 @@ public partial class CartWindow : Window
 
     private void cartConfirmation(object sender, RoutedEventArgs e)
     {
-
+        if (this.cart.Items.Count() == 0)
+        {
+            MessageBox.Show("you cannot confirm an empty cart.");
+            return;
+        }
         new customer.ConfirmCart(bl, this.cart, this).Show();
         this.Hide();
     }

@@ -33,13 +33,34 @@
     <Grid>
         <Button Content="Stop Simulation" HorizontalAlignment="Left" Height="64" Margin="641,15,0,0" VerticalAlignment="Top" Width="135" Click="StopSimulatorBTN_Click"/>
         <TextBlock x:Name="SimulatorTXTB" Text="00:00:00" HorizontalAlignment="Left" Height="80" Margin="22,10,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="230" FontSize="48" FontFamily="adam" FontWeight="Bold"/>
+        <Grid Margin="0,10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Current Order:" Grid.Row="0" Grid.Column="0"></TextBlock>
+            <TextBlock x:Name="CurrentOrderId" Text="{Binding Item1.ID, Mode=OneWay}" Grid.Row="0" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Previous Status:" Grid.Row="1" Grid.Column="0"></TextBlock>
+            <TextBlock x:Name="PreviousStatus" Grid.Row="1" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Next Status:" Grid.Row="2" Grid.Column="0"></TextBlock>
+            <TextBlock x:Name="NextStatus" Grid.Row="2" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Process start time:" Grid.Row="3" Grid.Column="0"></TextBlock>
+            <TextBlock x:Name="ProcessStart" Grid.Row="3" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Estimated time to complete:" Grid.Row="4" Grid.Column="0"></TextBlock>
+            <TextBlock x:Name="EstimatedTime" Text="{Binding Item2}" Grid.Row="4" Grid.Column="1"></TextBlock>
+        </Grid>
         <StatusBar Name="SBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="LightBlue">
             <StatusBarItem Height="80">
                 <TextBlock Width="72" FontSize="20">Status:</TextBlock>
             </StatusBarItem>
         </StatusBar>
         <!-- <ProgressBar Margin="181,333,0,0" Name="ProgressBar" HorizontalAlignment="Left" VerticalAlignment="Top" Width="500" Height="30" />-->
-
-
     </Grid>
 </Window>

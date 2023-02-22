@@ -69,13 +69,8 @@ namespace PL
 */
 
 
+using Simulator;
 using System;
-using System.Diagnostics;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-
-
 /*namespace PL
 {
 
@@ -114,6 +109,10 @@ using System.Windows.Controls;
 }
 */
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Threading;
+using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Animation;
 
 namespace PL
@@ -137,72 +136,94 @@ namespace PL
         //=====================================================
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        BackgroundWorker timerworker;
+        //BackgroundWorker worker;
         Duration duration;
         DoubleAnimation doubleanimation;
         ProgressBar ProgressBar;
-
+        Tuple<BO.Order, int> dcT;
 
         public SimulatorWindow(BLApi.IBL Bl)
         {
             InitializeComponent();
             bl = Bl;
             Loaded += ToolWindow_Loaded;
-            workerStart();
+            // workerStart();
             TimerStart();
-            ProgressBarStart();
+            //worker.RunWorkerAsync();
+
+            // ProgressBarStart();
         }
-        void ProgressBarStart()
-        {
-            ProgressBar = new ProgressBar();
-            ProgressBar.IsIndeterminate = false;
-            ProgressBar.Orientation = Orientation.Horizontal;
-            ProgressBar.Width = 500;
-            ProgressBar.Height = 30;
-            duration = new Duration(TimeSpan.FromSeconds(20));
-            doubleanimation = new DoubleAnimation(200.0, duration);
-            ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
-            SBar.Items.Add(ProgressBar);
-        }
+        //void ProgressBarStart()
+        //{
+        //    ProgressBar = new ProgressBar();
+        //    ProgressBar.IsIndeterminate = false;
+        //    ProgressBar.Orientation = Orientation.Horizontal;
+        //    ProgressBar.Width = 500;
+        //    ProgressBar.Height = 30;
+        //    duration = new Duration(TimeSpan.FromSeconds(20));
+        //    doubleanimation = new DoubleAnimation(200.0, duration);
+        //    ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
+        //    SBar.Items.Add(ProgressBar);
+        //}
 
         void TimerStart()
         {
             stopWatch = new Stopwatch();
-            timerworker = new BackgroundWorker();
-            timerworker.DoWork += TimerDoWork;
-            timerworker.ProgressChanged += TimerProgressChanged;
-            timerworker.WorkerReportsProgress = true;
-            Simulator.Simulator.StartSimulator();
+            worker = new BackgroundWorker();
+            worker.DoWork += TimerDoWork;
+            worker.ProgressChanged += TimerProgressChanged;
+            worker.WorkerReportsProgress = true;
+            //Simulator.Simulator.StartSimulator();
             stopWatch.Restart();
             isTimerRun = true;
-            timerworker.RunWorkerAsync();
-        }
-        void workerStart()
-        {
-            worker = new BackgroundWorker();
-            worker.DoWork += WorkerDoWork;
-            worker.WorkerReportsProgress = true;
-            worker.WorkerSupportsCancellation = true;
-            worker.ProgressChanged += workerProgressChanged;
-            worker.RunWorkerCompleted += RunWorkerCompleted;
             worker.RunWorkerAsync();
         }
+        //void workerStart()
+        //{
+        //    worker = new BackgroundWorker();
+        //    worker.DoWork += WorkerDoWork;
+        //    worker.WorkerReportsProgress = true;
+        //    worker.WorkerSupportsCancellation = true;
+        //   // worker.ProgressChanged += workerProgressChanged;
+        //    worker.RunWorkerCompleted += RunWorkerCompleted;
+        //    worker.RunWorkerAsync();
+        //}
         void TimerDoWork(object sender, DoWorkEventArgs e)
         {
+            Simulator.Simulator.ProgressChange += changeOrder;
+            Simulator.Simulator.run();
             while (isTimerRun)
-            {
-                timerworker.ReportProgress(1);
-                Thread.Sleep(1000);
-            }
-        }
-        void WorkerDoWork(object sender, DoWorkEventArgs e)
-        {
-            while (!worker.CancellationPending)
             {
                 worker.ReportProgress(1);
                 Thread.Sleep(1000);
             }
         }
+
+        private void changeOrder(object sender, EventArgs e)
+        {
+            if (!(e is Details))
+                return;
+            Details details = e as Details;
+            dcT = new Tuple<BO.Order, int>(details.order, details.seconds/1000);
+            if (!CheckAccess())
+            {
+                Dispatcher.BeginInvoke(changeOrder, sender, e);
+            }
+            else
+            {
+                DataContext = dcT;
+            }
+        }
+
+
+        //void WorkerDoWork(object sender, DoWorkEventArgs e)
+        //{
+        //    while (!worker.CancellationPending)
+        //    {
+        //        worker.ReportProgress(1);
+        //        Thread.Sleep(1000);
+        //    }
+        //}
 
         void TimerProgressChanged(object sender, ProgressChangedEventArgs e)
         {
@@ -210,10 +231,10 @@ namespace PL
             timerText = timerText.Substring(0, 8);
             SimulatorTXTB.Text = timerText;
         }
-        void workerProgressChanged(object sender, ProgressChangedEventArgs e)
-        {
-            ProgressBar.Value = e.ProgressPercentage;
-        }
+        //void workerProgressChanged(object sender, ProgressChangedEventArgs e)
+        //{
+        //    ProgressBar.Value = e.ProgressPercentage;
+        //}
         void ToolWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Code to remove close box from window
@@ -223,9 +244,9 @@ namespace PL
 
         private void StopSimulatorBTN_Click(object sender, RoutedEventArgs e)
         {
-            if (worker.WorkerSupportsCancellation == true)
-                // Cancel the asynchronous operation.
-                worker.CancelAsync();
+            //if (worker.WorkerSupportsCancellation == true)
+            //    // Cancel the asynchronous operation.
+            //    worker.CancelAsync();
             if (isTimerRun)
             {
                 stopWatch.Stop();
@@ -234,10 +255,11 @@ namespace PL
             this.Close();
         }
 
-        void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            Simulator.Simulator.StopSimulator();
-            this.Close();
-        }
+        //    void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        //    {
+        //        Simulator.Simulator.StopSimulator();
+        //        this.Close();
+        //    }
+        //}
     }
 }

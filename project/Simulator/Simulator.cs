@@ -28,8 +28,6 @@ namespace Simulator
         }
     }
 }*/
-
-
 using BLApi;
 using System.Diagnostics;
 namespace Simulator;
@@ -41,31 +39,20 @@ public static class Simulator
     static Thread myThread { get; set; }
     static Stopwatch myStopWatch { get; set; }
     static event EventHandler propsChanged;
-    static string? previousState;
-    static string? afterState;
+    private static string? previousState;
+    private static string? afterState;
     static bool finishFlag = false;
 
-    public static event EventHandler Stop;
-    public static void StartSimulator()
+    public static event EventHandler StopSimulator;
+    public static event EventHandler ProgressChange;
+    public static void DoStop()
     {
-        myThread = new Thread(Simulation);
-        myThread.Start();
+        finishFlag = true;
     }
     public static void run()
     {
         Thread mainThreads = new Thread(new ThreadStart(chooseOrder));
-        return;
-    }
-
-
-    private static void Simulation()
-    {
-
-    }
-    public static void StopSimulator()
-    {
-        //myThread.Join();
-        finishFlag = true;
+        mainThreads.Start();
         return;
     }
     public static void chooseOrder()
@@ -76,16 +63,34 @@ public static class Simulator
         {
             id = bl.order.ChooseOrder();
             if (id == null)
-                ; //call DoStop(), program has to finish, no more orders.
+                DoStop(); //call DoStop(), program has to finish, no more orders.
             else
             {
-                previousState = bl.order.GetOrderDetails((int)id).Status.ToString();
+                BO.Order o = bl.order.GetOrderDetails((int)id);
+                previousState = o.Status.ToString();
                 Random rand = new Random();
                 int num = rand.Next(1000, 5000);
+                Details details = new Details(o, num);
+                if (ProgressChange != null)
+                {
+                    ProgressChange(null, details);
+                }
                 Thread.Sleep(num);
                 afterState = (previousState == "Payed" ? bl.order.UpdateOrderShipping((int)id) : bl.order.UpdateOrderDelivery((int)id)).Status.ToString();
             }
         }
         return;
+    }
+}
+
+
+public class Details : EventArgs
+{
+    public BO.Order order;
+    public int seconds;
+    public Details(BO.Order ord, int sec)
+    {
+        order = ord;
+        seconds = sec;
     }
 }

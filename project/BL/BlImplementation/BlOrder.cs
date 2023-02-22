@@ -145,11 +145,11 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.BlExceptionFailedToRead();
         }
-        catch (Exception)
-        {
+        //catch (Exception)
+        //{
 
-            throw new BO.BlDefaultException("");
-        }
+        //    throw new BO.BlDefaultException("");
+        //}
     }
     void setShip(Dal.DO.Order o)
     {

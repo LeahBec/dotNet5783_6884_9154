@@ -45,16 +45,16 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <TextBlock Text="Current Order:" Grid.Row="0" Grid.Column="0"></TextBlock>
-            <TextBlock x:Name="CurrentOrderId" Text="{Binding Item1.ID, Mode=OneWay}" Grid.Row="0" Grid.Column="1"></TextBlock>
-            <TextBlock Text="Previous Status:" Grid.Row="1" Grid.Column="0"></TextBlock>
-            <TextBlock x:Name="PreviousStatus" Grid.Row="1" Grid.Column="1"></TextBlock>
-            <TextBlock Text="Next Status:" Grid.Row="2" Grid.Column="0"></TextBlock>
-            <TextBlock x:Name="NextStatus" Grid.Row="2" Grid.Column="1"></TextBlock>
-            <TextBlock Text="Process start time:" Grid.Row="3" Grid.Column="0"></TextBlock>
-            <TextBlock x:Name="ProcessStart" Grid.Row="3" Grid.Column="1"></TextBlock>
-            <TextBlock Text="Estimated time to complete:" Grid.Row="4" Grid.Column="0"></TextBlock>
-            <TextBlock x:Name="EstimatedTime" Text="{Binding Item2}" Grid.Row="4" Grid.Column="1"></TextBlock>
+            <TextBlock Text="Current Order:" Grid.Row="1" Grid.Column="0" Margin="200,83,120,78" Grid.RowSpan="2"/>
+            <TextBlock x:Name="currentOrder" Grid.Row="1" Grid.Column="1" Margin="0,83,238,75" Grid.RowSpan="2" Text="{Binding Item1.ID}"></TextBlock>
+            <TextBlock Text="Previous Status:" Grid.Row="2" Grid.Column="0" Margin="195,20,17,46"/>
+            <TextBlock x:Name="PreviousStatus" Grid.Row="1" Grid.Column="1" Margin="0,83,238,75" Grid.RowSpan="2"></TextBlock>
+            <TextBlock Text="Next Status:" Grid.Row="2" Grid.Column="0" Margin="195,51,17,0" Height="23" VerticalAlignment="Top"></TextBlock>
+            <TextBlock x:Name="NextStatus" Grid.Row="2" Grid.Column="1" Margin="0,51,0,16"></TextBlock>
+            <TextBlock Text="Process start time:" Grid.Row="2" Grid.Column="0" Margin="195,92,17,67" Grid.RowSpan="2"></TextBlock>
+            <TextBlock x:Name="ProcessStart" Grid.Row="2" Grid.Column="1" Margin="0,92,0,67" Grid.RowSpan="2"></TextBlock>
+            <TextBlock Text="Estimated time to complete:" Grid.Row="3" Grid.Column="0" Margin="195,33,17,32"/>
+            <TextBlock x:Name="EstimatedTime" Text="{Binding Item2}" Grid.Row="3" Grid.Column="1" Margin="0,33,0,32"/>
         </Grid>
         <StatusBar Name="SBar" Grid.Column="0" Grid.Row="5" VerticalAlignment="Bottom" Background="LightBlue">
             <StatusBarItem Height="80">

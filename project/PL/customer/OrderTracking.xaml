@@ -24,6 +24,7 @@
 
         <Button Content="order details" Name="order_details" Click="show_order_details" Style="{StaticResource BtnStyle}"/>
         <Button Content="⬅️" x:Name="goBack" Click="go_Back" Style="{StaticResource BtnStyle}" Margin="678,351,0,0"/>
+        <Button Content="home" Margin="120,363,0,0" Style="{StaticResource BtnStyle}" Click="Button_Click"/>
 
     </Grid>
 </Window>

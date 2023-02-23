@@ -76,5 +76,12 @@ namespace PL.customer
             this.prevWindow.Show();
             this.Close(); 
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Window home = new MainWindow();
+            home.Show();
+            this.Close();
+        }
     }
 }

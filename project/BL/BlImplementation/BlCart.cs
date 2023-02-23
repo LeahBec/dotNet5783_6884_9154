@@ -92,7 +92,7 @@ internal class BlCart : ICart
                     o.CustomerEmail = customerEmail;
                     id = Dal.Order.Add(o);
                     List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
-
+                    c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
                     var cartItems = from BO.OrderItem item1 in c.items
                                     select new BO.OrderItem
                                     {
@@ -118,6 +118,8 @@ internal class BlCart : ICart
                 }).ToList();
             return id;
         }
+
+
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
@@ -130,6 +132,15 @@ internal class BlCart : ICart
         {
             throw new Exception();
         }
+    }
+    public Dal.DO.OrderItem convertToDal(BO.OrderItem bo)
+    {
+        Dal.DO.OrderItem o = new();
+        o.OrderID = bo.ID;
+        o.ProductID = bo.ProductID;
+        o.Amount = bo.Amount;
+        o.Price = bo.Price;
+        return o;
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Cart Update(BO.Cart c, int id, double newAmount)

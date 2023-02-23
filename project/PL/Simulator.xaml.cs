@@ -146,9 +146,9 @@ namespace PL
         }
         public void Stop(object sender, EventArgs e)
         {
-            /*    Simulator.Simulator.ProgressChange -= changeOrder;
+              Simulator.Simulator.ProgressChange -= changeOrder;
                 Simulator.Simulator.StopSimulator -= Stop;
-                while (!CheckAccess())
+               /*   while (!CheckAccess())
                 {
                     Dispatcher.BeginInvoke(Stop, sender, e);
                 }

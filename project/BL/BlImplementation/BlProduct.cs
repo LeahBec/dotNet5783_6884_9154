@@ -15,8 +15,11 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         try
-        {
-            IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
+        { IEnumerable<Dal.DO.Product> existingProductsList;
+            lock (Dal)
+            {
+                existingProductsList = Dal.Product.GetAll();
+            }
             IEnumerable<BO.ProductForList> productList = from Dal.DO.Product item1 in existingProductsList
                                                          select new BO.ProductForList
                                                          {
@@ -45,7 +48,11 @@ internal class BlProduct : BLApi.IProduct
     {
         try
         {
-            IEnumerable<Dal.DO.Product> existingProductsList = Dal.Product.GetAll();
+            IEnumerable<Dal.DO.Product> existingProductsList;
+            lock (Dal)
+            {
+                existingProductsList = Dal.Product.GetAll();
+            }
             List<BO.ProductItem> productList = new List<BO.ProductItem>();
             existingProductsList.Select(item =>
             {
@@ -82,8 +89,11 @@ internal class BlProduct : BLApi.IProduct
         {
             BO.Product p = new BO.Product();
             if (id > 0)
-            {
-                Dal.DO.Product product = Dal.Product.Get(p => p.ID == id);
+            { Dal.DO.Product product;
+                lock (Dal)
+                {
+                    product = Dal.Product.Get(p => p.ID == id);
+                }
                 p.ID = product.ID;
                 p.Name = product.Name;
                 p.Price = product.Price;
@@ -110,8 +120,11 @@ internal class BlProduct : BLApi.IProduct
         {
             BO.Product p = new BO.Product();
             if (id > 0)
-            {
-                Dal.DO.Product product = Dal.Product.Get(p => p.ID == id);
+            { Dal.DO.Product product;
+                lock (Dal)
+                {
+                    product = Dal.Product.Get(p => p.ID == id);
+                }
                 p.ID = product.ID;
                 p.Name = product.Name;
                 p.Price = product.Price;
@@ -149,7 +162,11 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.Price = (float)p.Price;
             DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
             DOProduct.InStock = p.inStock;
-            int id = (int)Dal?.Product?.Add(DOProduct);
+            int id;
+            lock (Dal)
+            {
+                id = (int)Dal?.Product?.Add(DOProduct);
+            }
             return id;
         }
         catch (Exception err) { throw new BO.BlDefaultException(err.Message); }
@@ -162,13 +179,20 @@ internal class BlProduct : BLApi.IProduct
         {
             if (id <= 0)
                 throw new BO.BlInvalidIdToken("");
-            var orderitems = Dal.OrderItem.GetAll();
+            IEnumerable<Dal.DO.OrderItem> orderitems;
+            lock (Dal)
+            {
+                orderitems = Dal.OrderItem.GetAll();
+            }
             orderitems.Where(oi => oi.ID == id).Select(oi =>
             {
                 throw new BO.BlProductExistsInAnOrder("product exists in an order");
                 return oi;
             });
-            Dal.Product.Delete(id);
+            lock (Dal)
+            {
+                Dal.Product.Delete(id);
+            }
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
@@ -185,24 +209,8 @@ internal class BlProduct : BLApi.IProduct
     }
 
     //Help function:
-    bool IsValidEmail(string email)
-    {
-        var trimmedEmail = email.Trim();
-
-        if (trimmedEmail.EndsWith("."))
-        {
-            return false;
-        }
-        try
-        {
-            var addr = new System.Net.Mail.MailAddress(email);
-            return addr.Address == trimmedEmail;
-        }
-        catch
-        {
-            return false;
-        }
-    }
+   
+    
     [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(BO.Product p)
@@ -223,7 +231,10 @@ internal class BlProduct : BLApi.IProduct
             DOProduct.Price = (float)p.Price;
             DOProduct.Category = (DalFacade.DO.eCategory)p.Category;
             DOProduct.InStock = p.inStock;
-            Dal?.Product.Update(DOProduct);
+            lock (Dal)
+            {
+                Dal?.Product.Update(DOProduct);
+            }
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
@@ -256,8 +267,11 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetListByCategory(BO.Category category)
     {
         try
-        {
-            IEnumerable<Dal.DO.Product> products = Dal.Product.GetAll();
+        { IEnumerable<Dal.DO.Product> products;
+            lock (Dal)
+            {
+                products = Dal.Product.GetAll();
+            }
             List<BO.ProductForList> returnList = new List<BO.ProductForList>();
 
             List<Dal.DO.Product> a = products.Where(item => (Category)item.Category == category).ToList();

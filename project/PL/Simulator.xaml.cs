@@ -15,7 +15,8 @@ namespace PL
     public partial class SimulatorWindow : Window
     {
         BLApi.IBL bl;
-
+        string nextStatus;
+        string previousStatus;
         BackgroundWorker worker;
         //====== disable the option of closing the window =======
         private const int GWL_STYLE = -16;
@@ -32,32 +33,31 @@ namespace PL
         Duration duration;
         DoubleAnimation doubleanimation;
         ProgressBar ProgressBar;
-        Tuple<BO.Order, int> dcT;
-
+        Tuple<BO.Order, int,string, string> dcT;
         public SimulatorWindow(BLApi.IBL Bl)
         {
             InitializeComponent();
             bl = Bl;
             Loaded += ToolWindow_Loaded;
-            // workerStart();
             TimerStart();
-            //worker.RunWorkerAsync();
-
-            ProgressBarStart();
         }
-        void ProgressBarStart()
+
+        void ProgressBarStart(int sec)
         {
+            if (ProgressBar!=null)
+            {
+                SBar.Items.Remove(ProgressBar);
+            }
             ProgressBar = new ProgressBar();
             ProgressBar.IsIndeterminate = false;
             ProgressBar.Orientation = Orientation.Horizontal;
             ProgressBar.Width = 500;
             ProgressBar.Height = 30;
-            duration = new Duration(TimeSpan.FromSeconds(20));
+            duration = new Duration(TimeSpan.FromSeconds(sec*2));
             doubleanimation = new DoubleAnimation(200.0, duration);
             ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
             SBar.Items.Add(ProgressBar);
         }
-
         void TimerStart()
         {
             stopWatch = new Stopwatch();
@@ -91,13 +91,15 @@ namespace PL
                 Thread.Sleep(1000);
             }
         }
-
         private void changeOrder(object sender, EventArgs e)
         {
             if (!(e is Details))
                 return;
+            
             Details details = e as Details;
-            dcT = new Tuple<BO.Order, int>(details.order, details.seconds / 1000);
+            this.previousStatus = (details.order.ShipDate == null) ? BO.OrderStatus.Payed.ToString() : BO.OrderStatus.Shiped.ToString();
+            this.nextStatus = (details.order.ShipDate == null ) ? BO.OrderStatus.Shiped.ToString() : BO.OrderStatus.Delivered.ToString();
+            dcT = new Tuple<BO.Order, int, string, string>(details.order, details.seconds / 1000,previousStatus, nextStatus);
             if (!CheckAccess())
             {
                 Dispatcher.BeginInvoke(changeOrder, sender, e);
@@ -105,10 +107,10 @@ namespace PL
             else
             {
                 DataContext = dcT;
+                ProgressBarStart(details.seconds/1000);
+
             }
         }
-
-
         //void WorkerDoWork(object sender, DoWorkEventArgs e)
         //{
         //    while (!worker.CancellationPending)
@@ -117,7 +119,6 @@ namespace PL
         //        Thread.Sleep(1000);
         //    }
         //}
-
         void TimerProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             string timerText = stopWatch.Elapsed.ToString();
@@ -164,7 +165,6 @@ namespace PL
                 Dispatcher.BeginInvoke(changeOrder, sender, e);
             }
             Close();
-
         }
     }
 }

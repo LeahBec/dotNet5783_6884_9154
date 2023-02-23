@@ -12,7 +12,7 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-    
+
             Dal.DO.Order o = new()
             {
                 OrderID = order.ID,
@@ -23,9 +23,13 @@ internal class BlOrder : BLApi.IOrder
                 CustomerEmail = order.CustomerEmail,
                 CustomerName = order.CustomerName,
             };
-            int orderId = Dal.Order.Add(o);
+            int orderId;
+            lock (Dal)
+            {
+                orderId = Dal.Order.Add(o);
 
-            order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
+                order.Items.ForEach(oi => { oi.ID = orderId; Dal.OrderItem.Add(convertToDal(oi)); });
+            }
             return orderId;
 
         }
@@ -59,21 +63,27 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-            IEnumerable<Dal.DO.Order> existingOrdersList = Dal.Order.GetAll();
+            IEnumerable<Dal.DO.Order> existingOrdersList;
+            lock (Dal)
+            {
+                existingOrdersList = Dal.Order.GetAll();
+            }
             List<BO.OrderForList> ordersList = new List<BO.OrderForList>();
             existingOrdersList.Select(item =>
             {
                 BO.OrderForList o = new BO.OrderForList();
                 o.ID = item.OrderID;
                 o.CustomerName = item.CustomerName;
-                var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
-                orderItems.Select(orderItem =>
+                lock (Dal)
                 {
-                    o.AmountOfItems++;
-                    o.TotalPrice += orderItem.Price * orderItem.Amount;
-                    return orderItem;
-                }).ToList();
-
+                    var orderItems = Dal.OrderItem.getByOrderId(item.OrderID);
+                    orderItems.Select(orderItem =>
+                    {
+                        o.AmountOfItems++;
+                        o.TotalPrice += orderItem.Price * orderItem.Amount;
+                        return orderItem;
+                    }).ToList();
+                }
                 if (item.DeliveryDate != null)
                     o.Status = (BO.OrderStatus)3;
                 else if (item.ShipDate != null)
@@ -107,7 +117,11 @@ internal class BlOrder : BLApi.IOrder
         {
             if (id < 0)
                 throw new BO.BlInvalidIntegerException();
-            Dal.DO.Order o = Dal.Order.Get(o => o.OrderID == id);
+            Dal.DO.Order o;
+            lock (Dal)
+            {
+                o = Dal.Order.Get(o => o.OrderID == id);
+            }
             BO.Order oi = new BO.Order();
             oi.ID = o.OrderID;
             oi.OrderDate = o.OrderDate;
@@ -122,13 +136,20 @@ internal class BlOrder : BLApi.IOrder
                 oi.Status = (BO.OrderStatus)2;
             else
                 oi.Status = (BO.OrderStatus)1;
-            IEnumerable<Dal.DO.OrderItem> orderItems = Dal.OrderItem.getByOrderId(id);
+            IEnumerable<Dal.DO.OrderItem> orderItems;
+            lock (Dal)
+            {
+                orderItems = Dal.OrderItem.getByOrderId(id);
+            }
             List<BO.OrderItem> items = new();
             orderItems.Select(item =>
             {
                 BO.OrderItem orderItem = new();
                 orderItem.ID = item.ID;
-                orderItem.ProductName = Dal.Product.Get(p => p.ID == item.ProductID).Name;
+                lock (Dal)
+                {
+                    orderItem.ProductName = Dal.Product.Get(p => p.ID == item.ProductID).Name;
+                }
                 orderItem.ProductID = item.ProductID;
                 orderItem.Price = item.Price;
                 orderItem.Amount = item.Amount;
@@ -153,17 +174,16 @@ internal class BlOrder : BLApi.IOrder
         //    throw new BO.BlDefaultException("");
         //}
     }
-    void setShip(Dal.DO.Order o)
-    {
-        o.ShipDate = DateTime.Now;
-
-    }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderDelivery(int id)
     {
         try
         {
-            Dal.DO.Order oDO = Dal.Order.Get(o => o.OrderID == id);
+            Dal.DO.Order oDO;
+            lock (Dal)
+            {
+                oDO = Dal.Order.Get(o => o.OrderID == id);
+            }
             if (oDO.DeliveryDate == null)
             {
                 oDO.DeliveryDate = DateTime.Now;
@@ -176,7 +196,10 @@ internal class BlOrder : BLApi.IOrder
                 order.CustomerEmail = oDO.CustomerEmail;
                 order.CustomerName = oDO.CustomerName;
                 order.Status = (BO.OrderStatus)1;
-                Dal.Order.Update(oDO);
+                lock (Dal)
+                {
+                    Dal.Order.Update(oDO);
+                }
                 return order;
             }
             throw new BlEntityNotFoundException("");
@@ -197,7 +220,12 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-            Dal.DO.Order oDO = Dal.Order.Get(o => o.OrderID == orderId);
+            Dal.DO.Order oDO;
+            lock (Dal)
+            {
+                oDO = Dal.Order.Get(o => o.OrderID == orderId);
+            }
+
             if (oDO.ShipDate == null)
             {
                 oDO.ShipDate = DateTime.Now;
@@ -210,7 +238,10 @@ internal class BlOrder : BLApi.IOrder
                 order.CustomerEmail = oDO.CustomerEmail;
                 order.CustomerName = oDO.CustomerName;
                 order.Status = (BO.OrderStatus)1;
-                Dal.Order.Update(oDO);
+                lock (Dal)
+                {
+                    Dal.Order.Update(oDO);
+                }
                 return order;
             }
             throw new BlEntityNotFoundException("");
@@ -226,6 +257,7 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
+
             Dal.DO.Order o = new Dal.DO.Order();
             o.OrderID = or.ID;
             o.CustomerName = or.CustomerName;
@@ -235,7 +267,10 @@ internal class BlOrder : BLApi.IOrder
             o.CustomerEmail = or.CustomerEmail;
             o.CustomerAddress = or.CustomerAddress;
             o.OrderID = or.ID;
-            Dal.Order.Update(o);
+            lock (Dal)
+            {
+                Dal.Order.Update(o);
+            }
         }
         catch (DalApi.ExceptionFailedToRead)
         {
@@ -249,7 +284,11 @@ internal class BlOrder : BLApi.IOrder
     {
         try
         {
-            Dal.DO.Order currOrder = Dal.Order.Get(x => x.OrderID == id);
+            Dal.DO.Order currOrder;
+            lock (Dal)
+            {
+                currOrder = Dal.Order.Get(x => x.OrderID == id);
+            }
             BO.OrderTracking orderTracking = new BO.OrderTracking();
             orderTracking.ID = currOrder.OrderID;
             orderTracking?.dateAndTrack.Add(new Tuple<DateTime?, OrderStatus?>(currOrder.OrderDate, BO.OrderStatus.Payed));
@@ -273,7 +312,7 @@ internal class BlOrder : BLApi.IOrder
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
 
-    
+
     public int? ChooseOrder()
     {
         DateTime minDate = DateTime.Now;

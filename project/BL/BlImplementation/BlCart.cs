@@ -14,9 +14,15 @@ internal class BlCart : ICart
     {
         try
         {
-            int productInStock = Dal.Product.Get(p => p.ID == productId).InStock;
-            double productPrice = Dal.Product.Get(p => p.ID == productId).Price;
-            string productName = Dal.Product.Get(p => p.ID == productId).Name;
+            int productInStock;
+            double productPrice;
+            string productName;
+            lock (Dal)
+            {
+                productInStock = Dal.Product.Get(p => p.ID == productId).InStock;
+                productPrice = Dal.Product.Get(p => p.ID == productId).Price;
+                productName = Dal.Product.Get(p => p.ID == productId).Name;
+            }
             BO.OrderItem oi = cart.items.Find(item => item.ProductID == productId);
             if (productInStock > 0)
             {
@@ -72,17 +78,20 @@ internal class BlCart : ICart
     [MethodImpl(MethodImplOptions.Synchronized)]
     public int CartConfirmation(BO.Cart c, string customerName, string customerEmail, string customerAddress)
     {
-            int id=0;
+        int id = 0;
         try
         {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
                 throw new CustomerDetailsAreInValid();
             c.items.Select(item =>
                 {
-                    if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
-                        throw new Exception();
-                    int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
-                    Dal.DO.Order o = new Dal.DO.Order();
+                    lock (Dal)
+                    {
+                        if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
+                            throw new Exception();
+                        int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
+                    }    Dal.DO.Order o = new Dal.DO.Order();
+                    
                     o.OrderID = 0;
                     o.OrderDate = DateTime.Now;
                     o.DeliveryDate = null;
@@ -90,9 +99,12 @@ internal class BlCart : ICart
                     o.CustomerAddress = customerAddress;
                     o.CustomerName = customerName;
                     o.CustomerEmail = customerEmail;
-                    id = Dal.Order.Add(o);
-                    List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
-                    c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
+                    lock (Dal)
+                    {
+                        id = Dal.Order.Add(o);
+                        List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
+                        c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
+                    }
                     var cartItems = from BO.OrderItem item1 in c.items
                                     select new BO.OrderItem
                                     {
@@ -104,16 +116,16 @@ internal class BlCart : ICart
                                         TotalPrice = item1.TotalPrice
                                     };
 
-                   var items1 = from BO.OrderItem item1 in c.items
-                                    select new BO.OrderItem
-                                    {
-                                        ID = item1.ID,
-                                        Amount = item1.Amount,
-                                        Price = item1.Price,
-                                        ProductID = item1.ProductID,
-                                        ProductName = item1.ProductName,
-                                        TotalPrice = item1.TotalPrice
-                                    };
+                    var items1 = from BO.OrderItem item1 in c.items
+                                 select new BO.OrderItem
+                                 {
+                                     ID = item1.ID,
+                                     Amount = item1.Amount,
+                                     Price = item1.Price,
+                                     ProductID = item1.ProductID,
+                                     ProductName = item1.ProductName,
+                                     TotalPrice = item1.TotalPrice
+                                 };
                     return items1;
                 }).ToList();
             return id;
@@ -147,8 +159,8 @@ internal class BlCart : ICart
     {
         try
         {
-
-            int productInStock = Dal.Product.Get(p => p.ID == id).InStock;
+            int productInStock;
+            lock (Dal) { productInStock = Dal.Product.Get(p => p.ID == id).InStock; }
             if (productInStock < newAmount) throw new BlOutOfStockException();
             BO.OrderItem oi = c.items.Find(item => item.ProductID == id);
             if (oi != null)

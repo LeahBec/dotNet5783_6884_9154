@@ -65,6 +65,7 @@ namespace PL
             worker.DoWork += TimerDoWork;
             worker.ProgressChanged += TimerProgressChanged;
             worker.WorkerReportsProgress = true;
+            worker.WorkerSupportsCancellation = true;
             //Simulator.Simulator.StartSimulator();
             stopWatch.Restart();
             isTimerRun = true;
@@ -108,7 +109,6 @@ namespace PL
             {
                 DataContext = dcT;
                 ProgressBarStart(details.seconds/1000);
-
             }
         }
         //void WorkerDoWork(object sender, DoWorkEventArgs e)
@@ -160,11 +160,14 @@ namespace PL
         {
             Simulator.Simulator.ProgressChange -= changeOrder;
             Simulator.Simulator.StopSimulator -= Stop;
+            /*if (worker.WorkerSupportsCancellation == true)
+                worker.CancelAsync();*/
             while (!CheckAccess())
             {
-                Dispatcher.BeginInvoke(changeOrder, sender, e);
+                Dispatcher.BeginInvoke(Stop, sender, e);
             }
-            Close();
+            //MessageBox.Show("successfully finish updating all orders");
+            this.Close();
         }
     }
 }

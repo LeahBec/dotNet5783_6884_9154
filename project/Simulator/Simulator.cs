@@ -3,29 +3,29 @@ using System.Diagnostics;
 namespace Simulator;
 public static class Simulator
 {
-
-
-    static BO.Order order;
-    static Thread myThread { get; set; }
-    static Stopwatch myStopWatch { get; set; }
-    static event EventHandler propsChanged;
     private static string? previousState;
     private static string? afterState;
     static bool finishFlag = false;
-
     public static event EventHandler StopSimulator;
     public static event EventHandler ProgressChange;
     public static void DoStop()
     {
         finishFlag = true;
-        StopSimulator("",EventArgs.Empty);
+        if (StopSimulator != null)
+            StopSimulator("", EventArgs.Empty);
     }
+    /// <summary>
+    /// the function runs the program using maun thread
+    /// </summary>
     public static void run()
     {
         Thread mainThreads = new Thread(new ThreadStart(chooseOrder));
         mainThreads.Start();
         return;
     }
+    /// <summary>
+    /// the function choose the order that has to be cared now.
+    /// </summary>
     public static void chooseOrder()
     {
         IBL bl = new BlImplementation.Bl();
@@ -34,7 +34,7 @@ public static class Simulator
         {
             id = bl.order.ChooseOrder();
             if (id == null)
-                DoStop(); //call DoStop(), program has to finish, no more orders.
+                DoStop();
             else
             {
                 BO.Order o = bl.order.GetOrderDetails((int)id);
@@ -54,7 +54,9 @@ public static class Simulator
     }
 }
 
-
+/// <summary>
+/// class to define the things that are sended from the Simulator.cs to the window.
+/// </summary>
 public class Details : EventArgs
 {
     public BO.Order order;

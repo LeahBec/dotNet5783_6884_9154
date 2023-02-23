@@ -6,6 +6,7 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Animation;
+using System.Windows.Threading;
 
 namespace PL
 {
@@ -18,6 +19,7 @@ namespace PL
         string nextStatus;
         string previousStatus;
         BackgroundWorker worker;
+        Tuple<BO.Order, int, string, string> dcT;
         //====== disable the option of closing the window =======
         private const int GWL_STYLE = -16;
         private const int WS_SYSMENU = 0x80000;
@@ -29,11 +31,14 @@ namespace PL
         //=====================================================
         private Stopwatch stopWatch;
         private bool isTimerRun;
-        //BackgroundWorker worker;
+        //=======progressBar variables
         Duration duration;
         DoubleAnimation doubleanimation;
         ProgressBar ProgressBar;
-        Tuple<BO.Order, int,string, string> dcT;
+        //=======countdown timer variables
+        DispatcherTimer _timer;
+        TimeSpan _time;
+        //=======
         public SimulatorWindow(BLApi.IBL Bl)
         {
             InitializeComponent();
@@ -42,11 +47,24 @@ namespace PL
             TimerStart();
         }
 
+        void countDownTimer(int sec)
+        {
+            _time = TimeSpan.FromSeconds(sec);
+
+            _timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                tbTime.Text = _time.ToString("c");
+                if (_time == TimeSpan.Zero) _timer.Stop();
+                _time = _time.Add(TimeSpan.FromSeconds(-1));
+            }, Application.Current.Dispatcher);
+
+            _timer.Start();
+        }
         void ProgressBarStart(int sec)
         {
             if (ProgressBar!=null)
             {
-                SBar.Items.Remove(ProgressBar);
+                pBar.Items.Remove(ProgressBar);
             }
             ProgressBar = new ProgressBar();
             ProgressBar.IsIndeterminate = false;
@@ -56,7 +74,7 @@ namespace PL
             duration = new Duration(TimeSpan.FromSeconds(sec*2));
             doubleanimation = new DoubleAnimation(200.0, duration);
             ProgressBar.BeginAnimation(ProgressBar.ValueProperty, doubleanimation);
-            SBar.Items.Add(ProgressBar);
+            pBar.Items.Add(ProgressBar);
         }
         void TimerStart()
         {
@@ -71,16 +89,6 @@ namespace PL
             isTimerRun = true;
             worker.RunWorkerAsync();
         }
-        //void workerStart()
-        //{
-        //    worker = new BackgroundWorker();
-        //    worker.DoWork += WorkerDoWork;
-        //    worker.WorkerReportsProgress = true;
-        //    worker.WorkerSupportsCancellation = true;
-        //    // worker.ProgressChanged += workerProgressChanged;
-        //    worker.RunWorkerCompleted += RunWorkerCompleted;
-        //    worker.RunWorkerAsync();
-        //}
         void TimerDoWork(object sender, DoWorkEventArgs e)
         {
             Simulator.Simulator.ProgressChange += changeOrder;
@@ -108,27 +116,17 @@ namespace PL
             else
             {
                 DataContext = dcT;
+                countDownTimer(details.seconds / 1000);
+
                 ProgressBarStart(details.seconds/1000);
             }
         }
-        //void WorkerDoWork(object sender, DoWorkEventArgs e)
-        //{
-        //    while (!worker.CancellationPending)
-        //    {
-        //        worker.ReportProgress(1);
-        //        Thread.Sleep(1000);
-        //    }
-        //}
         void TimerProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             string timerText = stopWatch.Elapsed.ToString();
             timerText = timerText.Substring(0, 8);
             SimulatorTXTB.Text = timerText;
         }
-        //void workerProgressChanged(object sender, ProgressChangedEventArgs e)
-        //{
-        //    ProgressBar.Value = e.ProgressPercentage;
-        //}
         void ToolWindow_Loaded(object sender, RoutedEventArgs e)
         {
             // Code to remove close box from window
@@ -138,9 +136,6 @@ namespace PL
 
         private void StopSimulatorBTN_Click(object sender, RoutedEventArgs e)
         {
-            //if (worker.WorkerSupportsCancellation == true)
-            //    // Cancel the asynchronous operation.
-            //    worker.CancelAsync();
             if (isTimerRun)
             {
                 stopWatch.Stop();
@@ -149,25 +144,25 @@ namespace PL
             Simulator.Simulator.DoStop();
             this.Close();
         }
-
-        //    void RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        //    {
-        //        Simulator.Simulator.StopSimulator();
-        //        this.Close();
-        //    }
-        //}
         public void Stop(object sender, EventArgs e)
         {
-            Simulator.Simulator.ProgressChange -= changeOrder;
-            Simulator.Simulator.StopSimulator -= Stop;
-            /*if (worker.WorkerSupportsCancellation == true)
-                worker.CancelAsync();*/
-            while (!CheckAccess())
+            /*    Simulator.Simulator.ProgressChange -= changeOrder;
+                Simulator.Simulator.StopSimulator -= Stop;
+                while (!CheckAccess())
+                {
+                    Dispatcher.BeginInvoke(Stop, sender, e);
+                }
+                MessageBox.Show("successfully finish updating all orders");
+                this.Close();*/
+            if (!CheckAccess())
             {
                 Dispatcher.BeginInvoke(Stop, sender, e);
             }
-            //MessageBox.Show("successfully finish updating all orders");
-            this.Close();
+            else
+            {
+                MessageBox.Show("complete updating");
+                this.Close();
+            }
         }
     }
 }

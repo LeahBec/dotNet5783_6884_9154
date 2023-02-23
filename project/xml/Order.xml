@@ -190,15 +190,6 @@
     <DeliveryDate>2023-02-23T16:08:40.2550945+02:00</DeliveryDate>
   </order>
   <order>
-    <OrderID>500121</OrderID>
-    <CustomerName>sdf</CustomerName>
-    <CustomerEmail>s@d</CustomerEmail>
-    <CustomerAddress>sdf</CustomerAddress>
-    <OrderDate>2023-02-23T00:00:00</OrderDate>
-    <ShipDate>2023-02-23T16:42:45.8043589+02:00</ShipDate>
-    <DeliveryDate />
-  </order>
-  <order>
     <OrderID>500120</OrderID>
     <CustomerName>q</CustomerName>
     <CustomerEmail>q@s</CustomerEmail>
@@ -206,5 +197,14 @@
     <OrderDate>2023-02-23T00:00:00</OrderDate>
     <ShipDate>2023-02-23T16:42:40.7214714+02:00</ShipDate>
     <DeliveryDate>2023-02-23T16:42:47.7204946+02:00</DeliveryDate>
+  </order>
+  <order>
+    <OrderID>500121</OrderID>
+    <CustomerName>sdf</CustomerName>
+    <CustomerEmail>s@d</CustomerEmail>
+    <CustomerAddress>sdf</CustomerAddress>
+    <OrderDate>2023-02-23T00:00:00</OrderDate>
+    <ShipDate>2023-02-23T16:42:45.8043589+02:00</ShipDate>
+    <DeliveryDate>2023-02-23T17:44:38.4255184+02:00</DeliveryDate>
   </order>
 </Orders>

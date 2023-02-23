@@ -122,11 +122,6 @@ public partial class CustomerProductList : Window
         }
     }
 
-    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
-
     private void showCart(object sender, RoutedEventArgs e)
     {
         Window w = new CartWindow(bl, this.c, this);

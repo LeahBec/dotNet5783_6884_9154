@@ -11,7 +11,7 @@
         <TextBlock HorizontalAlignment="Left" Margin="114,155,0,0" TextWrapping="Wrap" Text="{Binding Path=ID }" VerticalAlignment="Top" Height="21" Width="76"/>
         <TextBlock HorizontalAlignment="Left" Margin="114,203,0,0" TextWrapping="Wrap" Text="Order Status:" VerticalAlignment="Top" Height="24" Width="83"/>
         <TextBlock HorizontalAlignment="Left" Margin="114,242,0,0" TextWrapping="Wrap" Text="{Binding Path=Status }" VerticalAlignment="Top" Height="23" Width="86"/>
-        <ListView x:Name="orderDates" MouseDoubleClick="itemClicked"  FontFamily="Amatic SC" FontSize="16" Cursor="Hand" SelectionChanged="orderDates_SelectionChanged" Margin="244,97,40,120" ItemsSource="{Binding mylist}">
+        <ListView x:Name="orderDates"   FontFamily="Amatic SC" FontSize="16" Cursor="Hand"  Margin="244,97,40,120" ItemsSource="{Binding mylist}">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 

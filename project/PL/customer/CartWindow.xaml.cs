@@ -87,8 +87,4 @@ public partial class CartWindow : Window
         this.Hide();
     }
 
-    private void ListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-
-    }
 }

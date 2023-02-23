@@ -35,10 +35,7 @@ namespace PL
             this.Hide();
         }
 
-        private void TextBox_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
-
-        }
+        
 
         private void OrderTracking_clicked(object sender, RoutedEventArgs e)
         {

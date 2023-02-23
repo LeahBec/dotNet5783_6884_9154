@@ -37,7 +37,7 @@ VerticalAlignment="Stretch" Width="auto">
             </ListView.View>
         </ListView>
 
-        <ListView Grid.Row="1" x:Name="ProductsListview" MouseDoubleClick="itemClicked" ItemsSource="{Binding Path=Item1}" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" SelectionChanged="ProductsListview_SelectionChanged">
+        <ListView Grid.Row="1" x:Name="ProductsListview" MouseDoubleClick="itemClicked" ItemsSource="{Binding Path=Item1}" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 

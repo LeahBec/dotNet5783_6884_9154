@@ -37,7 +37,7 @@ VerticalAlignment="Stretch" Width="auto">
                 </ComboBox>
             </Label>
         </Grid>
-        <ListView Grid.Row="1" x:Name="ProductsListview" ItemsSource="{Binding Path= Item1}" MouseDoubleClick="itemClicked" SelectionChanged="ProductsListview_SelectionChanged" FontFamily="Amatic SC" FontSize="16" Cursor="Hand" >
+        <ListView Grid.Row="1" x:Name="ProductsListview" ItemsSource="{Binding Path= Item1}" MouseDoubleClick="itemClicked"  FontFamily="Amatic SC" FontSize="16" Cursor="Hand" >
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
 

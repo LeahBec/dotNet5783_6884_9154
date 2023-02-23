@@ -120,9 +120,6 @@ public partial class AdminWindow : Window
         }
     }
 
-    private void ProductsListview_SelectionChanged(object sender, SelectionChangedEventArgs e)
-    {
-    }
 
     private void go_Back(object sender, RoutedEventArgs e)
     {

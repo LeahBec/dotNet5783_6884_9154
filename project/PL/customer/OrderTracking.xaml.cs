@@ -61,15 +61,6 @@ namespace PL.customer
             //this.Close();
         }
 
-        private void itemClicked(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
-        private void orderDates_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-        }
 
         private void go_Back(object sender, RoutedEventArgs e)
         {

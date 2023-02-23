@@ -27,7 +27,7 @@ namespace PL
         PO.Cart cart=new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
         Window prevWindow;
-        Tuple<PO.Order, bool> dcT;
+        Tuple<PO.Order, bool, bool> dcT;
         public OrderWindow(BLApi.IBL bl, PO.Order ord, bool _isCustomer, PO.Cart c, Window prevWindow, ObservableCollection<PO.OrderForList> list = null)
         {
             try
@@ -42,14 +42,8 @@ namespace PL
                 BO.Order order = bl.order.GetOrderDetails(ord.ID);
                 this.or = order;
                 this.o = Common.ConvertToPoOrder(or, o);
-                this.dcT = new Tuple<PO.Order, bool>(this.o, isCustomer);
+                this.dcT = new Tuple<PO.Order, bool, bool>(this.o, isCustomer, !isCustomer);
                 this.DataContext = this.dcT;
-                if (this.isCustomer)
-                {
-                    updateOrderBtn.IsEnabled = false;
-                    updateOrderDeliveryBtn.IsEnabled = false;
-                    updateOrderShippingBtn.IsEnabled = false;
-                }
             }
             catch (Exception err)
             {

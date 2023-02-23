@@ -21,7 +21,6 @@ public partial class CustomerProductList : Window
     PO.Cart c = new PO.Cart();
     IEnumerable<BO.ProductForList> list1;
     ObservableCollection<PO.ProductForList> List_p = new();
-    PO.ProductForList pro = new PO.ProductForList();
     Window prevWindow;
     Tuple<ObservableCollection<PO.ProductForList>, Array> dcT;
     public CustomerProductList(BLApi.IBL bl, PO.Cart _c, Window _prevWindow)

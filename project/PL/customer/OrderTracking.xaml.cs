@@ -26,7 +26,6 @@ namespace PL.customer
         PO.Order order = new();
         BO.OrderTracking ot;
         BLApi.IBL bl;
-        BO.Cart cart = new BO.Cart();
         PO.Cart c = new PO.Cart();
         Window prevWindow;
         public OrderTracking(BLApi.IBL _bl ,int _orderID, PO.Cart _c, Window _prevWindow)
@@ -58,7 +57,6 @@ namespace PL.customer
             {
                 MessageBox.Show(ex.Message + "orderTracking: 95");
             }
-            //this.Close();
         }
 
 

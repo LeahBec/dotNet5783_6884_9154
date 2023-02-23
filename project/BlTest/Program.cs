@@ -19,7 +19,8 @@ void getOrders()
     catch (BO.BlNoEntitiesFound ex)
     {
         Console.WriteLine(ex.Message);
-    }catch (BO.BlExceptionFailedToRead ex)
+    }
+    catch (BO.BlExceptionFailedToRead ex)
     {
         Console.WriteLine(ex.Message);
     }
@@ -121,7 +122,8 @@ void getProducts()
     catch (BO.BlExceptionFailedToRead ex)
     {
         Console.WriteLine(ex.Message);
-    }catch (Exception ex)
+    }
+    catch (Exception ex)
     {
         Console.WriteLine(ex.Message);
     }

@@ -39,7 +39,6 @@ namespace PL
 
         private void OrderTracking_clicked(object sender, RoutedEventArgs e)
         {
-            //this.ID =int.Parse( id.Text);
             this.ID = int.Parse(id_.Text);
             Window w = new customer.OrderTracking(bl ,this.ID, this.c, this);
             w.Show();

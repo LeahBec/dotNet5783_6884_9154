@@ -20,7 +20,6 @@ public partial class AdminWindow : Window
     Window prevWindow;
     public ObservableCollection<PO.ProductForList> List_p { get; set; } = new();
     IEnumerable<BO.ProductForList> list1;
-    PO.ProductForList pro = new PO.ProductForList();
     IEnumerable<BO.OrderForList> list2;
     public ObservableCollection<PO.OrderForList> List_o { get; set; } = new();
     PO.Order order = new PO.Order();

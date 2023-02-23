@@ -40,7 +40,6 @@ public partial class ProductWindow : Window
             this.prevWindow = prevWindow;
             if (_list_p == null) this.list_p = new();
             else this.list_p = _list_p;
-            if (!isCustomer) addBtn.Visibility = Visibility.Hidden;
             Array a = Enum.GetValues(typeof(BO.Category));
             this.dcT = new Tuple<PO.Product, bool , bool, Array>(this.p_, this.isCustomer, !this.isCustomer, a);
             this.DataContext = this.dcT;
@@ -98,11 +97,7 @@ public partial class ProductWindow : Window
     }
 
 
-    private void categorySelectorBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
-    {
-
-        p_.Category = (BO.Category)categorySelectorBox.SelectedItem;
-    }
+   
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
     {

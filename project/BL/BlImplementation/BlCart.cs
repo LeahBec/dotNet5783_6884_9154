@@ -90,7 +90,8 @@ internal class BlCart : ICart
                         if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
                             throw new Exception();
                         int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
-                    }    Dal.DO.Order o = new Dal.DO.Order();
+                    }
+                    Dal.DO.Order o = new Dal.DO.Order();
                     
                     o.OrderID = 0;
                     o.OrderDate = DateTime.Now;

@@ -41,20 +41,6 @@ namespace PL.customer
         {
             try
             {
-                /*if (this.c.CustomerEmail == "" || this.c.CustomerAddress == "" || this.c.CustomerName == "")
-                {
-                    throw new PlInvalidValueExeption("one or more of the customer details is missing");
-                }
-                BO.Order o = new BO.Order();
-                o.CustomerAddress = this.c.CustomerAddress;
-                o.CustomerEmail= this.c.CustomerEmail;
-                o.CustomerName = this.c.CustomerName;
-                o.Items = Common.convertToBoOiList(this.c.Items);
-                o.OrderDate = DateTime.Today;
-                o.ShipDate=null;
-                o.DeiveryDate= null;
-                o.TotalPrice= this.c.TotalPrice;
-                int id = bl.order.AddNewOrder(o);*/
                 int id = bl.cart.CartConfirmation(Common.ConvertToBoCart(this.c), this.c.CustomerName, this.c.CustomerEmail, this.c.CustomerAddress);
                 MessageBox.Show("The order was successfully created");
                 Window w = new OrderTracking(bl, id, this.c,this);

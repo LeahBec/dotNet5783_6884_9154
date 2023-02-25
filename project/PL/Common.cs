@@ -115,24 +115,30 @@ namespace PL
         public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<List<BO.ProductForList>> Blist, ObservableCollection<PO.ProductForList> Plist)
         {
             Plist.Clear();
-            foreach (var group in Blist)
+/*            foreach (var group in Blist)
             {
                 foreach (var item in group)
                 {
                     Plist.Add(ConvertToPoProFL(item));
 
                 }
-            }
+            }*/
+            Blist.FirstOrDefault(group =>
+            {
+                group.ForEach(item => Plist.Add(ConvertToPoProFL(item))); return false;
+            });
             return Plist;
         }
 
         public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist, ObservableCollection<PO.ProductForList> Plist)
         {
             Plist.Clear();
-            foreach (var item in Blist)
+         /*   foreach (var item in Blist)
             {
                 Plist.Add(ConvertToPoProFL(item));
-            }
+            }*/
+            Blist.FirstOrDefault(i => { Plist.Add(ConvertToPoProFL(i)); return false; });
+
             return Plist;
         }
 
@@ -146,7 +152,7 @@ namespace PL
             Po.ShipDate = (DateTime?)Bo.ShipDate;
             Po.OrderDate = (DateTime?)Bo?.OrderDate;
             Po.TotalPrice = Bo.TotalPrice;
-            Po.Status= Bo.Status;
+            Po.Status = Bo.Status;
             Po.Items = convertToPoOiList(Bo.Items);
 
             return Po;
@@ -155,11 +161,17 @@ namespace PL
         public static ObservableCollection<PO.OrderForList> convertListOrder(IEnumerable<BO.OrderForList> list2, ObservableCollection<PO.OrderForList> List_o)
         {
             PO.OrderForList i = new PO.OrderForList();
-            foreach (BO.OrderForList tmp in list2)
+            /*            foreach (BO.OrderForList tmp in list2)
+                        {
+                            i = ConvertToPoOrderForList(tmp);
+                            List_o.Add(i);
+                        }*/
+            list2.FirstOrDefault(tmp =>
             {
                 i = ConvertToPoOrderForList(tmp);
-                List_o.Add(i);
-            }
+                List_o.Add(i); return false;
+            });
+
             return List_o;
         }
         public static PO.OrderForList ConvertToPoOrderForList(BO.OrderForList boo)
@@ -189,11 +201,12 @@ namespace PL
         public static List<PO.OrderItem> convertToPoOiList(List<BO.OrderItem> loi)
         {
             List<PO.OrderItem> returnList = new();
-            if(loi != null)
-            foreach (BO.OrderItem oi in loi)
-            {
-                returnList.Add(converToPoOi(oi));
-            }
+            if (loi != null)
+                /*                foreach (BO.OrderItem oi in loi)
+                                {
+                                    returnList.Add(converToPoOi(oi));
+                                }*/
+                loi.ForEach(oi => returnList.Add(converToPoOi(oi)));
             return returnList;
         }
 
@@ -213,20 +226,26 @@ namespace PL
         public static List<BO.OrderItem> convertToBoOiList(List<PO.OrderItem> loi)
         {
             List<BO.OrderItem> returnList = new();
-            foreach (PO.OrderItem oi in loi)
-            {
-                returnList.Add(converToBoOi(oi));
-            }
+            /*            foreach (PO.OrderItem oi in loi)
+                        {
+                            returnList.Add(converToBoOi(oi));
+                        }*/
+            loi.ForEach(oi => returnList.Add(converToBoOi(oi)));
             return returnList;
         }
-   public static ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p, IEnumerable<BO.ProductForList> list1)
+        public static ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p, IEnumerable<BO.ProductForList> list1)
         {
             PO.ProductForList i = new PO.ProductForList();
-            foreach (BO.ProductForList tmp in list1)
+            /*            foreach (BO.ProductForList tmp in list1)
+                        {
+                            i = ConvertToPo(tmp);
+                            List_p.Add(i);
+                        }*/
+            list1.FirstOrDefault(tmp =>
             {
                 i = ConvertToPo(tmp);
-                List_p.Add(i);
-            }
+                List_p.Add(i); return false;
+            });
             return List_p;
         }
         public static PO.ProductForList ConvertToPo(BO.ProductForList Bp)
@@ -252,7 +271,7 @@ namespace PL
                 ShipDate = (DateTime?)Op.ShipDate,
                 DeiveryDate = (DateTime?)Op.DeiveryDate,
                 Status = Op.Status,
-                TotalPrice= Op.TotalPrice,
+                TotalPrice = Op.TotalPrice,
             };
             item.Items = convertItemsToBOOI(Op.Items);
             return item;

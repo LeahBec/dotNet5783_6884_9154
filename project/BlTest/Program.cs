@@ -11,10 +11,12 @@ void getOrders()
     try
     {
         IEnumerable<BO.OrderForList> orderList = bl.order.GetOrderList();
-        foreach (var item in orderList)
-        {
-            Console.WriteLine(item);
-        }
+        /*        foreach (var item in orderList)
+                {
+                    Console.WriteLine(item);
+                }*/
+        orderList.FirstOrDefault(i => { Console.WriteLine(i); return false; });
+
     }
     catch (BO.BlNoEntitiesFound ex)
     {
@@ -47,8 +49,8 @@ void getOrderItems()
     catch (BO.BlInvalidIntegerException ex)
     {
         Console.WriteLine(ex.Message);
-    } 
-    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); } 
+    }
+    catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
     catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
 
 }
@@ -72,9 +74,9 @@ void updateOrderDelivery()
 {
     try
     {
-    Console.WriteLine("enter order id");
-    int id = int.Parse(Console.ReadLine());
-    bl.order.UpdateOrderDelivery(id);
+        Console.WriteLine("enter order id");
+        int id = int.Parse(Console.ReadLine());
+        bl.order.UpdateOrderDelivery(id);
     }
     catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
     catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
@@ -114,10 +116,12 @@ void getProducts()
     try
     {
         IEnumerable<BO.ProductForList> products = bl.product.GetProductList();
-        foreach (var item in products)
-        {
-            Console.WriteLine(item);
-        }
+        /*    foreach (var item in products)
+            {
+                Console.WriteLine(item);
+            }*/
+        products.FirstOrDefault(i => { Console.WriteLine(i); return false; });
+
     }
     catch (BO.BlExceptionFailedToRead ex)
     {
@@ -134,10 +138,12 @@ void getCatalog()
     try
     {
         IEnumerable<BO.ProductItem> catalog = bl.product.GetCatalog();
-        foreach (var item in catalog)
+/*        foreach (var item in catalog)
         {
             Console.WriteLine(item);
-        }
+        }*/
+        catalog.FirstOrDefault(i => { Console.WriteLine(i); return false; });
+
     }
     catch (BO.BlExceptionFailedToRead ex) { Console.WriteLine(ex.Message); }
     catch (Exception ex) { Console.WriteLine(ex.Message); }
@@ -170,7 +176,7 @@ void getProCustomer()
 
 void addPro()
 {
-   
+
 }
 
 void deletePro()
@@ -251,7 +257,7 @@ void addProduct()
             throw new BO.BlInvalidIntegerException();
         cart = bl.cart.AddProductToCart(cart, productId);
     }
-    
+
     catch (BO.BlDefaultException ex) { Console.WriteLine(ex.Message); }
     catch (BO.BlEntityNotFoundException ex) { Console.WriteLine(ex.Message); }
 }

@@ -96,7 +96,8 @@ namespace PL
                 or = bl?.order.UpdateOrderShipping(id);
                 Common.ConvertToPoOrder(or, o);
                 o.Items = list;
-                foreach (var item in list) { o.TotalPrice += item.Price; }
+/*                foreach (var item in list) { o.TotalPrice += item.Price; }
+*/                list.ForEach(item => o.TotalPrice += item.Price);
             }
             catch (BO.BlDefaultException ex)
             {
@@ -114,8 +115,9 @@ namespace PL
                 or = bl?.order.UpdateOrderDelivery(id);
                 Common.ConvertToPoOrder(or, o);
                 o.Items = list;
-                foreach (var item in list) { o.TotalPrice += item.Price; }
-            }
+                list.ForEach(item => o.TotalPrice += item.Price);
+/*                foreach (var item in list) { o.TotalPrice += item.Price; }
+*/            }
             catch(BO.BlDefaultException ex)
             {
                 MessageBox.Show(ex.Message);

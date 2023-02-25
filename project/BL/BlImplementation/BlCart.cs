@@ -83,52 +83,56 @@ internal class BlCart : ICart
         {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
                 throw new CustomerDetailsAreInValid();
+            Dal.DO.Order o = new Dal.DO.Order();
             c.items.Select(item =>
                 {
                     lock (Dal)
                     {
                         if (item.Amount < 0 || (Dal.Product.Get(p => p.ID == item.ProductID).InStock - item.Amount) < 0)
                             throw new Exception();
-                        int amountInStock = Dal.Product.Get(p => p.ID == item.ProductID).InStock;
                     }
-                    Dal.DO.Order o = new Dal.DO.Order();
-                    
-                    o.OrderID = 0;
-                    o.OrderDate = DateTime.Now;
-                    o.DeliveryDate = null;
-                    o.ShipDate = null;
-                    o.CustomerAddress = customerAddress;
-                    o.CustomerName = customerName;
-                    o.CustomerEmail = customerEmail;
-                    lock (Dal)
-                    {
-                        id = Dal.Order.Add(o);
-                        List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
-                        c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
-                    }
-                    var cartItems = from BO.OrderItem item1 in c.items
-                                    select new BO.OrderItem
-                                    {
-                                        ID = item1.ID,
-                                        Amount = item1.Amount,
-                                        Price = item1.Price,
-                                        ProductID = item1.ProductID,
-                                        ProductName = item1.ProductName,
-                                        TotalPrice = item1.TotalPrice
-                                    };
+                    return item;
 
-                    var items1 = from BO.OrderItem item1 in c.items
-                                 select new BO.OrderItem
-                                 {
-                                     ID = item1.ID,
-                                     Amount = item1.Amount,
-                                     Price = item1.Price,
-                                     ProductID = item1.ProductID,
-                                     ProductName = item1.ProductName,
-                                     TotalPrice = item1.TotalPrice
-                                 };
-                    return items1;
-                }).ToList();
+                });
+            
+                o.OrderID = 0;
+                o.OrderDate = DateTime.Now;
+                o.DeliveryDate = null;
+                o.ShipDate = null;
+                o.CustomerAddress = customerAddress;
+                o.CustomerName = customerName;
+                o.CustomerEmail = customerEmail;
+                lock (Dal)
+                {
+                    id = Dal.Order.Add(o);
+                    List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
+                    c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
+                }
+           /* c.items.Select(item =>
+            {*/
+                var cartItems = from BO.OrderItem item1 in c.items
+                                select new BO.OrderItem
+                                {
+                                    ID = item1.ID,
+                                    Amount = item1.Amount,
+                                    Price = item1.Price,
+                                    ProductID = item1.ProductID,
+                                    ProductName = item1.ProductName,
+                                    TotalPrice = item1.TotalPrice
+                                };
+
+                var items1 = from BO.OrderItem item1 in c.items
+                             select new BO.OrderItem
+                             {
+                                 ID = item1.ID,
+                                 Amount = item1.Amount,
+                                 Price = item1.Price,
+                                 ProductID = item1.ProductID,
+                                 ProductName = item1.ProductName,
+                                 TotalPrice = item1.TotalPrice
+                             };
+            /*    return items1;
+            }).ToList();*/
             return id;
         }
 

@@ -1,94 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Product>
-    <ID>100007</ID>
-    <Name>upooooo</Name>
-    <Category>Cameras</Category>
-    <Price>480</Price>
-    <InStock>54</InStock>
-  </Product>
-  <Product>
-    <ID>100013</ID>
-    <Name>qqq</Name>
-    <Category>Drones</Category>
-    <Price>23</Price>
-    <InStock>12</InStock>
-  </Product>
-  <Product>
-    <ID>100015</ID>
-    <Name>epes</Name>
-    <Category>Computers</Category>
-    <Price>12</Price>
-    <InStock>12</InStock>
-  </Product>
-  <Product>
-    <ID>100021</ID>
-    <Name>789</Name>
-    <Category>Drones</Category>
-    <Price>7</Price>
-    <InStock>2</InStock>
-  </Product>
-  <Product>
-    <ID>100023</ID>
-    <Name>it totaly works!</Name>
-    <Category>Headphones</Category>
-    <Price>77</Price>
-    <InStock>55</InStock>
-  </Product>
-  <Product>
-    <ID>100024</ID>
-    <Name>lllllllll</Name>
-    <Category>SmartWatches</Category>
-    <Price>222</Price>
-    <InStock>2222</InStock>
-  </Product>
-  <Product>
-    <ID>100010</ID>
-    <Name>ttttt</Name>
-    <Category>SmartWatches</Category>
-    <Price>55555</Price>
-    <InStock>15</InStock>
-  </Product>
-  <Product>
-    <ID>100016</ID>
-    <Name>cvcvcv</Name>
-    <Category>Cameras</Category>
-    <Price>560</Price>
-    <InStock>56</InStock>
-  </Product>
-  <Product>
-    <ID>100017</ID>
-    <Name>45</Name>
-    <Category>Drones</Category>
-    <Price>45</Price>
-    <InStock>45</InStock>
-  </Product>
-  <Product>
-    <ID>100019</ID>
-    <Name>333asdf</Name>
-    <Category>Drones</Category>
-    <Price>33</Price>
-    <InStock>33</InStock>
-  </Product>
-  <Product>
-    <ID>100012</ID>
-    <Name>tama</Name>
-    <Category>Drones</Category>
-    <Price>3</Price>
-    <InStock>3</InStock>
-  </Product>
-  <Product>
-    <ID>100018</ID>
-    <Name>zzzz</Name>
-    <Category>Headphones</Category>
-    <Price>34</Price>
-    <InStock>34</InStock>
-  </Product>
-  <Product>
-    <ID>100025</ID>
-    <Name>hii</Name>
-    <Category>Computers</Category>
-    <Price>30</Price>
-    <InStock>2</InStock>
-  </Product>
+	<Product>
+		<ID>100007</ID>
+		<Name>panasonic 45xd</Name>
+		<Category>Cameras</Category>
+		<Price>950</Price>
+		<InStock>54</InStock>
+	</Product>
+	<Product>
+		<ID>100013</ID>
+		<Name>Canon Ixus185</Name>
+		<Category>Cameras</Category>
+		<Price>655.90</Price>
+		<InStock>12</InStock>
+	</Product>
+	<Product>
+		<ID>100015</ID>
+		<Name>Asus 950D</Name>
+		<Category>Computers</Category>
+		<Price>1950</Price>
+		<InStock>12</InStock>
+	</Product>
+	<Product>
+		<ID>100021</ID>
+		<Name>dji miniMavic</Name>
+		<Category>Drones</Category>
+		<Price>3595</Price>
+		<InStock>7</InStock>
+	</Product>
+	<Product>
+		<ID>100023</ID>
+		<Name>JBL Endurance Peak II</Name>
+		<Category>Headphones</Category>
+		<Price>99</Price>
+		<InStock>55</InStock>
+	</Product>
+	<Product>
+		<ID>100024</ID>
+		<Name>Piere Richardson</Name>
+		<Category>SmartWatches</Category>
+		<Price>790</Price>
+		<InStock>155</InStock>
+	</Product>
+	<Product>
+		<ID>100010</ID>
+		<Name>Ortech smartWatch</Name>
+		<Category>SmartWatches</Category>
+		<Price>359</Price>
+		<InStock>15</InStock>
+	</Product>
+	<Product>
+		<ID>100016</ID>
+		<Name>Nikon D780</Name>
+		<Category>Cameras</Category>
+		<Price>1950</Price>
+		<InStock>56</InStock>
+	</Product>
+	<Product>
+		<ID>100017</ID>
+		<Name>V27 rs Airplane</Name>
+		<Category>Drones</Category>
+		<Price>355</Price>
+		<InStock>45</InStock>
+	</Product>
+	<Product>
+		<ID>100019</ID>
+		<Name>BLESSBE Drone</Name>
+		<Category>Drones</Category>
+		<Price>255</Price>
+		<InStock>33</InStock>
+	</Product>
+	<Product>
+		<ID>100012</ID>
+		<Name>canon powerShot xs620</Name>
+		<Category>Cameras</Category>
+		<Price>799.90</Price>
+		<InStock>3</InStock>
+	</Product>
+	<Product>
+		<ID>100012</ID>
+		<Name>iCamera Apple</Name>
+		<Category>Cameras</Category>
+		<Price>589.70</Price>
+		<InStock>3</InStock>
+	</Product>
+	<Product>
+		<ID>100018</ID>
+		<Name>JBL wave 200</Name>
+		<Category>Headphones</Category>
+		<Price>255.90</Price>
+		<InStock>34</InStock>
+	</Product>
+	<Product>
+		<ID>100025</ID>
+		<Name>DELL Optiplex 7040</Name>
+		<Category>Computers</Category>
+		<Price>2599.90</Price>
+		<InStock>2</InStock>
+	</Product>
 </Products>

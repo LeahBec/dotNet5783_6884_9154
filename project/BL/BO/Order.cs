@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BLApi;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,10 +35,12 @@ namespace BO
         Deivery Date : {DeiveryDate}
         total price: {TotalPrice}
         Items :";
-            if (Items != null)
+            /*if (Items != null)
             {
                 foreach (var i in Items)  order +=$"\n \t   {i}"; ;
             }
+            return order;*/
+            Items.ForEach(i => order += "\n \t " + i);
             return order;
         }
 

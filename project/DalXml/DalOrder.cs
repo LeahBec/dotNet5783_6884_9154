@@ -97,7 +97,7 @@ internal class DalOrder : IOrder
         XElement? root = XDocument.Load("../xml/Order.xml").Root;
         XElement? order = root?.Elements("order")?.Where(o => o.Element("OrderID")?.Value == ord.OrderID.ToString()).FirstOrDefault();
         if (order == null)
-            throw new NotImplementedException();
+            throw new xmlEntityNotFoundException();
         XElement o = new("order",
                         new XElement("OrderID", ord.OrderID),
                         new XElement("CustomerName", ord.CustomerName),
@@ -111,4 +111,3 @@ internal class DalOrder : IOrder
         root?.Save("../xml/Order.xml");
     }
 }
-

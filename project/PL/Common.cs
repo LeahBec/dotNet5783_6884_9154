@@ -194,7 +194,8 @@ namespace PL
                 ID = oi.ID,
                 ProductID = oi.ProductID,
                 Price = oi.Price,
-                ProductName = oi.ProductName
+                ProductName = oi.ProductName,
+                TotalPrice = oi.TotalPrice
             };
             return item;
         }

@@ -23,7 +23,6 @@ namespace PL.customer
     /// </summary>
     public partial class ConfirmCart : Window
     {
-
         BLApi.IBL bl;
         BO.Cart cart;
         PO.Cart c;
@@ -36,7 +35,6 @@ namespace PL.customer
             this.prevWindow = _prevWindow;
             DataContext = this.c;
         }
-
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             try

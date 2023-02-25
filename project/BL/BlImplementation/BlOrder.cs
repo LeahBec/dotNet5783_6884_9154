@@ -183,11 +183,11 @@ internal class BlOrder : BLApi.IOrder
             {
                 oDO = Dal.Order.Get(o => o.OrderID == id);
             }
-            if(oDO.ShipDate == null)
+            if (oDO.ShipDate == null)
             {
                 throw new BlExceptionCantUpdateDelivery();
             }
-            if (oDO.DeliveryDate == null )
+            if (oDO.DeliveryDate == null)
             {
                 oDO.DeliveryDate = DateTime.Now;
                 BO.Order order = new BO.Order();
@@ -313,7 +313,7 @@ internal class BlOrder : BLApi.IOrder
         }
         catch (DalApi.ExceptionObjectNotFound)
         {
-            throw new Exception();
+            throw new BlEntityNotFoundException("could not find the order");
         }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]

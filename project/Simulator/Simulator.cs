@@ -19,6 +19,7 @@ public static class Simulator
     /// </summary>
     public static void run()
     {
+        finishFlag = false;
         Thread mainThreads = new Thread(new ThreadStart(chooseOrder));
         mainThreads.Start();
         return;

@@ -15,7 +15,8 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetProductList()
     {
         try
-        { IEnumerable<Dal.DO.Product> existingProductsList;
+        {
+            IEnumerable<Dal.DO.Product> existingProductsList;
             lock (Dal)
             {
                 existingProductsList = Dal.Product.GetAll();
@@ -69,7 +70,7 @@ internal class BlProduct : BLApi.IProduct
 
 
             if (productList.Count() == 0)
-                throw new Exception();
+                throw new BlNoEntitiesFound("no products");
             return productList;
         }
         catch (DalApi.ExceptionFailedToRead)
@@ -89,7 +90,8 @@ internal class BlProduct : BLApi.IProduct
         {
             BO.Product p = new BO.Product();
             if (id > 0)
-            { Dal.DO.Product product;
+            {
+                Dal.DO.Product product;
                 lock (Dal)
                 {
                     product = Dal.Product.Get(p => p.ID == id);
@@ -120,7 +122,8 @@ internal class BlProduct : BLApi.IProduct
         {
             BO.Product p = new BO.Product();
             if (id > 0)
-            { Dal.DO.Product product;
+            {
+                Dal.DO.Product product;
                 lock (Dal)
                 {
                     product = Dal.Product.Get(p => p.ID == id);
@@ -173,8 +176,9 @@ internal class BlProduct : BLApi.IProduct
         {
             throw new BO.BlDefaultException("Failed to load the root");
         }
-        catch (Exception err) { 
-            throw new BO.BlDefaultException(err.Message); 
+        catch (Exception err)
+        {
+            throw new BO.BlDefaultException(err.Message);
         }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -275,7 +279,8 @@ internal class BlProduct : BLApi.IProduct
     public IEnumerable<BO.ProductForList> GetListByCategory(BO.Category category)
     {
         try
-        { IEnumerable<Dal.DO.Product> products;
+        {
+            IEnumerable<Dal.DO.Product> products;
             lock (Dal)
             {
                 products = Dal.Product.GetAll();
@@ -303,5 +308,3 @@ internal class BlProduct : BLApi.IProduct
         }
     }
 }
-
-

@@ -70,10 +70,6 @@ void viewOrderList()
     orders = i.Order.GetAll();
     int amountOfOrders = DataSource.orders.Count();
     if (amountOfOrders == 0) { Console.WriteLine("no orders were found"); return; }
-    /*    foreach (Order item in orders)
-        {
-            Console.WriteLine(item.OrderID + " " + item.CustomerName + " " + item.CustomerEmail + " " + item.CustomerAddress + " " + item.OrderDate + " " + item.ShipDate + " " + item.DeliveryDate);
-        }*/
     orders.FirstOrDefault(i => { Console.WriteLine(i); return false; });
 
 }
@@ -209,11 +205,6 @@ void viewOrderListItem()
 {
     IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
     orderItems = i.OrderItem.GetAll();
-    /*    foreach (OrderItem item in orderItems)
-        {
-            Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
-
-        }*/
     orderItems.FirstOrDefault(item => { Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount); ; return false; });
 
 }
@@ -222,14 +213,7 @@ void viewOrderListItem()
 /// </summary>
 IEnumerable<OrderItem> getOrderItemByOrderId(int id)
 {
-    List<OrderItem> orderItems = new List<OrderItem>();//[DataSource.orderItems.Count()];
-    /*    foreach (OrderItem item in DataSource.orderItems)
-        {
-            if (item.OrderID == id)
-            {
-                orderItems.Add(item);
-            }
-        }*/
+    List<OrderItem> orderItems = new List<OrderItem>();
     DataSource.orderItems.ForEach(i => { if (i.OrderID == id) orderItems.Add(i); });
     return orderItems;
 }
@@ -240,11 +224,6 @@ void viewListOrderId()
     int id = int.Parse(Console.ReadLine());
     IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
     orderItems = getOrderItemByOrderId(id);
-    /*    foreach (OrderItem item in orderItems)
-        {
-            if (item.OrderID != 0)
-                Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
-        }*/
     DataSource.orderItems.ForEach(item =>
     {
         if (item.OrderID != 0)
@@ -257,14 +236,7 @@ void viewListOrderId()
 /// </summary>
 List<OrderItem> getOrderItemByProductId(int id)
 {
-    List<OrderItem> orderItems = new List<OrderItem>();//[DataSource.orderItems.Count()];
-    /*    foreach (OrderItem item in DataSource.orderItems)
-        {
-            if (item.ProductID == id)
-            {
-                orderItems.Add(item);
-            }
-        }*/
+    List<OrderItem> orderItems = new List<OrderItem>();
     DataSource.orderItems.ForEach(i => { if (i.ProductID == id) orderItems.Add(i); });
 
     return orderItems;
@@ -276,11 +248,6 @@ void viewListProductId()
     int id = int.Parse(Console.ReadLine());
     IEnumerable<OrderItem> orderItems = new OrderItem[DataSource.orderItems.Count()];
     orderItems = getOrderItemByProductId(id);
-    /*    foreach (OrderItem item in orderItems)
-        {
-            if (item.OrderID != 0)
-                Console.WriteLine(item.ID + " " + item.OrderID + " " + item.ProductID + " " + item.Price + " " + item.Amount);
-        }*/
     orderItems.FirstOrDefault(item =>
     {
         if (item.OrderID != 0)
@@ -418,11 +385,6 @@ void viewProductList()
 {
     IEnumerable<Product> products = new Product[DataSource.products.Count()];
     products = i.Product.GetAll();
-    /*    foreach (Product item in products)
-        {
-            Console.WriteLine(item.ID + " " + item.Name + " " + item.Price + " " + item.InStock + " " + item.Category);
-
-        }*/
     products.FirstOrDefault(item =>
     {
         Console.WriteLine(item.ID + " " + item.Name + " " + item.Price + " " + item.InStock + " " + item.Category);

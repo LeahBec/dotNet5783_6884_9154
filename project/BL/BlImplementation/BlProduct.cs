@@ -209,8 +209,6 @@ internal class BlProduct : BLApi.IProduct
     }
 
     //Help function:
-   
-    
     [MethodImpl(MethodImplOptions.Synchronized)]
 
     public void Update(BO.Product p)

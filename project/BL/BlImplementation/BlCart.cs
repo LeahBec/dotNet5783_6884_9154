@@ -108,8 +108,6 @@ internal class BlCart : ICart
                     List<Dal.DO.OrderItem> allItems = Dal.OrderItem.GetAll().ToList();
                     c.items.ForEach(oi => { oi.ID = id; Dal.OrderItem.Add(convertToDal(oi)); });
                 }
-           /* c.items.Select(item =>
-            {*/
                 var cartItems = from BO.OrderItem item1 in c.items
                                 select new BO.OrderItem
                                 {
@@ -131,8 +129,6 @@ internal class BlCart : ICart
                                  ProductName = item1.ProductName,
                                  TotalPrice = item1.TotalPrice
                              };
-            /*    return items1;
-            }).ToList();*/
             return id;
         }
 
@@ -191,7 +187,7 @@ internal class BlCart : ICart
             }
             else
 
-                throw new BO.BlOutOfStockException();//OutOfStockException();
+                throw new BO.BlOutOfStockException();
 
         }
         catch (DalApi.ExceptionObjectNotFound)

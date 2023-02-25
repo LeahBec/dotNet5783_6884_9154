@@ -53,7 +53,6 @@ namespace PL.customer
                 MessageBox.Show(ex.Message);
             }
         }
-
         private void goBack(object sender, RoutedEventArgs e)
         {
             this.prevWindow.Show();

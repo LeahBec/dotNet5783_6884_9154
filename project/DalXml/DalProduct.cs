@@ -1,6 +1,4 @@
-﻿
-namespace Dal;
-//using BO;
+﻿namespace Dal;
 using Dal.DO;
 using DalApi;
 using System;

@@ -168,11 +168,6 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.BlExceptionFailedToRead();
         }
-        //catch (Exception)
-        //{
-
-        //    throw new BO.BlDefaultException("");
-        //}
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderDelivery(int id)
@@ -184,7 +179,11 @@ internal class BlOrder : BLApi.IOrder
             {
                 oDO = Dal.Order.Get(o => o.OrderID == id);
             }
-            if (oDO.DeliveryDate == null)
+            if(oDO.ShipDate == null)
+            {
+                throw new BlExceptionCantUpdateDelivery();
+            }
+            if (oDO.DeliveryDate == null )
             {
                 oDO.DeliveryDate = DateTime.Now;
                 BO.Order order = new BO.Order();
@@ -207,6 +206,10 @@ internal class BlOrder : BLApi.IOrder
         catch (DllNotFoundException e)
         {
             throw new BlEntityNotFoundException("");
+        }
+        catch (BlExceptionCantUpdateDelivery e)
+        {
+            throw new BlExceptionCantUpdateDelivery();
         }
     }
 
@@ -251,7 +254,6 @@ internal class BlOrder : BLApi.IOrder
             throw new BlEntityNotFoundException("");
         }
     }
-    //bonus
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderForManager(BO.Order or)
     {

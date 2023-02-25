@@ -24,7 +24,7 @@ namespace PL
         PO.Order o = new PO.Order();
         BO.Order or = new BO.Order();
         bool isCustomer;
-        PO.Cart cart=new PO.Cart();
+        PO.Cart cart = new PO.Cart();
         ObservableCollection<PO.OrderForList> list_o;
         Window prevWindow;
         Tuple<PO.Order, bool, bool> dcT;
@@ -32,10 +32,10 @@ namespace PL
         {
             try
             {
-                this.isCustomer= _isCustomer;
+                this.isCustomer = _isCustomer;
                 InitializeComponent();
                 this.bl = bl;
-                this.cart= c;
+                this.cart = c;
                 this.prevWindow = prevWindow;
                 if (list == null) this.list_o = new();
                 else this.list_o = list;
@@ -96,8 +96,7 @@ namespace PL
                 or = bl?.order.UpdateOrderShipping(id);
                 Common.ConvertToPoOrder(or, o);
                 o.Items = list;
-/*                foreach (var item in list) { o.TotalPrice += item.Price; }
-*/                list.ForEach(item => o.TotalPrice += item.Price);
+                list.ForEach(item => o.TotalPrice += item.Price);
             }
             catch (BO.BlDefaultException ex)
             {
@@ -116,9 +115,12 @@ namespace PL
                 Common.ConvertToPoOrder(or, o);
                 o.Items = list;
                 list.ForEach(item => o.TotalPrice += item.Price);
-/*                foreach (var item in list) { o.TotalPrice += item.Price; }
-*/            }
-            catch(BO.BlDefaultException ex)
+            }
+            catch (BO.BlExceptionCantUpdateDelivery ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch (BO.BlDefaultException ex)
             {
                 MessageBox.Show(ex.Message);
             }

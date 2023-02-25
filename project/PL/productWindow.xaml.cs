@@ -63,9 +63,8 @@ public partial class ProductWindow : Window
                 if (this.p_.inStock.GetType().Name != "Int32" || pro.inStock > 5000000)
                     throw new PlInvalidValueExeption("amount");
             }
-            else  // if product is ordered do not show the delete btn
+            else  
             {
-                //this.DataContext = this.dcT;
                 updateProductBtn.Visibility = Visibility.Hidden;
                 deleteProductBtn.Visibility = Visibility.Hidden;
             }
@@ -139,7 +138,7 @@ public partial class ProductWindow : Window
             this.pro = Common.ConvertToBo(p_);
             list_p.Remove(list_p.Where(i => i.ID == this.dcT.Item1.ID).Single());
             list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
-            bl.product.Update(Common.ConvertToBo(this.dcT.Item1));/////
+            bl.product.Update(Common.ConvertToBo(this.dcT.Item1));
 
             backToList();
         }

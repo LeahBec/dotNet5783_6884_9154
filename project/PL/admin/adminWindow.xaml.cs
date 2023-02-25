@@ -98,7 +98,6 @@ public partial class AdminWindow : Window
     {
         try
         {
-            // p.ID = sender.AnchorItem.
             int OId = (OrdersListview.SelectedItem as PO.OrderForList).ID;
             o = bl.order.GetOrderDetails(OId);
             Window window = new OrderWindow(bl, Common.ConvertToPoOrder(o, order), false, this.cart, this, this.List_o);
@@ -110,6 +109,10 @@ public partial class AdminWindow : Window
             MessageBox.Show(ex.Message);
         }
         catch (BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch (BO.BlExceptionCantUpdateDelivery ex)
         {
             MessageBox.Show(ex.Message);
         }

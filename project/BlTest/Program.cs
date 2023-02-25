@@ -11,10 +11,6 @@ void getOrders()
     try
     {
         IEnumerable<BO.OrderForList> orderList = bl.order.GetOrderList();
-        /*        foreach (var item in orderList)
-                {
-                    Console.WriteLine(item);
-                }*/
         orderList.FirstOrDefault(i => { Console.WriteLine(i); return false; });
 
     }
@@ -116,10 +112,6 @@ void getProducts()
     try
     {
         IEnumerable<BO.ProductForList> products = bl.product.GetProductList();
-        /*    foreach (var item in products)
-            {
-                Console.WriteLine(item);
-            }*/
         products.FirstOrDefault(i => { Console.WriteLine(i); return false; });
 
     }
@@ -138,10 +130,6 @@ void getCatalog()
     try
     {
         IEnumerable<BO.ProductItem> catalog = bl.product.GetCatalog();
-/*        foreach (var item in catalog)
-        {
-            Console.WriteLine(item);
-        }*/
         catalog.FirstOrDefault(i => { Console.WriteLine(i); return false; });
 
     }

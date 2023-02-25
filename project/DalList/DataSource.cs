@@ -14,7 +14,7 @@ public class DataSource
     /// initialize functions.
     /// </summary>
     private static void s_Initialize()
-    {  //initializing the program
+    {
         CreateProductList();
         CreateOrderList();
         CreateOrderItemList();
@@ -68,7 +68,6 @@ public class DataSource
         for (int i = 0; i < 20; i++)
         {
             Random rand = new Random();
-            //orders[i] = new Order();
             Order o = new Order();
             int indexName = (int)rand.NextInt64(CustomerName.Length);
             int indexAdress = (int)rand.NextInt64(CustomerAddress.Length);
@@ -86,7 +85,7 @@ public class DataSource
             else
                 o.ShipDate = null;
             if (i % 10 < 6)
-            { // 60% from them have delivery date
+            { 
                 if (o.ShipDate == null)
                     o.ShipDate = o.OrderDate + shipSpan;
                 o.DeliveryDate = o.ShipDate + deliverySpan;
@@ -105,7 +104,6 @@ public class DataSource
         for (int i = 0; i < 40;)
         {
             OrderItem oi = new OrderItem();
-            //int OrderIndex = (int)rand.NextInt64(Config.OrderIndex);
             int numOfProducts = (int)rand.NextInt64(1, 4);
             for (int j = 0; j < numOfProducts; j++)
             {

@@ -9,7 +9,6 @@ namespace PL
     /// </summary>
     public partial class MainWindow : Window
     {
-        //Bl bl = new BlImplementation.Bl();
         BLApi.IBL bl = BLApi.Factory.get();
         BO.Cart cart = new BO.Cart();
         PO.Cart c = new PO.Cart();

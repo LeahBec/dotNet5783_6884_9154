@@ -51,6 +51,16 @@ public class CustomerDetailsAreInValid : Exception
     public CustomerDetailsAreInValid() : base("the details are invalid") { }
     public override string Message => ("the details are invalid");
 }
+
+/// <summary>
+/// The exception will be scheduled when customer details are invalid
+/// </summary>
+public class BlExceptionCantUpdateDelivery : Exception
+{
+    public BlExceptionCantUpdateDelivery() : base("cannot update delivery date for unshipped order") { }
+    public override string Message => ("cannot update delivery date for unshipped order");
+}
+
 /// <summary>
 /// The exception will be scheduled when error occured while reading an
 /// entity list
@@ -70,6 +80,8 @@ public class BlExceptionNoMatchingItems : Exception
     public override string Message =>
                     "no matching items";
 }
+
+
 /// <summary>
 /// The exception will be scheduled when invalid id was taken
 /// </summary>

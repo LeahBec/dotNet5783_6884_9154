@@ -84,7 +84,6 @@ namespace PL
             worker.ProgressChanged += TimerProgressChanged;
             worker.WorkerReportsProgress = true;
             worker.WorkerSupportsCancellation = true;
-            //Simulator.Simulator.StartSimulator();
             stopWatch.Restart();
             isTimerRun = true;
             worker.RunWorkerAsync();
@@ -148,12 +147,6 @@ namespace PL
         {
               Simulator.Simulator.ProgressChange -= changeOrder;
                 Simulator.Simulator.StopSimulator -= Stop;
-               /*   while (!CheckAccess())
-                {
-                    Dispatcher.BeginInvoke(Stop, sender, e);
-                }
-                MessageBox.Show("successfully finish updating all orders");
-                this.Close();*/
             if (!CheckAccess())
             {
                 Dispatcher.BeginInvoke(Stop, sender, e);

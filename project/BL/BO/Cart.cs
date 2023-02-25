@@ -22,8 +22,6 @@ namespace BO
         Customer E-mail : {CustomerEmail}
         total price: {TotalPrice}
         Items: {items}";
-            /*foreach (var i in items) { cart += "\n \t " + i; };
-            return cart;*/
             items.ForEach(i => cart += "\n \t " + i);
             return cart;
         }

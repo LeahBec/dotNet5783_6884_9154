@@ -1,5 +1,6 @@
 ﻿using BLApi;
 using BO;
+using Dal;
 using System.Linq;
 using System.Net.Mail;
 using System.Runtime.CompilerServices;
@@ -82,7 +83,7 @@ internal class BlCart : ICart
         try
         {
             if (customerAddress == "" || !IsValidEmail(customerEmail) || customerEmail == "" || customerName == "")
-                throw new CustomerDetailsAreInValid();
+                throw new BO.CustomerDetailsAreInValid();
             Dal.DO.Order o = new Dal.DO.Order();
             c.items.Select(item =>
                 {
@@ -137,9 +138,13 @@ internal class BlCart : ICart
         {
             throw new BO.BlEntityNotFoundException("");
         }
-        catch (CustomerDetailsAreInValid)
+        catch (Dal.CustomerDetailsAreInValid)
         {
-            throw new CustomerDetailsAreInValid();
+            throw new BO.CustomerDetailsAreInValid();
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlDefaultException("Failed to load the root");
         }
         catch (Exception)
         {

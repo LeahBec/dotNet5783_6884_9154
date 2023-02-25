@@ -16,35 +16,42 @@ IDal i = new Dal.DalList();
 /// </summary>
 void addOrder()
 {
-    Random rand = new Random();
-    int _id;
-    string _name;
-    string _email;
-    string _address;
-    DateTime? _oDate;
-    DateTime? _sDate;
-    DateTime? _dDate;
-    Console.WriteLine("enter costumer name");
-    _name = Console.ReadLine();
-    Console.WriteLine("enter costumer email");
-    _email = Console.ReadLine();
-    Console.WriteLine("enter costumer address");
-    _address = Console.ReadLine();
-    _oDate = DateTime.Today;
-    TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
-    TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
-    _sDate = _oDate + shipSpan;
-    _dDate = _sDate + deliverySpan;
-    _id = DataSource.orders.Count() + IDX;
-    Order newOrder = new Order();
-    newOrder.OrderID = _id;
-    newOrder.CustomerName = _name;
-    newOrder.CustomerEmail = _email;
-    newOrder.CustomerAddress = _address;
-    newOrder.OrderDate = _oDate;
-    newOrder.ShipDate = _sDate;
-    newOrder.DeliveryDate = _dDate;
-    i.Order.Add(newOrder);
+    try
+    {
+        Random rand = new Random();
+        int _id;
+        string _name;
+        string _email;
+        string _address;
+        DateTime? _oDate;
+        DateTime? _sDate;
+        DateTime? _dDate;
+        Console.WriteLine("enter costumer name");
+        _name = Console.ReadLine();
+        Console.WriteLine("enter costumer email");
+        _email = Console.ReadLine();
+        Console.WriteLine("enter costumer address");
+        _address = Console.ReadLine();
+        _oDate = DateTime.Today;
+        TimeSpan shipSpan = TimeSpan.FromDays((int)rand.NextInt64(0, 10));
+        TimeSpan deliverySpan = TimeSpan.FromDays((int)rand.NextInt64(10, 25));
+        _sDate = _oDate + shipSpan;
+        _dDate = _sDate + deliverySpan;
+        _id = DataSource.orders.Count() + IDX;
+        Order newOrder = new Order();
+        newOrder.OrderID = _id;
+        newOrder.CustomerName = _name;
+        newOrder.CustomerEmail = _email;
+        newOrder.CustomerAddress = _address;
+        newOrder.OrderDate = _oDate;
+        newOrder.ShipDate = _sDate;
+        newOrder.DeliveryDate = _dDate;
+        i.Order.Add(newOrder);
+    }
+    catch (Dal.xmlFailedAccessToRoot)
+    {
+        throw new BO.BlDefaultException("Failed to load the root");
+    }
 
 }
 
@@ -185,6 +192,7 @@ void addOrderItem()
     orderItem.Amount = amount;
     orderItem.Price = price;
     i.OrderItem.Add(orderItem);
+}
 
 }
 /// <summary>

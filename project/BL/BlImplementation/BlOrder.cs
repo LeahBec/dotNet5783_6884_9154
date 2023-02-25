@@ -42,6 +42,10 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.BlEntityNotFoundException("");
         }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlDefaultException("Failed to load the root");
+        }
         catch (Exception)
         {
 

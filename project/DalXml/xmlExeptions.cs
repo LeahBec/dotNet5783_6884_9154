@@ -34,13 +34,17 @@ public class xmlNoEntitiesFound : Exception
     public readonly string msg;
     public xmlNoEntitiesFound(string m) { msg = m; }
     public override string Message => msg;
-
 }
 public class xmlOutOfStockException : Exception
 {
-
     public xmlOutOfStockException() : base("product is out of stock") { }
     public override string Message => ("product is out of stock");
+}
+
+public class xmlFailedAccessToRoot : Exception
+{
+    public xmlFailedAccessToRoot() : base("fail to access the xml root") { }
+    public override string Message => ("fail to access the xml root");
 }
 
 /// <summary>

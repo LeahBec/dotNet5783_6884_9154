@@ -169,7 +169,13 @@ internal class BlProduct : BLApi.IProduct
             }
             return id;
         }
-        catch (Exception err) { throw new BO.BlDefaultException(err.Message); }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlDefaultException("Failed to load the root");
+        }
+        catch (Exception err) { 
+            throw new BO.BlDefaultException(err.Message); 
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
 
@@ -200,7 +206,11 @@ internal class BlProduct : BLApi.IProduct
         }
         catch (BO.BlProductExistsInAnOrder)
         {
-            throw new BO.BlProductExistsInAnOrder("object is ordered");
+            throw new BO.BlProductExistsInAnOrder("object is already ordered");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlDefaultException("Failed to load the root");
         }
         catch (Exception)
         {

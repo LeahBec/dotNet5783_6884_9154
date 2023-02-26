@@ -27,7 +27,9 @@ VerticalAlignment="Stretch" Width="auto">
             <ListView.View>
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=CustomerName}" Header="customerName" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path= CustomerName}" Header="customerName" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path= Status}" Header="status" Width="120"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path= TotalPrice}" Header="price" Width="80"/>
                 </GridView>
             </ListView.View>
         </ListView>
@@ -36,6 +38,9 @@ VerticalAlignment="Stretch" Width="auto">
                 <GridView AllowsColumnReorder="true" ColumnHeaderToolTip="Employee Information">
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="200"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="category" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="70"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock, Converter={StaticResource trueToVOrX}}" Header="in stock?" Width="70"/>
                 </GridView>
             </ListView.View>
         </ListView>

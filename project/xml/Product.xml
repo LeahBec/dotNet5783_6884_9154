@@ -1,101 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Products xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-	<Product>
-		<ID>100007</ID>
-		<Name>panasonic 45xd</Name>
-		<Category>Cameras</Category>
-		<Price>950</Price>
-		<InStock>54</InStock>
-	</Product>
-	<Product>
-		<ID>100013</ID>
-		<Name>Canon Ixus185</Name>
-		<Category>Cameras</Category>
-		<Price>655.90</Price>
-		<InStock>12</InStock>
-	</Product>
-	<Product>
-		<ID>100015</ID>
-		<Name>Asus 950D</Name>
-		<Category>Computers</Category>
-		<Price>1950</Price>
-		<InStock>12</InStock>
-	</Product>
-	<Product>
-		<ID>100021</ID>
-		<Name>dji miniMavic</Name>
-		<Category>Drones</Category>
-		<Price>3595</Price>
-		<InStock>7</InStock>
-	</Product>
-	<Product>
-		<ID>100023</ID>
-		<Name>JBL Endurance Peak II</Name>
-		<Category>Headphones</Category>
-		<Price>99</Price>
-		<InStock>55</InStock>
-	</Product>
-	<Product>
-		<ID>100024</ID>
-		<Name>Piere Richardson</Name>
-		<Category>SmartWatches</Category>
-		<Price>790</Price>
-		<InStock>155</InStock>
-	</Product>
-	<Product>
-		<ID>100010</ID>
-		<Name>Ortech smartWatch</Name>
-		<Category>SmartWatches</Category>
-		<Price>359</Price>
-		<InStock>15</InStock>
-	</Product>
-	<Product>
-		<ID>100016</ID>
-		<Name>Nikon D780</Name>
-		<Category>Cameras</Category>
-		<Price>1950</Price>
-		<InStock>56</InStock>
-	</Product>
-	<Product>
-		<ID>100017</ID>
-		<Name>V27 rs Airplane</Name>
-		<Category>Drones</Category>
-		<Price>355</Price>
-		<InStock>45</InStock>
-	</Product>
-	<Product>
-		<ID>100019</ID>
-		<Name>BLESSBE Drone</Name>
-		<Category>Drones</Category>
-		<Price>255</Price>
-		<InStock>33</InStock>
-	</Product>
-	<Product>
-		<ID>100012</ID>
-		<Name>canon powerShot xs620</Name>
-		<Category>Cameras</Category>
-		<Price>799.90</Price>
-		<InStock>3</InStock>
-	</Product>
-	<Product>
-		<ID>100012</ID>
-		<Name>iCamera Apple</Name>
-		<Category>Cameras</Category>
-		<Price>589.70</Price>
-		<InStock>3</InStock>
-	</Product>
-	<Product>
-		<ID>100018</ID>
-		<Name>JBL wave 200</Name>
-		<Category>Headphones</Category>
-		<Price>255.90</Price>
-		<InStock>34</InStock>
-	</Product>
-	<Product>
-		<ID>100025</ID>
-		<Name>DELL Optiplex 7040</Name>
-		<Category>Computers</Category>
-		<Price>2599.90</Price>
-		<InStock>2</InStock>
-	</Product>
+  <Product>
+    <ID>100013</ID>
+    <Name>Canon Ixus185</Name>
+    <Category>Cameras</Category>
+    <Price>655</Price>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <ID>100015</ID>
+    <Name>Asus 950D</Name>
+    <Category>Computers</Category>
+    <Price>1950</Price>
+    <InStock>12</InStock>
+  </Product>
+  <Product>
+    <ID>100023</ID>
+    <Name>JBL Endurance Peak II</Name>
+    <Category>Headphones</Category>
+    <Price>99</Price>
+    <InStock>55</InStock>
+  </Product>
+  <Product>
+    <ID>100024</ID>
+    <Name>Piere Richardson</Name>
+    <Category>SmartWatches</Category>
+    <Price>790</Price>
+    <InStock>155</InStock>
+  </Product>
+  <Product>
+    <ID>100010</ID>
+    <Name>Ortech smartWatch</Name>
+    <Category>SmartWatches</Category>
+    <Price>359</Price>
+    <InStock>15</InStock>
+  </Product>
+  <Product>
+    <ID>100017</ID>
+    <Name>V27 rs Airplane</Name>
+    <Category>Drones</Category>
+    <Price>355</Price>
+    <InStock>44</InStock>
+  </Product>
+  <Product>
+    <ID>100016</ID>
+    <Name>Nikon D780</Name>
+    <Category>Cameras</Category>
+    <Price>1950</Price>
+    <InStock>9</InStock>
+  </Product>
+  <Product>
+    <ID>100021</ID>
+    <Name>dji miniMavic</Name>
+    <Category>Drones</Category>
+    <Price>3595</Price>
+    <InStock>0</InStock>
+  </Product>
 </Products>

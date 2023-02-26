@@ -20,6 +20,7 @@
             <Setter Property="Foreground" Value="Black"/>
         </Style>
         <local:FalseToHiddenConverter x:Key="FalseToHiddenConverter"/>
+        <local:trueToVOrX x:Key="trueToVOrX"/>
     </Application.Resources>
 
 </Application>

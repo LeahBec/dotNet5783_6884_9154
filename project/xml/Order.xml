@@ -34,25 +34,7 @@
     <CustomerAddress>rrr 5</CustomerAddress>
     <OrderDate>2023-02-25T00:00:00</OrderDate>
     <ShipDate>2023-02-25T22:36:10.6332235+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T23:32:05.4844024+02:00</DeliveryDate>
-  </order>
-  <order>
-    <OrderID>500127</OrderID>
-    <CustomerName>Chaya</CustomerName>
-    <CustomerEmail>c@c.c</CustomerEmail>
-    <CustomerAddress>ccc 4</CustomerAddress>
-    <OrderDate>2023-02-25T00:00:00</OrderDate>
-    <ShipDate>2023-02-25T23:31:45.4728522+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T23:32:14.4847969+02:00</DeliveryDate>
-  </order>
-  <order>
-    <OrderID>500124</OrderID>
-    <CustomerName>Tamar</CustomerName>
-    <CustomerEmail>t@t.t</CustomerEmail>
-    <CustomerAddress>ttt 3</CustomerAddress>
-    <OrderDate>2023-02-25T00:00:00</OrderDate>
-    <ShipDate>2023-02-25T23:31:59.5582488+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T23:32:16.9187672+02:00</DeliveryDate>
+    <DeliveryDate>2023-02-26T11:47:13.0530403+02:00</DeliveryDate>
   </order>
   <order>
     <OrderID>500126</OrderID>
@@ -60,7 +42,16 @@
     <CustomerEmail>l@l.l</CustomerEmail>
     <CustomerAddress>lll 1</CustomerAddress>
     <OrderDate>2023-02-25T00:00:00</OrderDate>
-    <ShipDate>2023-02-25T23:46:25.5917047+02:00</ShipDate>
-    <DeliveryDate>2023-02-25T23:46:32.0428358+02:00</DeliveryDate>
+    <ShipDate>2023-02-26T11:46:40.1796451+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T12:45:19.5392469+02:00</DeliveryDate>
+  </order>
+  <order>
+    <OrderID>500127</OrderID>
+    <CustomerName>channa</CustomerName>
+    <CustomerEmail>c@c.c</CustomerEmail>
+    <CustomerAddress>ccc 4</CustomerAddress>
+    <OrderDate>2023-02-25T00:00:00</OrderDate>
+    <ShipDate>2023-02-26T11:46:35.5724695+02:00</ShipDate>
+    <DeliveryDate>2023-02-26T11:47:17.2553059+02:00</DeliveryDate>
   </order>
 </Orders>

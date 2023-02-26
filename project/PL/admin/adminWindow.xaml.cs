@@ -18,8 +18,8 @@ public partial class AdminWindow : Window
     private BO.Order o = new BO.Order();
     PO.Cart cart = new PO.Cart();
     Window prevWindow;
-    public ObservableCollection<PO.ProductForList> List_p { get; set; } = new();
-    IEnumerable<BO.ProductForList> list1;
+    public ObservableCollection<PO.ProductItem> List_p { get; set; } = new();
+    IEnumerable<BO.ProductItem> list1;
     IEnumerable<BO.OrderForList> list2;
     public ObservableCollection<PO.OrderForList> List_o { get; set; } = new();
     PO.Order order = new PO.Order();
@@ -32,12 +32,12 @@ public partial class AdminWindow : Window
             this.bl = bl;
             this.cart = c;
             this.prevWindow = _prevWindow;
-            list1 = bl.product.GetProductList();
+            list1 = bl.product.GetCatalog();
             List_p = Common.convertList(List_p, list1);
             list2 = bl.order.GetOrderList();
             List_o = Common.convertListOrder(list2, List_o);
-            Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>> dcT =
-                new Tuple<ObservableCollection<PO.ProductForList>, ObservableCollection<PO.OrderForList>>(this.List_p, this.List_o);
+            Tuple<ObservableCollection<PO.ProductItem>, ObservableCollection<PO.OrderForList>> dcT =
+                new Tuple<ObservableCollection<PO.ProductItem>, ObservableCollection<PO.OrderForList>>(this.List_p, this.List_o);
             this.DataContext = dcT;
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -61,7 +61,7 @@ public partial class AdminWindow : Window
     {
         try
         {
-            int pId = (ProductsListview.SelectedItem as PO.ProductForList).ID;
+            int pId = (ProductsListview.SelectedItem as PO.ProductItem).ID;
             p = bl.product.GetProductCustomer(pId);
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), false, this.cart, this, this.List_p);
             window.Show();

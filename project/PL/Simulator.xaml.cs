@@ -47,7 +47,7 @@ namespace PL
             TimerStart();
         }
 
-        void countDownTimer(int sec)
+/*        void countDownTimer(int sec)
         {
             _time = TimeSpan.FromSeconds(sec);
 
@@ -59,7 +59,7 @@ namespace PL
             }, Application.Current.Dispatcher);
 
             _timer.Start();
-        }
+        }*/
         void ProgressBarStart(int sec)
         {
             if (ProgressBar!=null)
@@ -115,7 +115,7 @@ namespace PL
             else
             {
                 DataContext = dcT;
-                countDownTimer(details.seconds / 1000);
+                //countDownTimer(details.seconds / 1000);
 
                 ProgressBarStart(details.seconds/1000);
             }
@@ -124,7 +124,8 @@ namespace PL
         {
             string timerText = stopWatch.Elapsed.ToString();
             timerText = timerText.Substring(0, 8);
-            SimulatorTXTB.Text = timerText;
+            //SimulatorTXTB.Text = timerText;
+            SimulatorTXTB.Text = DateTime.Now.ToString();
         }
         void ToolWindow_Loaded(object sender, RoutedEventArgs e)
         {
@@ -153,7 +154,7 @@ namespace PL
             }
             else
             {
-                MessageBox.Show("complete updating");
+                MessageBox.Show("completed");
                 this.Close();
             }
         }

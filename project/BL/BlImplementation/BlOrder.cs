@@ -180,6 +180,10 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BlEntityNotFoundException("failed to accsess resource");
         }
+        catch (Dal.xmlExceptionNoMatchingItems)
+        {
+            throw new BlEntityNotFoundException("no matchin items");
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderDelivery(int id)

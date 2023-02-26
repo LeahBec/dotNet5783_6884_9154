@@ -10,7 +10,6 @@ internal class BlProduct : BLApi.IProduct
 {
     static Random rand = new Random();
     DalApi.IDal? Dal = DalApi.Factory.Get();
-    [MethodImpl(MethodImplOptions.Synchronized)]
 
     public IEnumerable<BO.ProductForList> GetProductList()
     {

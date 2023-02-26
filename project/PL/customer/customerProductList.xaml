@@ -44,11 +44,12 @@ VerticalAlignment="Stretch" Width="auto">
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=ID}" Header="ID" Width="100"/>
 
-                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=Name}" Header="Name" Width="150"/>
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Price}" Header="Price" Width="100"/>
 
                     <GridViewColumn DisplayMemberBinding="{Binding Path=Category}" Header="category" Width="100"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding Path=InStock , Converter={StaticResource trueToVOrX}}" Header="in stock?" Width="100"/>
                 </GridView>
             </ListView.View>
         </ListView>

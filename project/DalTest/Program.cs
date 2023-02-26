@@ -20,9 +20,9 @@ void addOrder()
     {
         Random rand = new Random();
         int _id;
-        string _name;
-        string _email;
-        string _address;
+        string? _name;
+        string? _email;
+        string? _address;
         DateTime? _oDate;
         DateTime? _sDate;
         DateTime? _dDate;
@@ -48,6 +48,7 @@ void addOrder()
         newOrder.DeliveryDate = _dDate;
         i.Order.Add(newOrder);
     }
+    catch (Exception ex) { Console.WriteLine(ex.Message); }
 
 
 }
@@ -87,9 +88,9 @@ void updateOrder()
     Random rand = new Random();
     Console.WriteLine("enter id of the order you want to update");
     int _id = int.Parse(Console.ReadLine());
-    string _name;
-    string _email;
-    string _address;
+    string? _name;
+    string? _email;
+    string? _address;
     DateTime? _oDate;
     DateTime? _sDate;
     DateTime? _dDate;
@@ -346,7 +347,7 @@ void orderItems()
 Product addProduct()
 {
     int f = DataSource.products.Count();
-    string name;
+    string? name;
     eCategory category;
     float price;
     int inStock;

@@ -25,9 +25,9 @@ public partial class ProductWindow : Window
     public bool isCustomer { get; set; }
     int id;
     PO.Product p_ = new PO.Product();
-    ObservableCollection<PO.ProductForList> list_p;
+    ObservableCollection<PO.ProductItem> list_p;
     Tuple<PO.Product, bool, bool, Array> dcT;
-    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductForList> _list_p = null)
+    public ProductWindow(BLApi.IBL bl, PO.Product pro, bool _isCustomer, PO.Cart _c, Window prevWindow, ObservableCollection<PO.ProductItem>? _list_p = null)
     {
         try
         {
@@ -111,6 +111,7 @@ public partial class ProductWindow : Window
             int id = bl.product.AddProduct(this.pro);
             this.dcT.Item1.ID = id;
             this.list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
+            MessageBox.Show($"product #{id} was successfully added");
             backToList();
         }
         catch (BO.blInvalidAmountToken ex)
@@ -143,6 +144,7 @@ public partial class ProductWindow : Window
             list_p.Remove(list_p.Where(i => i.ID == this.dcT.Item1.ID).Single());
             list_p.Add(Common.ConvertPFLToP(this.dcT.Item1));
             bl.product.Update(Common.ConvertToBo(this.dcT.Item1));
+            MessageBox.Show($"product #{this.dcT.Item1.ID} was successfully updated");
 
             backToList();
         }
@@ -181,11 +183,12 @@ public partial class ProductWindow : Window
     {
         try
         {
-            bl?.product.DeleteProduct(pro.ID);
-            BO.ProductForList ppp = Common.ConvertPFLToB(pro);
+            bl?.product.DeleteProduct(this.p_.ID);
+/*            BO.ProductItem ppp = Common.ConvertPFLToB(pro);
             p_ = Common.ConvertPToPFL(Common.ConvertToPo(ppp));
-            var a = Common.ConvertPFLToP(p_);
-            list_p.Remove(list_p.Where(i => i.ID == a.ID).Single());
+            var a = Common.ConvertPFLToP(p_);*/
+            list_p.Remove(list_p.Where(i => i.ID == this.p_.ID).Single());
+            MessageBox.Show($"product #{this.p_.ID} was successfully deleted");
             backToList();
         }
 

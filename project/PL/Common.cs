@@ -98,21 +98,21 @@ namespace PL
             };
             return item;
         }
-        public static PO.ProductForList ConvertToPoProFL(BO.ProductForList Pp)
+        public static PO.ProductItem ConvertToPoProFL(BO.ProductItem Pp)
         {
-            PO.ProductForList item = new()
+            PO.ProductItem item = new()
             {
                 ID = Pp.ID,
                 Name = Pp.Name,
                 Price = Pp.Price,
-                Category = (DalFacade.DO.eCategory)Pp.Category,
-
+                Category = Pp.Category,
+                InStock = Pp.inStock
             };
             return item;
         }
 
 
-        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<List<BO.ProductForList>> Blist, ObservableCollection<PO.ProductForList> Plist)
+        public static ObservableCollection<PO.ProductItem> ConvertToPoProList(IEnumerable<List<BO.ProductItem>> Blist, ObservableCollection<PO.ProductItem> Plist)
         {
             Plist.Clear();
             Blist.FirstOrDefault(group =>
@@ -122,7 +122,7 @@ namespace PL
             return Plist;
         }
 
-        public static ObservableCollection<PO.ProductForList> ConvertToPoProList(IEnumerable<BO.ProductForList> Blist, ObservableCollection<PO.ProductForList> Plist)
+        public static ObservableCollection<PO.ProductItem> ConvertToPoProList(IEnumerable<BO.ProductItem> Blist, ObservableCollection<PO.ProductItem> Plist)
         {
             Plist.Clear();
             Blist.FirstOrDefault(i => { Plist.Add(ConvertToPoProFL(i)); return false; });
@@ -209,9 +209,9 @@ namespace PL
             loi.ForEach(oi => returnList.Add(converToBoOi(oi)));
             return returnList;
         }
-        public static ObservableCollection<PO.ProductForList> convertList(ObservableCollection<PO.ProductForList> List_p, IEnumerable<BO.ProductForList> list1)
+        public static ObservableCollection<PO.ProductItem> convertList(ObservableCollection<PO.ProductItem> List_p, IEnumerable<BO.ProductItem> list1)
         {
-            PO.ProductForList i = new PO.ProductForList();
+            PO.ProductItem i = new PO.ProductItem();
             list1.FirstOrDefault(tmp =>
             {
                 i = ConvertToPo(tmp);
@@ -219,14 +219,16 @@ namespace PL
             });
             return List_p;
         }
-        public static PO.ProductForList ConvertToPo(BO.ProductForList Bp)
+        public static PO.ProductItem ConvertToPo(BO.ProductItem Bp)
         {
-            PO.ProductForList item = new()
+            PO.ProductItem item = new()
             {
                 ID = Bp.ID,
                 Name = Bp.Name,
                 Price = Bp.Price,
-                Category = (eCategory)Bp.Category
+                Category = Bp.Category,
+                InStock = Bp.inStock
+
             };
             return item;
         }
@@ -273,17 +275,18 @@ namespace PL
             return item;
         }
 
-        public static PO.ProductForList ConvertPFLToP(PO.Product p)
+        public static PO.ProductItem ConvertPFLToP(PO.Product p)
         {
-            PO.ProductForList item = new();
+            PO.ProductItem item = new();
             item.ID = p.ID;
             item.Name = p.Name;
             item.Price = p.Price;
-            item.Category = (DalFacade.DO.eCategory)p.Category;
+            item.Category = p.Category;
+            item.InStock = (p.inStock == 0) ? false : true;
             return item;
         }
 
-        public static PO.Product ConvertPToPFL(PO.ProductForList p)
+        public static PO.Product ConvertPToPFL(PO.ProductItem p)
         {
             PO.Product item = new();
             item.ID = p.ID;
@@ -293,13 +296,14 @@ namespace PL
 
             return item;
         }
-        public static BO.ProductForList ConvertPFLToB(BO.Product p)
+        public static BO.ProductItem ConvertPFLToB(BO.Product p)
         {
-            BO.ProductForList item = new();
+            BO.ProductItem item = new();
             item.ID = p.ID;
             item.Name = p.Name;
             item.Price = p.Price;
             item.Category = p.Category;
+            item.inStock = (p.inStock == 0) ? false : true;
             return item;
         }
 

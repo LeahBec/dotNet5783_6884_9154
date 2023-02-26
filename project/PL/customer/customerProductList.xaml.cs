@@ -19,10 +19,12 @@ public partial class CustomerProductList : Window
     private BO.Product p = new BO.Product();
     BO.Cart cart = new BO.Cart();
     PO.Cart c = new PO.Cart();
-    IEnumerable<BO.ProductForList> list1;
-    ObservableCollection<PO.ProductForList> List_p = new();
+    //IEnumerable<BO.ProductForList> list1;
+    IEnumerable<BO.ProductItem> list1;
+    //ObservableCollection<PO.ProductForList> List_p = new();
+    ObservableCollection<PO.ProductItem> List_p = new();
     Window prevWindow;
-    Tuple<ObservableCollection<PO.ProductForList>, Array> dcT;
+    Tuple<ObservableCollection<PO.ProductItem>, Array> dcT;
     public CustomerProductList(BLApi.IBL bl, PO.Cart _c, Window _prevWindow)
     {
         try
@@ -31,10 +33,11 @@ public partial class CustomerProductList : Window
             this.bl = bl;
             this.c = _c;
             this.prevWindow = _prevWindow;
-            list1 = bl.product.GetProductList();
+            //list1 = bl.product.GetProductList();
+            list1 = bl.product.GetCatalog();
             Array i = Enum.GetValues(typeof(BO.Category));
             Common.convertList(List_p, list1);
-            this.dcT = new Tuple<ObservableCollection<PO.ProductForList>, Array>(this.List_p, i);
+            this.dcT = new Tuple<ObservableCollection<PO.ProductItem>, Array>(this.List_p, i);
             this.DataContext = this.dcT;
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -53,7 +56,7 @@ public partial class CustomerProductList : Window
     {
         try
         {
-            var allProducts = bl?.product.GetProductList();
+            var allProducts = bl?.product.GetCatalog();
             BO.Category cat = (BO.Category)categorySelectorBox.SelectedItem;
             var list = bl?.product.GetListByCategory(cat);
             if (cat != BO.Category.All)
@@ -87,7 +90,7 @@ public partial class CustomerProductList : Window
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             window.Show();
             InitializeComponent();
-            this.List_p = (ObservableCollection<PO.ProductForList>)bl.product.GetProductList();
+            this.List_p = (ObservableCollection<PO.ProductItem>)bl.product.GetProductList();
             this.Hide();
         }
         catch (BO.BlNoEntitiesFound ex)
@@ -108,7 +111,7 @@ public partial class CustomerProductList : Window
     {
         try
         {
-            p = bl.product.GetProductManager((ProductsListview.SelectedItem as PO.ProductForList).ID);
+            p = bl.product.GetProductManager((ProductsListview.SelectedItem as PO.ProductItem).ID);
             Window window = new ProductWindow(bl, Common.ConvertToPoPro(p), true, this.c, this);
             window.Show();
             this.Hide();

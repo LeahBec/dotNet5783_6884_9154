@@ -102,11 +102,13 @@ namespace PL
             try
             {
                 int id = this.or.ID;
+                this.list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 List<PO.OrderItem> list;
                 or = Common.ConvertToBo(o);
                 list = Common.convertItemsToPOOI(or.Items);
                 or = bl?.order.UpdateOrderShipping(id);
                 Common.ConvertToPoOrder(or, o);
+                list_o.Add(Common.ConvertPFLToP(this.o));
                 o.Items = list;
                 list.ForEach(item => o.TotalPrice += item.Price);
             }
@@ -124,11 +126,13 @@ namespace PL
             try
             {
                 int id = this.or.ID;
+                list_o.Remove(list_o.Where(i => i.ID == o.ID).Single());
                 List<PO.OrderItem> list;
                 or = Common.ConvertToBo(o);
                 list = Common.convertItemsToPOOI(or.Items);
                 or = bl?.order.UpdateOrderDelivery(id);
                 Common.ConvertToPoOrder(or, o);
+                list_o.Add(Common.ConvertPFLToP(this.o));
                 o.Items = list;
                 list.ForEach(item => o.TotalPrice += item.Price);
             }

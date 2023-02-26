@@ -191,9 +191,12 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             Dal.DO.Order oDO;
+            List<Dal.DO.OrderItem> orderItems = new List<Dal.DO.OrderItem>();
+
             lock (Dal)
             {
                 oDO = Dal.Order.Get(o => o.OrderID == id);
+                orderItems = Dal.OrderItem.getByOrderId(id).ToList();
             }
             if (oDO.ShipDate == null)
             {
@@ -210,7 +213,10 @@ internal class BlOrder : BLApi.IOrder
                 order.CustomerAddress = oDO.CustomerAddress;
                 order.CustomerEmail = oDO.CustomerEmail;
                 order.CustomerName = oDO.CustomerName;
-                order.Status = (BO.OrderStatus)1;
+                order.Status = (BO.OrderStatus)3;
+                double total = 0;
+                orderItems.ForEach(o => { total += o.Price * o.Amount; });
+                order.TotalPrice = total;
                 lock (Dal)
                 {
                     Dal.Order.Update(oDO);
@@ -248,9 +254,11 @@ internal class BlOrder : BLApi.IOrder
         try
         {
             Dal.DO.Order oDO;
+            List<Dal.DO.OrderItem> orderItems = new List<Dal.DO.OrderItem>();
             lock (Dal)
             {
                 oDO = Dal.Order.Get(o => o.OrderID == orderId);
+                orderItems = Dal.OrderItem.getByOrderId(orderId).ToList();
             }
 
             if (oDO.ShipDate == null)
@@ -264,7 +272,10 @@ internal class BlOrder : BLApi.IOrder
                 order.CustomerAddress = oDO.CustomerAddress;
                 order.CustomerEmail = oDO.CustomerEmail;
                 order.CustomerName = oDO.CustomerName;
-                order.Status = (BO.OrderStatus)1;
+                order.Status = (BO.OrderStatus)2;
+                double total=0;
+                orderItems.ForEach(o => { total += o.Price * o.Amount; }) ;
+                order.TotalPrice = total;
                 lock (Dal)
                 {
                     Dal.Order.Update(oDO);

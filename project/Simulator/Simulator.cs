@@ -29,29 +29,55 @@ public static class Simulator
     /// </summary>
     public static void chooseOrder()
     {
-        IBL bl = new BlImplementation.Bl();
-        int? id;
-        while (!finishFlag)
+        try
         {
-            id = bl.order.ChooseOrder();
-            if (id == null)
-                DoStop();
-            else
+            IBL bl = new BlImplementation.Bl();
+            int? id;
+            while (!finishFlag)
             {
-                BO.Order o = bl.order.GetOrderDetails((int)id);
-                previousState = o.Status.ToString();
-                Random rand = new Random();
-                int num = rand.Next(1000, 5000);
-                Details details = new Details(o, num);
-                if (ProgressChange != null)
+                id = bl.order.ChooseOrder();
+                if (id == null)
+                    DoStop();
+                else
                 {
-                    ProgressChange(null, details);
+                    BO.Order o = bl.order.GetOrderDetails((int)id);
+                    previousState = o.Status.ToString();
+                    Random rand = new Random();
+                    int num = rand.Next(1000, 5000);
+                    Details details = new Details(o, num);
+                    if (ProgressChange != null)
+                    {
+                        ProgressChange(null, details);
+                    }
+                    Thread.Sleep(num);
+                    afterState = (previousState == "Payed" ? bl.order.UpdateOrderShipping((int)id) : bl.order.UpdateOrderDelivery((int)id)).Status.ToString();
                 }
-                Thread.Sleep(num);
-                afterState = (previousState == "Payed" ? bl.order.UpdateOrderShipping((int)id) : bl.order.UpdateOrderDelivery((int)id)).Status.ToString();
             }
+            return;
+        }catch(BO.BlExceptionFailedToRead ex)
+        {
+            throw new BO.BlExceptionFailedToRead();
         }
-        return;
+        catch(BO.BlEntityNotFoundException ex)
+        {
+            throw new BO.BlEntityNotFoundException(ex.Message);
+        }
+        catch(BO.BlExceptionCantUpdateDelivery ex)
+        {
+            throw new BO.BlExceptionCantUpdateDelivery();
+        }
+        catch (BO.BlNoEntitiesFound ex)
+        {
+            throw new BO.BlNoEntitiesFound(ex.Message);
+        }
+        catch (BO.BlExceptionNoMatchingItems ex)
+        {
+            throw new BO.BlExceptionNoMatchingItems();
+        }
+        catch (Exception ex)
+        {
+            throw new BO.BlDefaultException(ex.Message);
+        }
     }
 }
 

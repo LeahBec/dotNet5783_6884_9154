@@ -73,23 +73,36 @@ internal class DalOrder : IOrder
     [MethodImpl(MethodImplOptions.Synchronized)]
     public Order Get(Func<Order, bool> func)
     {
-        IEnumerable<Dal.DO.Order> orders = GetAll();
-        return (func == null ? orders : orders.Where(func).ToList()).FirstOrDefault();
+        try
+        {
+            IEnumerable<Dal.DO.Order> orders = GetAll();
+            return (func == null ? orders : orders.Where(func).ToList()).FirstOrDefault();
+        }
+        catch (xmlFailedAccessToRoot)
+        {
+            throw new xmlFailedAccessToRoot();
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public IEnumerable<Order> GetAll(Func<Order, bool> func = null)
     {
-
-        XElement? root = XDocument.Load("../xml/Order.xml")?.Root;
-        IEnumerable<XElement>? orderList = root?.Descendants("order")?.ToList();
-        List<Dal.DO.Order> orders = new List<Order>();
-        orderList.Select(item =>
+        try
         {
-            orders.Add(deepCopy(item));
+            XElement? root = XDocument.Load("../xml/Order.xml")?.Root;
+            IEnumerable<XElement>? orderList = root?.Descendants("order")?.ToList();
+            List<Dal.DO.Order> orders = new List<Order>();
+            orderList.Select(item =>
+            {
+                orders.Add(deepCopy(item));
 
-            return item;
-        }).ToList();
-        return (func == null ? orders : orders.Where(func).ToList());
+                return item;
+            }).ToList();
+            return (func == null ? orders : orders.Where(func).ToList());
+        }
+        catch (Exception)
+        {
+            throw new xmlFailedAccessToRoot();
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public void Update(Order ord)

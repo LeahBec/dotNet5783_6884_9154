@@ -14,15 +14,26 @@ namespace BlImplementation
 
         public static BO.OrderTracking GetOrderTracking(int id)
         {
-            BO.Order order = new();
-            lock (BLApi.Factory.get())
+            try
             {
-                order = BLApi.Factory.get().order.GetOrderDetails(id);
+                BO.Order order = new();
+                lock (BLApi.Factory.get())
+                {
+                    order = BLApi.Factory.get().order.GetOrderDetails(id);
+                }
+                BO.OrderTracking returnOrder = new();
+                returnOrder.Status = (BO.OrderStatus)order.Status;
+                returnOrder.ID = order.ID;
+                return returnOrder;
             }
-            BO.OrderTracking returnOrder = new();
-            returnOrder.Status = (BO.OrderStatus)order.Status;
-            returnOrder.ID = order.ID;
-            return returnOrder;
+            catch(BO.BlExceptionFailedToRead ex)
+            {
+                throw new BO.BlExceptionFailedToRead();
+            }
+            catch(BO.BlEntityNotFoundException ex)
+            {
+                throw new BO.BlEntityNotFoundException(ex.Message);
+            }
         }
     }
 }

@@ -37,7 +37,10 @@ internal class BlProduct : BLApi.IProduct
         {
             throw new BO.BlExceptionFailedToRead();
         }
-
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
         catch (Exception)
         {
             throw new BO.BlDefaultException("unexpected error");
@@ -77,6 +80,10 @@ internal class BlProduct : BLApi.IProduct
         {
             throw new BO.BlExceptionFailedToRead();
         }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
         catch (Exception)
         {
             throw new BO.BlDefaultException("unexpected error");
@@ -108,6 +115,10 @@ internal class BlProduct : BLApi.IProduct
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
         }
         catch (Exception)
         {
@@ -143,6 +154,10 @@ internal class BlProduct : BLApi.IProduct
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlEntityNotFoundException("");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
         }
         catch (Exception)
         {
@@ -252,6 +267,10 @@ internal class BlProduct : BLApi.IProduct
         {
             throw new BO.BlEntityNotFoundException("product not found");
         }
+        catch (Dal.xmlEntityNotFoundException)
+        {
+            throw new BlEntityNotFoundException("product not found");
+        }
         catch (BO.BlInvalidIdToken)
         {
             throw new BO.BlInvalidIdToken("invalid id token");
@@ -305,6 +324,14 @@ internal class BlProduct : BLApi.IProduct
         catch (DalApi.ExceptionObjectNotFound)
         {
             throw new BO.BlNoEntitiesFound("");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
+        catch (Exception)
+        {
+            throw new BlDefaultException("failed to get products");
         }
     }
 }

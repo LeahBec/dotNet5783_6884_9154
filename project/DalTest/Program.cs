@@ -48,10 +48,7 @@ void addOrder()
         newOrder.DeliveryDate = _dDate;
         i.Order.Add(newOrder);
     }
-    catch (Dal.xmlFailedAccessToRoot)
-    {
-        throw new BO.BlDefaultException("Failed to load the root");
-    }
+
 
 }
 
@@ -194,7 +191,7 @@ void addOrderItem()
     i.OrderItem.Add(orderItem);
 }
 
-}
+
 /// <summary>
 /// prints a certin orderItem
 /// </summary>

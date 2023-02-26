@@ -19,7 +19,7 @@
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Foreground" Value="Black"/>
         </Style>
-        <local:EnumToStringConverter x:Key="EnumToStringConverter"/>
+        <local:FalseToHiddenConverter x:Key="FalseToHiddenConverter"/>
     </Application.Resources>
 
 </Application>

@@ -41,6 +41,8 @@ public partial class CustomerProductList : Window
         {
             MessageBox.Show(ex.Message);
         }
+        catch(BO.BlExceptionFailedToRead ex)
+        { MessageBox.Show(ex.Message); }
         catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
@@ -69,6 +71,10 @@ public partial class CustomerProductList : Window
         {
             MessageBox.Show(ex.Message);
         }
+        catch(BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
         catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
@@ -88,7 +94,7 @@ public partial class CustomerProductList : Window
         {
             MessageBox.Show(ex.Message);
         }
-        catch (BO.BlExceptionFailedToRead ex)
+        catch(BO.BlExceptionFailedToRead ex)
         {
             MessageBox.Show(ex.Message);
         }

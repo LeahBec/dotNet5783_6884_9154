@@ -52,6 +52,18 @@ namespace PL.customer
             catch(PlInvalidValueExeption ex){
                 MessageBox.Show(ex.Message);
             }
+            catch (BlOutOfStockException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(BlDefaultException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
         private void goBack(object sender, RoutedEventArgs e)
         {

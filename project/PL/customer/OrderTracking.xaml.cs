@@ -53,6 +53,14 @@ namespace PL.customer
                 w.Show();
                 this.Hide();
             }
+            catch(BO.BlEntityNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(BO.BlExceptionFailedToRead ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message + "orderTracking: 95");

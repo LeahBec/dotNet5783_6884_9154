@@ -56,7 +56,14 @@ public partial class CartWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
-
+        catch(BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(Exception ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
 
     private void addProductBtn_Click(object sender, RoutedEventArgs e)
@@ -69,6 +76,14 @@ public partial class CartWindow : Window
             
         }
         catch (BlOutOfStockException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(Exception ex)
         {
             MessageBox.Show(ex.Message);
         }

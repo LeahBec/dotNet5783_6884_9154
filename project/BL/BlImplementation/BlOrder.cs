@@ -109,6 +109,10 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.BlExceptionNoMatchingItems();
         }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BO.BlExceptionFailedToRead();
+        }
         catch (Exception)
         {
             throw new BO.BlDefaultException("Unknown exception occured");
@@ -172,6 +176,10 @@ internal class BlOrder : BLApi.IOrder
         {
             throw new BO.BlExceptionFailedToRead();
         }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
+        }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
     public BO.Order UpdateOrderDelivery(int id)
@@ -207,9 +215,17 @@ internal class BlOrder : BLApi.IOrder
             }
             throw new BlEntityNotFoundException("");
         }
+        catch (Dal.xmlEntityNotFoundException)
+        {
+            throw new BlEntityNotFoundException("could not find order");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
+        }
         catch (DllNotFoundException e)
         {
-            throw new BlEntityNotFoundException("");
+            throw new BlEntityNotFoundException("could not find order");
         }
         catch (BlExceptionCantUpdateDelivery e)
         {
@@ -251,11 +267,19 @@ internal class BlOrder : BLApi.IOrder
                 }
                 return order;
             }
-            throw new BlEntityNotFoundException("");
+            throw new BlEntityNotFoundException("could not find order");
         }
         catch (DllNotFoundException e)
         {
-            throw new BlEntityNotFoundException("");
+            throw new BlEntityNotFoundException("could not find order");
+        }
+        catch (Dal.xmlEntityNotFoundException)
+        {
+            throw new BlEntityNotFoundException("could not find order");
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
         }
     }
     [MethodImpl(MethodImplOptions.Synchronized)]
@@ -281,6 +305,10 @@ internal class BlOrder : BLApi.IOrder
         catch (DalApi.ExceptionFailedToRead)
         {
             throw new BO.BlExceptionFailedToRead();
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
         }
         return or;
     }
@@ -321,32 +349,54 @@ internal class BlOrder : BLApi.IOrder
 
     public int? ChooseOrder()
     {
-        DateTime minDate = DateTime.Now;
-        int? orderId = null;
-        List<OrderForList>? orderList = GetOrderList().ToList();
-        orderList?.ForEach(o =>
+        try {
+            DateTime minDate = DateTime.Now;
+            int? orderId = null;
+            List<OrderForList>? orderList = GetOrderList().ToList();
+            orderList?.ForEach(o =>
 
-        {
-            switch (o.Status)
             {
-                case BO.OrderStatus.Payed:
-                    if (GetOrderDetails(o.ID).OrderDate < minDate)
-                    {
-                        orderId = o.ID;
-                        minDate = (DateTime)GetOrderDetails(o.ID).OrderDate;
-                    }
-                    break;
-                case BO.OrderStatus.Shiped:
-                    if (GetOrderDetails(o.ID).ShipDate < minDate)
-                    {
-                        orderId = o.ID;
-                        minDate = (DateTime)GetOrderDetails(o.ID).ShipDate;
-                    }
-                    break;
-                default:
-                    break;
-            }
-        });
-        return orderId;
-    }
+                switch (o.Status)
+                {
+                    case BO.OrderStatus.Payed:
+                        if (GetOrderDetails(o.ID).OrderDate < minDate)
+                        {
+                            orderId = o.ID;
+                            minDate = (DateTime)GetOrderDetails(o.ID).OrderDate;
+                        }
+                        break;
+                    case BO.OrderStatus.Shiped:
+                        if (GetOrderDetails(o.ID).ShipDate < minDate)
+                        {
+                            orderId = o.ID;
+                            minDate = (DateTime)GetOrderDetails(o.ID).ShipDate;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            });
+            return orderId;
+        }
+        catch(BlExceptionFailedToRead ex)
+        {
+            throw new BlExceptionFailedToRead();
+        }
+        catch(BlNoEntitiesFound ex)
+        {
+            throw new BlNoEntitiesFound(ex.Message);
+        }
+        catch(BlEntityNotFoundException ex)
+        {
+            throw new BlEntityNotFoundException(ex.Message);
+        }
+        catch(BlExceptionNoMatchingItems ex)
+        {
+            throw new BlExceptionNoMatchingItems();
+        }
+        catch (Exception ex)
+        {
+            throw new BlDefaultException(ex.Message);
+        }
+        }
 }

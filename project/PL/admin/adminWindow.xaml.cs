@@ -44,6 +44,14 @@ public partial class AdminWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
+        catch (BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(BO.BlExceptionNoMatchingItems ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
         catch (BO.BlDefaultException ex)
         {
             MessageBox.Show(ex.Message);
@@ -65,6 +73,10 @@ public partial class AdminWindow : Window
             MessageBox.Show(ex.Message);
         }
         catch (BO.BlExceptionFailedToRead ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(BO.BlEntityNotFoundException ex)
         {
             MessageBox.Show(ex.Message);
         }
@@ -113,6 +125,10 @@ public partial class AdminWindow : Window
             MessageBox.Show(ex.Message);
         }
         catch (BO.BlExceptionCantUpdateDelivery ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
+        catch(BO.BlEntityNotFoundException ex)
         {
             MessageBox.Show(ex.Message);
         }

@@ -89,6 +89,10 @@ public partial class ProductWindow : Window
         {
             MessageBox.Show(ex.Message);
         }
+        catch(BO.BlEntityNotFoundException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
         catch (Exception err)
         {
             MessageBox.Show(err.Message);

@@ -58,6 +58,10 @@ internal class BlCart : ICart
         {
             throw new BO.BlOutOfStockException();
         }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
+        }
         catch (Exception)
         {
             throw new BO.BlDefaultException("unexpected error occured");
@@ -202,6 +206,14 @@ internal class BlCart : ICart
         catch (BlOutOfStockException ex)
         {
             throw new BO.BlOutOfStockException();
+        }
+        catch (Dal.xmlFailedAccessToRoot)
+        {
+            throw new BlEntityNotFoundException("failed to accsess resource");
+        }
+        catch(BlEntityNotFoundException ex)
+        {
+            throw new BlEntityNotFoundException(ex.Message);
         }
         catch (Exception)
         {

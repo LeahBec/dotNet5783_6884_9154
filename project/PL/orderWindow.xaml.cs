@@ -45,6 +45,14 @@ namespace PL
                 this.dcT = new Tuple<PO.Order, bool, bool>(this.o, isCustomer, !isCustomer);
                 this.DataContext = this.dcT;
             }
+            catch(BO.BlExceptionFailedToRead ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(BO.BlEntityNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (Exception err)
             {
                 MessageBox.Show(err.Message);
@@ -80,6 +88,10 @@ namespace PL
             {
                 MessageBox.Show(ex.Message);
             }
+            catch(BO.BlExceptionFailedToRead ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
             catch (BO.BlDefaultException ex)
             {
                 MessageBox.Show(ex.Message);
@@ -97,6 +109,10 @@ namespace PL
                 Common.ConvertToPoOrder(or, o);
                 o.Items = list;
                 list.ForEach(item => o.TotalPrice += item.Price);
+            }
+            catch (BO.BlEntityNotFoundException ex)
+            {
+                MessageBox.Show(ex.Message);
             }
             catch (BO.BlDefaultException ex)
             {
@@ -117,6 +133,10 @@ namespace PL
                 list.ForEach(item => o.TotalPrice += item.Price);
             }
             catch (BO.BlExceptionCantUpdateDelivery ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            catch(BO.BlEntityNotFoundException ex)
             {
                 MessageBox.Show(ex.Message);
             }
